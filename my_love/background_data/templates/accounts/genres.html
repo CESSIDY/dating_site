@@ -1,0 +1,71 @@
+{% extends 'base_accounts.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<input type="hidden" id="status_of_page" value="{{ status }}">
+<div class="col-md-12">
+    <ul class="errorlist nonfield">
+        {{ form.non_field_errors }}
+    </ul>
+    <form  data-validate-url="{% url 'background.accounts_data.genres' %}" method="post">
+        <div class="block block-themed">
+            <div class="block-header bg-flat-dark">
+                <h3 class="block-title">Create a new genres</h3>
+                <button class="btn btn-primary-danger" id="tera" onclick="myWindowClose()">X</button>
+            </div>
+            <div class="block-content">
+                {% csrf_token %}
+                {{form.id}}
+                <div class="form-group row justify-content-center ">
+                    <div class="col-sm-4">
+                        <div class="form-material">
+                            {{form.name}}
+                            <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
+                            {{ form.name.errors }}
+                        </div>
+                    </div>
+            </div>
+            <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm bg-flat-dark text-right">
+                <button type="submit" class="btn btn-rounded btn-noborder btn-secondary">
+                    <i class="fa fa-check"></i> Submit
+                </button>
+                <button type="reset" class="btn btn-rounded btn-noborder btn-secondary">
+                    <i class="fa fa-repeat"></i> Reset
+                </button>
+            </div>
+        </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+function myWindowClose(){
+    window.close();
+}
+
+    $("#id_name").change(function () {
+      var form = $(this).closest("form");
+      $.ajax({
+        url: form.attr("data-validate-url"),
+        data: form.serialize(),
+        dataType: 'json',
+        success: function (data) {
+        var obj = JSON.parse(json);
+          if (obj.status) {
+            window.close();
+          }else{
+          alert("Some error!");
+          }
+        }
+      });
+
+    });
+    $( document ).ready(function() {
+    var status = $('#status_of_page').val();
+    if(status == '1'){
+         window.close();
+    }
+});
+  </script>
+{% endblock %}

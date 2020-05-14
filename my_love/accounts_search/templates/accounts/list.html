@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-sm-3">
+    <div class="row">
+        {% for account in accounts %}
+        <div class="col-md-6 col-xl-3">
+            <a class="block text-center" href="javascript:void(0)">
+                <div class="block-content block-content-full bg-gd-sun">
+                    <img class="img-avatar img-avatar-thumb" src="{{ account.aboutme.main_photo }}" alt="">
+                </div>
+                <div class="block-content block-content-full">
+                    <div class="font-w600 mb-5">{{ account.aboutme.name }} {{ account.aboutme.surname }}</div>
+                </div>
+                <div class="block-content block-content-full block-content-sm bg-body-light">
+                    <span class="font-w600 font-size-sm text-danger">{{ account.username }}</span>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

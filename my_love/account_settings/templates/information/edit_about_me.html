@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <ul class="errorlist nonfield">
+                {{ form.non_field_errors }}
+            </ul>
+
+            <form action="{% url 'edit_about_me' %}" method="post">
+                <div class="block block-themed">
+                    <div class="block-header bg-flat-dark">
+                        <h3 class="block-title">Edit About Me</h3>
+                    </div>
+                    <div class="block-content">
+                        {% csrf_token %}
+                        {{form.id}}
+                        {{form.user}}
+                        <div class="form-group row justify-content-center ">
+                            <div class="col-sm-4">
+                                <div class="form-material">
+                                    {{form.name}}
+                                    <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
+                                    {{ form.name.errors }}
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-material">
+                                    {{form.surname}}
+                                    <label for="{{form.surname.id_for_label}}">{{form.surname.label}}</label>
+                                    {{ form.surname.errors }}
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-material">
+                                    {{form.country}}
+                                    <label for="{{form.country.id_for_label}}">{{form.country.label}}</label>
+                                    {{ form.country.errors }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row justify-content-center ">
+                            <div class="col-sm-4">
+                                <div class="form-material">
+                                    {{form.growth}}
+                                    <label for="{{form.growth.id_for_label}}">{{form.growth.label}}</label>
+                                    {{ form.growth.errors }}
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-material">
+                                    {{form.weight}}
+                                    <label for="{{form.weight.id_for_label}}">{{form.weight.label}}</label>
+                                    {{ form.weight.errors }}
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-material">
+                                    {{form.birthday}}
+                                    <label for="{{form.birthday.id_for_label}}">{{form.birthday.label}}</label>
+                                    {{ form.birthday.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center">
+                            <div class="col-sm-4">
+                                <div class="form-material">
+                                    {{form.color_hair}}
+                                    <label for="{{form.color_hair.id_for_label}}">{{form.color_hair.label}}</label>
+                                    {{ form.color_hair.errors }}
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-material">
+                                    {{form.color_aye}}
+                                    <label for="{{form.color_aye.id_for_label}}">{{form.color_aye.label}}</label>
+                                    {{ form.color_aye.errors }}
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-material">
+                                    {{form.gender}}
+                                    <label for="{{form.gender.id_for_label}}">{{form.gender.label}}</label>
+                                    {{ form.gender.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center">
+                            <label id="{{form.genres.id_for_label}}_label" class="col-sm-8"
+                                   for="{{form.genres.id_for_label}}">{{form.genres.label}}
+                                <button id="{{form.genres.id_for_label}}_button"
+                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.genres' %}')"
+                                        type="button" class="btn-block-option"><i class="fa fa-plus"></i>
+                                </button>
+                            </label>
+                            {{ form.genres.errors }}
+                            <div class="col-sm-8">
+                                {{form.genres}}
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center">
+                            <label id="{{form.music_types.id_for_label}}_label" class="col-sm-8"
+                                   for="{{form.music_types.id_for_label}}">{{form.music_types.label}}
+                                <button id="{{form.music_types.id_for_label}}_button"
+                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.music_types' %}')"
+                                        type="button" class="btn-block-option"
+                                        data-toggle="modal" data-target="#addAnotherOne"><i
+                                        class="fa fa-plus"></i></button>
+                            </label>
+                            {{ form.music_types.errors }}
+                            <div class="col-sm-8">
+                                {{form.music_types}}
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center">
+                            <label id="{{form.films.id_for_label}}_label" class="col-sm-8"
+                                   for="{{form.films.id_for_label}}">{{form.films.label}}
+                                <button id="{{form.films.id_for_label}}_button" type="button"
+                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.films' %}')"
+                                        class="btn-block-option"
+                                        data-toggle="modal" data-target="#addAnotherOne"><i
+                                        class="fa fa-plus"></i></button>
+                            </label>
+                            {{ form.films.errors }}
+                            <div class="col-sm-8">
+                                {{form.films}}
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center">
+                            <label id="{{form.books.id_for_label}}_label" class="col-sm-8"
+                                   for="{{form.books.id_for_label}}">{{form.books.label}}
+                                <button id="{{form.books.id_for_label}}_button" type="button"
+                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.books' %}')"
+                                        class="btn-block-option"
+                                        data-toggle="modal" data-target="#addAnotherOne"><i
+                                        class="fa fa-plus"></i></button>
+
+                            </label>
+                            {{ form.books.errors }}
+                            <div class="col-sm-8">
+                                {{form.books}}
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center">
+                            <label id="{{form.hobbies.id_for_label}}_label" class="col-sm-8"
+                                   for="{{form.hobbies.id_for_label}}">{{form.hobbies.label}}
+                                <button id="{{form.hobbies.id_for_label}}_button" type="button"
+                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.hobbies' %}')"
+                                        class="btn-block-option"
+                                        data-toggle="modal" data-target="#addAnotherOne"><i
+                                        class="fa fa-plus"></i></button>
+                            </label>
+                            {{ form.hobbies.errors }}
+                            <div class="col-sm-8">
+                                {{form.hobbies}}
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-center">
+                            <label id="{{form.foods.id_for_label}}_label" class="col-sm-8"
+                                   for="{{form.foods.id_for_label}}">{{form.foods.label}}
+                                <button id="{{form.foods.id_for_label}}_button" type="button"
+                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.foods' %}')"
+                                        class="btn-block-option"
+                                        data-toggle="modal" data-target="#addAnotherOne"><i
+                                        class="fa fa-plus"></i></button>
+                            </label>
+                            {{ form.foods.errors }}
+                            <div class="col-sm-8">
+                                {{form.foods}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm bg-flat-dark text-right">
+                        <button type="submit" class="btn btn-rounded btn-noborder btn-secondary">
+                            <i class="fa fa-check"></i> Submit
+                        </button>
+                        <button type="reset" class="btn btn-rounded btn-noborder btn-secondary">
+                            <i class="fa fa-repeat"></i> Reset
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts%}
+<script>
+//создать переменную, в которой будем хранить ссылку на объект window открытого окна
+var myWindow;
+function myWindowOpen(elem, url) {
+  myWindow = window.open(url, "myWindow", "width=600, height=350");
+}
+</script>
+{% endblock %}

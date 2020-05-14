@@ -1,0 +1,333 @@
+{% extends 'base.html' %}
+{% block side-overlay%}
+{% endblock %}
+{% block content %}
+<div class="bg-image bg-image-bottom " style="background-image: url('static/media/images/main.jpg');">
+    <div class="bg-primary-dark-op py-30">
+        <div class="content content-full text-center">
+            <!-- Avatar -->
+            <div class="mb-15">
+                <a class="img-link" href="#">
+                    <img class="img-avatar img-avatar96 img-avatar-thumb" src="{{ user.aboutme.main_photo }}"
+                         alt="">
+                </a>
+            </div>
+            <!-- END Avatar -->
+
+            <!-- Personal -->
+            <h1 class="h3 text-white font-w700 mb-10">{{ user.aboutme.name }} {{ user.aboutme.surname }}</h1>
+            <!-- END Personal -->
+
+            <!-- Actions -->
+            <button type="button" class="btn btn-rounded btn-hero btn-sm btn-alt-success mb-5">
+                <a href="{% url 'edit_about_me' %}"><i class="fa fa-edit mr-5"></i> Change</a>
+            </button>
+            <!-- END Actions -->
+        </div>
+    </div>
+</div>
+<div class="container my-sm-3">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="block block-bordered block-mode-hidden" id="genres-block">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Genres <small></small></h3>
+                    <div class="block-options">
+                        <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                        <button type="button" class="btn-block-option" data-toggle="block-option"
+                                data-action="content_toggle">
+                            <i class="si si-arrow-down"></i></button>
+                    </div>
+                </div>
+                <div class="block-content">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                        </tr>
+                        </thead>
+                        {% for value in user.aboutme.genres.all %}
+                        <tbody class="">
+                        <tr>
+                            <td class="text-left">{{ value.name }}</td>
+                        </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="block block-mode-hidden" id="music-block">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Music types<small></small></h3>
+                    <div class="block-options">
+                        <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                        <button type="button" class="btn-block-option" data-toggle="block-option"
+                                data-action="content_toggle">
+                            <i class="si si-arrow-down"></i></button>
+                    </div>
+                </div>
+                <div class="block-content">
+                    <table class="table table-hover">
+                        <thead>
+                        </thead>
+                        {% for value in user.aboutme.music_types.all %}
+                        <tbody class="">
+                        <tr>
+                            <td class="text-left">{{ value.name }}</td>
+                        </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="block block-mode-hidden" id="films-block">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Films <small></small></h3>
+                    <div class="block-options">
+                        <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                        <button type="button" class="btn-block-option" data-toggle="block-option"
+                                data-action="content_toggle">
+                            <i class="si si-arrow-down"></i></button>
+                    </div>
+                </div>
+                <div class="block-content">
+                    <table class="js-table-sections table table-hover">
+                        <thead>
+                        </thead>
+                        {% for value in user.aboutme.films.all %}
+                        <tbody class="js-table-sections-header">
+                        <tr>
+                            <td class="text-left">
+                                <i class="fa fa-angle-right"></i>
+                            </td>
+                            <td class="text-left">{{ value.name }}</td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        {% for genre in value.genres.all %}
+                        <tr>
+                            <td class="text-center"></td>
+                            <td class="font-w600 text-success">{{ genre.name }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td class="text-center"></td>
+                            <td class="font-w600 text-success"></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="block block-mode-hidden" id="books-block">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Books <small></small></h3>
+                    <div class="block-options">
+                        <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                        <button type="button" class="btn-block-option" data-toggle="block-option"
+                                data-action="content_toggle">
+                            <i class="si si-arrow-down"></i></button>
+                    </div>
+                </div>
+                <div class="block-content">
+                    <table class="js-table-sections table table-hover">
+                        <thead>
+                        </thead>
+                        {% for value in user.aboutme.books.all %}
+                        <tbody class="js-table-sections-header">
+                        <tr>
+                            <td class="text-left">
+                                <i class="fa fa-angle-right"></i>
+                            </td>
+                            <td class="text-left">{{ value.name }}</td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        {% for genre in value.genres.all %}
+                        <tr>
+                            <td class="text-center"></td>
+                            <td class="font-w600 text-success">{{ genre.name }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td class="text-center"></td>
+                            <td class="font-w600 text-success"></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="block block-mode-hidden" id="hobbies-block">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Hobbies <small></small></h3>
+                    <div class="block-options">
+                        <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                        <button type="button" class="btn-block-option" data-toggle="block-option"
+                                data-action="content_toggle">
+                            <i class="si si-arrow-down"></i></button>
+                    </div>
+                </div>
+                <div class="block-content">
+                    <table class="js-table-sections table table-hover">
+                        <thead>
+                        </thead>
+                        {% for value in user.aboutme.hobbies.all %}
+                        <tbody class="js-table-sections-header">
+                        <tr>
+                            <td class="text-left">
+                                <i class="fa fa-angle-right"></i>
+                            </td>
+                            <td class="text-left">{{ value.name }}</td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        <tr>
+                            <td class="text-center"></td>
+                            <td class="font-w600 text-success">{{ value.description }}</td>
+                        </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="block block-mode-hidden" id="foods-block">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Foods <small></small></h3>
+                    <div class="block-options">
+                        <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                        <button type="button" class="btn-block-option" data-toggle="block-option"
+                                data-action="content_toggle">
+                            <i class="si si-arrow-down"></i></button>
+                    </div>
+                </div>
+                <div class="block-content">
+                    <table class="js-table-sections table table-hover">
+                        <thead>
+                        </thead>
+                        {% for value in user.aboutme.foods.all %}
+                        <tbody class="js-table-sections-header">
+                        <tr>
+                            <td class="text-left">
+                                <i class="fa fa-angle-right"></i>
+                            </td>
+                            <td class="text-left">{{ value.name }}</td>
+                            <td class="text-right">({{ value.get_type_display }})</td>
+                        </tr>
+                        </tbody>
+                        <tbody>
+                        <tr>
+                            <td class="text-center"></td>
+                            <td class="font-w600 text-success">{{ value.description }}</td>
+                        </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="block-content">
+            <li>
+                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
+                                    class="sidebar-mini-hide">Birth Day</span></span>
+                <ul>
+                    <li>
+                        <span> {{ user.aboutme.birthday }}</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
+                                    class="sidebar-mini-hide">Country</span></span>
+                <ul>
+                    <li>
+                        <span>{{ user.aboutme.country.name }}</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
+                                    class="sidebar-mini-hide">Growth</span></span>
+                <ul>
+                    <li>
+                        <span>{{ user.aboutme.growth }}</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
+                                    class="sidebar-mini-hide">Weight</span></span>
+                <ul>
+                    <li>
+                        <span>{{ user.aboutme.weight }}</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
+                                    class="sidebar-mini-hide">Gender</span></span>
+                <ul>
+                    <li>
+                        <span>{{ user.aboutme.get_gender_display }}</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
+                                    class="sidebar-mini-hide">Hair color</span></span>
+                <ul>
+                    <li>
+                        <span>{{ user.aboutme.get_color_hair_display }}</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
+                                    class="sidebar-mini-hide">Aye color</span></span>
+                <ul>
+                    <li>
+                        <span>{{ user.aboutme.get_color_aye_display }}</span>
+                    </li>
+                </ul>
+            </li>
+        </div>
+    </div>
+    <!-- END Table Sections -->
+</div>
+{% endblock %}
+{% block scripts %}
+<!-- Page JS Helpers (Table Tools helper) -->
+<script>
+jQuery(function () {  Codebase.helpers('table-tools');     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+{% endblock %}

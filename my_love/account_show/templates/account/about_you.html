@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid banner">
+    <div class="row">
+        <div class="col-md-8 col-sm-9">
+            <div class="col-sm">
+                <h1 class="h1">About You<a class="btn btn-danger" href="{% url 'edit_about_you' %}">Edit</a></h1>
+            </div>
+            <div class="col-sm">
+                <p>Countries: {% for value in user.aboutyou.countries.all %} {{value.name}}{% endfor %}</p>
+                <p>Age: {{ user.aboutyou.min_age }} - {{ user.aboutyou.max_age }}</p>
+                <p>Growth: {{ user.aboutyou.min_growth }} - {{ user.aboutyou.max_growth }}</p>
+                <p>Weight: {{ user.aboutyou.min_weight }} - {{ user.aboutyou.max_weight }}</p>
+                <p>Gender: {{ user.aboutyou.get_gender_display }}</p>
+                <p>Hair: {{ user.aboutyou.get_color_hair_display }}</p>
+                <p>Aye: {{ user.aboutyou.get_color_aye_display }}</p>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <h2>Lovely genres</h2>
+                        {% for value in user.aboutyou.genres.all %}
+                        <p>{{ value.name }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="col-sm">
+                        <h2>Music types</h2>
+                        {% for value in user.aboutyou.music_types.all %}
+                        <p>{{ value.name }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="col-sm">
+                        <h2>Lovely Films</h2>
+                        {% for value in user.aboutyou.films.all %}
+                        <p>{{ value.name }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <h2>Lovely Books</h2>
+                        {% for value in user.aboutyou.books.all %}
+                        <p>{{ value.name }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="col-sm">
+                        <h2>Hobbies</h2>
+                        {% for value in user.aboutyou.hobbies.all %}
+                        <p>{{ value.name }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="col-sm">
+                        <h2>Lovely Foods</h2>
+                        {% for value in user.aboutyou.foods.all %}
+                        <p>{{ value.name }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
