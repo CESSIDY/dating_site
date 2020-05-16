@@ -48,6 +48,16 @@ class AboutYouUpdate(LoginRequiredMixin, UpdateView):
     form_class = AboutYouForm
     template_name = 'information/edit_about_you.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print("TERA")
+        #print(context['form']['color_hair'])
+        #unit_id = context['latest_articles']
+        #form.fields['unit_id'].choices = [(unit_id, unit_id)]
+        #context['color_hair'] = context['color_hair']
+        #context['color_aye'] = context['color_aye']
+        return context
+
     def get_object(self, queryset=None):
         pk_ = self.request.user.aboutyou.pk
         return get_object_or_404(self.model, pk=pk_)

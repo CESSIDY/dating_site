@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -26,33 +27,44 @@ class AboutCommonInfo(models.Model):
     # object.get_color_hair_display()
     # object.get_color_aye_display()
     GENDER = (
-        (1, 'Mall'),
+        (1, 'Other'),
         (2, 'Female'),
-        (3, 'Other'),
+        (3, 'Mall'),
     )
     COLOR_HAIR = (
-        ('1', 'Blonde'),
-        ('2', 'Brunette'),
-        ('3', 'Red'),
-        ('4', 'Brown'),
-        ('5', 'Anything'),
-        ('6', 'Other'),
+        (1, 'Other'),
+        (2, 'Brunette'),
+        (3, 'Red'),
+        (4, 'Brown'),
+        (5, 'Anything'),
+        (6, 'Blonde'),
     )
     COLOR_AYE = (
-        ('1', 'Amber'),
-        ('2', 'Blue'),
-        ('3', 'Brown'),
-        ('4', 'Gray'),
-        ('5', 'Green'),
-        ('6', 'Hazel'),
+        (1, 'Other'),
+        (2, 'Blue'),
+        (3, 'Brown'),
+        (4, 'Gray'),
+        (5, 'Green'),
+        (6, 'Hazel'),
+        (7, 'Amber')
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    gender = models.IntegerField(choices=GENDER, null=True)
-    color_hair = models.CharField('Color of hair', max_length=20, choices=COLOR_HAIR, null=True)
-    color_aye = models.CharField('Color of aye', max_length=20, choices=COLOR_AYE, null=True)
+    gender = models.IntegerField(choices=GENDER, default=1)
+    # color_hair = models.CharField('Color of hair', max_length=20, choices=COLOR_HAIR, null=True)
+    color_hair = ArrayField(
+        models.CharField('Color of hair', choices=COLOR_HAIR, max_length=20, blank=True, default=1),
+        null=True,
+    )
+    color_aye = ArrayField(
+        models.CharField('Color of aye', choices=COLOR_AYE, max_length=20, blank=True, default=1),
+        null=True,
+    )
 
-    class Meta:
-        abstract = True
+
+# color_aye = models.CharField('Color of aye', max_length=20, choices=COLOR_AYE, null=True)
+
+class Meta:
+    abstract = True
 
 
 class MusicType(models.Model):
@@ -171,7 +183,8 @@ class AboutMe(AboutCommonInfo):
                                          verbose_name='Favorite types of music')
     films = models.ManyToManyField(Films, blank=True, related_name='my_films_set', verbose_name='Favorite films')
     books = models.ManyToManyField(Books, blank=True, related_name='my_books_set', verbose_name='Favorite books')
-    hobbies = models.ManyToManyField(Hobbies, blank=True, related_name='my_hobbies_set', verbose_name='Favorite hobbies')
+    hobbies = models.ManyToManyField(Hobbies, blank=True, related_name='my_hobbies_set',
+                                     verbose_name='Favorite hobbies')
     foods = models.ManyToManyField(Foods, blank=True, related_name='my_foods_set', verbose_name='Favorite foods')
     country = models.ForeignKey(Countries, blank=True, related_name='my_country_set', on_delete=models.DO_NOTHING,
                                 verbose_name='Where are you from?', null=True)
