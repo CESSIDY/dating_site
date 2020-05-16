@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render
@@ -13,25 +14,17 @@ from django_select2.views import AutoResponseView
 from django.http import HttpResponse
 
 
-def upload(request):
-    context = {}
-    if request.method == 'POST':
-        uploaded_image = request.FILES['image']
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_image.name, uploaded_image)
-        context['url'] = fs.url(name)
-    return render(request, 'upload.html', context)
-
-
 @login_required
 def image_upload(request):
     if request.method == 'POST':
         form = GalleryForm(request.POST, request.FILES)
+        #errors = form.errors.as_data()
         if form.is_valid():
             image = form.save(commit=False)
             image.user = request.user
             image.save()
             form.save_m2m()
+
     return redirect('gallery')
 
 
@@ -51,11 +44,11 @@ class AboutYouUpdate(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         print("TERA")
-        #print(context['form']['color_hair'])
-        #unit_id = context['latest_articles']
-        #form.fields['unit_id'].choices = [(unit_id, unit_id)]
-        #context['color_hair'] = context['color_hair']
-        #context['color_aye'] = context['color_aye']
+        # print(context['form']['color_hair'])
+        # unit_id = context['latest_articles']
+        # form.fields['unit_id'].choices = [(unit_id, unit_id)]
+        # context['color_hair'] = context['color_hair']
+        # context['color_aye'] = context['color_aye']
         return context
 
     def get_object(self, queryset=None):

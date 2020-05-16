@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from multiselectfield import MultiSelectField
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -26,13 +27,14 @@ class AboutCommonInfo(models.Model):
     # object.get_gender_display()
     # object.get_color_hair_display()
     # object.get_color_aye_display()
+    DEFAULT_VAL = 1
     GENDER = (
         (1, 'Other'),
         (2, 'Female'),
         (3, 'Mall'),
     )
     COLOR_HAIR = (
-        (1, 'Other'),
+        (DEFAULT_VAL, 'Other'),
         (2, 'Brunette'),
         (3, 'Red'),
         (4, 'Brown'),
@@ -40,7 +42,7 @@ class AboutCommonInfo(models.Model):
         (6, 'Blonde'),
     )
     COLOR_AYE = (
-        (1, 'Other'),
+        (DEFAULT_VAL, 'Other'),
         (2, 'Blue'),
         (3, 'Brown'),
         (4, 'Gray'),
@@ -50,21 +52,10 @@ class AboutCommonInfo(models.Model):
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     gender = models.IntegerField(choices=GENDER, default=1)
-    # color_hair = models.CharField('Color of hair', max_length=20, choices=COLOR_HAIR, null=True)
-    color_hair = ArrayField(
-        models.CharField('Color of hair', choices=COLOR_HAIR, max_length=20, blank=True, default=1),
-        null=True,
-    )
-    color_aye = ArrayField(
-        models.CharField('Color of aye', choices=COLOR_AYE, max_length=20, blank=True, default=1),
-        null=True,
-    )
-
-
-# color_aye = models.CharField('Color of aye', max_length=20, choices=COLOR_AYE, null=True)
-
-class Meta:
-    abstract = True
+    color_hair = MultiSelectField('Color of hair', choices=COLOR_HAIR, null=True)
+    color_aye = MultiSelectField('Color of aye', choices=COLOR_AYE, null=True)
+    class Meta:
+        abstract = True
 
 
 class MusicType(models.Model):
