@@ -1,31 +1,17 @@
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.decorators import login_required
 from .models import AboutMe, AboutYou, Gallery
 from . import models
-from account_show.forms import GalleryForm
+from .forms import GalleryForm
 from .forms import AboutYouForm, AboutMeForm
 import json
 from django_select2.views import AutoResponseView
 from django.http import HttpResponse
-
-
-@login_required
-def image_upload(request):
-    if request.method == 'POST':
-        form = GalleryForm(request.POST, request.FILES)
-        #errors = form.errors.as_data()
-        if form.is_valid():
-            image = form.save(commit=False)
-            image.user = request.user
-            image.save()
-            form.save_m2m()
-
-    return redirect('gallery')
 
 
 @login_required
@@ -36,6 +22,47 @@ def image_delete(request):
     return redirect('gallery')
 
 
+class ArticleCreate(LoginRequiredMixin, CreateView):
+    model = Gallery
+    form_class = GalleryForm
+    template_name = 'information/create_article.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('gallery')
+
+
+class ArticleUpdate(LoginRequiredMixin, UpdateView):
+    model = Gallery
+    form_class = GalleryForm
+    queryset = Gallery.objects.all()
+    template_name = 'information/create_article.html'
+
+    def get_object(self, queryset=None):
+        pk_ = self.kwargs.get('pk')
+        article = self.model.objects.get(id=pk_)
+        if article.user == self.request.user:
+            return article
+
+        return None
+
+    def form_valid(self, form):
+        if self.request.user.gallery_set.filter(pk=form.instance.pk):
+            form.instance.user = self.request.user
+            return super().form_valid(form)
+        return None
+
+    def get_success_url(self):
+        return reverse('gallery')
+
+
 class AboutYouUpdate(LoginRequiredMixin, UpdateView):
     model = AboutYou
     form_class = AboutYouForm
@@ -43,12 +70,6 @@ class AboutYouUpdate(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print("TERA")
-        # print(context['form']['color_hair'])
-        # unit_id = context['latest_articles']
-        # form.fields['unit_id'].choices = [(unit_id, unit_id)]
-        # context['color_hair'] = context['color_hair']
-        # context['color_aye'] = context['color_aye']
         return context
 
     def get_object(self, queryset=None):

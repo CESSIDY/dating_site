@@ -1,14 +1,10 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<h2>Accounts List</h2>
+<h2>You'r Gallery!</h2>
 <div class="container pt-5">
-    <div class="container-fluid my-2">
-        <form class="post-form" method="post" action="{% url 'image_upload' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{form|crispy}}
-            <button type="submit" class="btn btn-primary">Upload</button>
-        </form>
+    <div>
+        <a href="{% url 'create_article' %}"><h2>+</h2></a>
     </div>
     <div class="container-fluid my-2">
         <p>

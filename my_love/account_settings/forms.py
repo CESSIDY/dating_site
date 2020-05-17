@@ -2,6 +2,7 @@ from django import forms
 from . import models
 from .models import AboutYou, AboutMe, Gallery
 from django.forms import TextInput
+from taggit.forms import *
 from django_select2 import forms as s2forms
 
 
@@ -11,14 +12,24 @@ class MyWidget(s2forms.ModelSelect2MultipleWidget):
 
 
 class GalleryForm(forms.ModelForm):
+    tags = TagField()
+    tags.widget.attrs.update({'data-role': 'tagsinput'})
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'id': 'id_create_' + field, 'class': 'form-control'
+            })
+
     class Meta:
         model = Gallery
         fields = '__all__'
         widgets = {
-            # 'user': TextInput(attrs={'type': 'hidden'}),
-            'tags': TextInput(attrs={'data-role': 'tagsinput', 'type': 'text'}),
+            'user': TextInput(attrs={'type': 'hidden', 'value': '1'}),
+            #'tags': TextInput(attrs={'data-role': 'tagsinput', 'type': 'text'}),
         }
-        exclude = ('user',)
+        #exclude = ('user',)
 
 
 class AboutYouForm(forms.ModelForm):

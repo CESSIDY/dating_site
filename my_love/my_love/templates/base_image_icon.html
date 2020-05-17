@@ -12,13 +12,16 @@
                     {% endfor %}
                 </div>
                 <p class="mb-auto">{{image.description|truncatewords:"15"}}</p>
-                <form action="{% url 'image_delete' %}" method="post">
+                <form action="{% url 'article_delete' %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="image_pk" value="{{ image.pk }}">
                     <p class="mb-auto text-muted">
                         <button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
                     </p>
                 </form>
+                <p class="mb-auto text-muted">
+                    <a type="submit" class="btn btn-secondary btn-sm btn-block" href="{% url 'update_article' image.pk %}">Edit</a>
+                </p>
             </div>
         </div>
     </div>
