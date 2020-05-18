@@ -1,6 +1,5 @@
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render
 from django.core.files.storage import FileSystemStorage
@@ -12,14 +11,25 @@ from .forms import AboutYouForm, AboutMeForm
 import json
 from django_select2.views import AutoResponseView
 from django.http import HttpResponse
+from django.views.generic import (
+    CreateView,
+    UpdateView,
+    DeleteView
+)
 
 
-@login_required
-def image_delete(request):
-    if request.method == 'POST':
-        image_pk = request.POST['image_pk']
-        Gallery.image_del(image_pk, request.user.pk)
-    return redirect('gallery')
+# @login_required
+
+
+class ArticleDelete(DeleteView):
+    template_name = 'information/delete_article.html'
+
+    def get_object(self, queryset=None):
+        pk_ = self.kwargs.get("pk")
+        return get_object_or_404(Gallery, pk=pk_)
+
+    def get_success_url(self):
+        return reverse('gallery')
 
 
 class ArticleCreate(LoginRequiredMixin, CreateView):
