@@ -55,11 +55,17 @@ class ArticleUpdate(LoginRequiredMixin, UpdateView):
     queryset = Gallery.objects.all()
     template_name = 'information/create_article.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['image_url'] = context['gallery'].path.url
+        return context
+
     def get_object(self, queryset=None):
         pk_ = self.kwargs.get('pk')
-        article = self.model.objects.get(id=pk_)
-        if article.user == self.request.user:
-            return article
+        if pk_ is not None or pk_.isnumeric():
+            article = self.model.objects.get(id=pk_)
+            if article.user == self.request.user:
+                return article
 
         return None
 

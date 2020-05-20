@@ -44,18 +44,28 @@
                             </div>
                         </div>
                         <div class="form-group row justify-content-center ">
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
+                                <div class="form-material">
+                                    <img src="{{ image_url }}" class="img-fluid options-item rounded float-left" alt="...">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
                                 <div class="form-material">
                                     {{form.path}}
                                     <label for="{{form.path.id_for_label}}">{{form.path.label}}</label>
                                     {{ form.path.errors }}
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-2">
                                 <div class="form-material">
                                     {{form.main}}
                                     <label for="{{form.main.id_for_label}}">{{form.main.label}}</label>
                                     {{ form.main.errors }}
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-material">
+                                    <img id="change_image" src="..." class="img-fluid options-item rounded float-right" alt="...">
                                 </div>
                             </div>
                         </div>
@@ -76,5 +86,29 @@
 </div>
 {% endblock %}
 {% block scripts%}
+<script>
+$( document ).ready(function() {
+function handleFile(file) {
+    if (!file.type.startsWith('image/')){ return 0; }
+    var img = document.getElementById("change_image");
+    img.file = file;
 
+    var reader = new FileReader();
+    reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+    reader.readAsDataURL(file);
+    return 1;
+}
+
+ $("#id_create_path").change(function(){
+  var selectedFile = $(this).get(0).files[0];
+  response = handleFile(selectedFile);
+  console.log(response);
+});
+});
+
+
+
+
+
+</script>
 {% endblock %}
