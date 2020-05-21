@@ -33,7 +33,6 @@ admin.site.register(Hobbies)
 admin.site.register(Foods)
 admin.site.register(Countries)
 admin.site.register(Gallery)
-admin.site.register(Tags)
 
 admin.site.register(AboutMe, AboutMeAdmin)
 admin.site.register(AboutYou, AboutYouAdmin)

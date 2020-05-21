@@ -118,25 +118,6 @@ class Countries(models.Model):
         return self.name
 
 
-class Tags(models.Model):
-    name = models.CharField(max_length=300)
-
-    def __str__(self):
-        return self.name
-
-    def validate_unique(self, exclude=None):
-        if Tags.objects.filter(name=self.name).exists():
-            raise ValidationError("tag already exists")
-        super(Tags, self).validate_unique(exclude=exclude)
-
-    def save(self, *args, **kwargs):
-        try:
-            self.validate_unique()
-            super().save(*args, **kwargs)
-        except ValidationError as e:
-            pass
-
-
 class Gallery(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='gallery_set')
     # tags = models.ManyToManyField(Tags, related_name='gallery_set', blank=True)
@@ -236,7 +217,3 @@ def pre_save_main_image(sender, instance, **kwargs):
     if instance.main:
         Gallery.objects.filter(user=instance.user, main=True).update(main=False)
 
-
-@receiver(post_save, sender=Gallery)
-def post_save_image_hashtags(sender, instance, created, **kwargs):
-    pass

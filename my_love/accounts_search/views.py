@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
@@ -9,6 +9,17 @@ class AccountsListView(LoginRequiredMixin, ListView):
     model = User
     template_name = 'accounts/list.html'
     context_object_name = 'accounts'
+
+    def get_queryset(self):
+        users = self.request.user.get_candidates()
+        print(users)
+        return users
+
+
+def partners_search(request):
+    #request.user.make_candidate(2)
+    #request.user.make_candidate(3)
+    redirect('accounts_list')
 
 
 class AccountDetailView(LoginRequiredMixin, DetailView):
