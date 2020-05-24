@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.decorators import login_required
 from .models import AboutMe, AboutYou, Gallery
-from . import models
+from background_data.models import Genres, MusicType, Films, Foods, Countries, Books, Hobbies
 from .forms import GalleryForm
 from .forms import AboutYouForm, AboutMeForm
 import json
@@ -113,7 +113,7 @@ class AboutMeUpdate(LoginRequiredMixin, UpdateView):
 
 def select2_json_for(model, value):
     results = list()
-    values = model.objects.filter(name__startswith=value).values()
+    values = model.objects.filter(name__icontains=value).values()
     for value in values:
         results.append({'id': value['id'], 'text': value['name']})
     return json.dumps({'err': 'nil', 'results': results})
@@ -122,13 +122,13 @@ def select2_json_for(model, value):
 def heavy_data_about_me(request, model):
     term = request.GET.get("term", )
     Model = {
-        'genres': models.Genres,
-        'music_types': models.MusicType,
-        'films': models.Films,
-        'books': models.Books,
-        'hobbies': models.Hobbies,
-        'foods': models.Foods,
-        'countries': models.Countries,
+        'genres': Genres,
+        'music_types': MusicType,
+        'films': Films,
+        'books': Books,
+        'hobbies': Hobbies,
+        'foods': Foods,
+        'countries': Countries,
     }[model]
 
     return HttpResponse(select2_json_for(Model, term), content_type='application/json')

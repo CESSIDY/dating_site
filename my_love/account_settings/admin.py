@@ -24,14 +24,6 @@ class AboutYouAdmin(admin.ModelAdmin):
 
     username.short_description = 'User'
 
-
-admin.site.register(MusicType)
-admin.site.register(Genres)
-admin.site.register(Films)
-admin.site.register(Books)
-admin.site.register(Hobbies)
-admin.site.register(Foods)
-admin.site.register(Countries)
 admin.site.register(Gallery)
 
 admin.site.register(AboutMe, AboutMeAdmin)

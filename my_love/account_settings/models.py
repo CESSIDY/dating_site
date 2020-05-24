@@ -16,6 +16,7 @@ from taggit.managers import TaggableManager
 from django.conf.urls.static import static
 from django.conf import settings
 import re
+from background_data.models import Genres, MusicType, Films, Foods, Countries, Books, Hobbies
 
 
 def delete_file(path):
@@ -28,10 +29,12 @@ class AboutCommonInfo(models.Model):
     # object.get_color_hair_display()
     # object.get_color_aye_display()
     DEFAULT_VAL = 1
+    FEMALE = 2
+    MALL = 3
     GENDER = (
-        (1, 'Other'),
-        (2, 'Female'),
-        (3, 'Mall'),
+        (DEFAULT_VAL, 'Other'),
+        (FEMALE, 'Female'),
+        (MALL, 'Mall'),
     )
     COLOR_HAIR = (
         (DEFAULT_VAL, 'Other'),
@@ -54,68 +57,9 @@ class AboutCommonInfo(models.Model):
     gender = models.IntegerField(choices=GENDER, default=1)
     color_hair = MultiSelectField('Color of hair', choices=COLOR_HAIR, null=True)
     color_aye = MultiSelectField('Color of aye', choices=COLOR_AYE, null=True)
+
     class Meta:
         abstract = True
-
-
-class MusicType(models.Model):
-    name = models.CharField(max_length=200, unique=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Genres(models.Model):
-    name = models.CharField(max_length=200, unique=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Films(models.Model):
-    name = models.CharField(max_length=300)
-    genres = models.ManyToManyField(Genres)
-
-    def __str__(self):
-        return self.name
-
-
-class Books(models.Model):
-    name = models.CharField(max_length=300, unique=True)
-    genres = models.ManyToManyField(Genres)
-
-    def __str__(self):
-        return self.name
-
-
-class Hobbies(models.Model):
-    name = models.CharField(max_length=300, unique=True)
-    description = models.TextField(max_length=1000)
-
-    def __str__(self):
-        return self.name
-
-
-class Foods(models.Model):
-    FOOD_TYPES = (
-        ('1', 'animal'),
-        ('2', 'vegetable'),
-        ('3', 'organic'),
-    )
-    name = models.CharField(max_length=300, unique=True)
-    description = models.TextField(max_length=1000)
-    type = models.CharField(max_length=20, choices=FOOD_TYPES)
-
-    def __str__(self):
-        return self.name
-
-
-class Countries(models.Model):
-    name = models.CharField(max_length=300)
-    description = models.TextField(max_length=1000)
-
-    def __str__(self):
-        return self.name
 
 
 class Gallery(models.Model):
@@ -126,6 +70,7 @@ class Gallery(models.Model):
     path = models.ImageField(upload_to='images/', default='images/default.png')
     name = models.CharField(max_length=200)
     main = models.BooleanField(default=False)
+    pub_date = models.DateTimeField(default=timezone.now().now())
 
     def __str__(self):
         return '%s - %s' % (self.user.username, self.name)
@@ -145,6 +90,7 @@ class Gallery(models.Model):
 
 
 class AboutMe(AboutCommonInfo):
+    activate = models.BooleanField('Activate in search?', default=False)
     birthday = models.DateField('Your birthday', null=True)
     name = models.CharField(max_length=100, help_text='100 characters max.', null=True)
     surname = models.CharField(max_length=100, null=True)
@@ -216,4 +162,3 @@ class AboutYou(AboutCommonInfo):
 def pre_save_main_image(sender, instance, **kwargs):
     if instance.main:
         Gallery.objects.filter(user=instance.user, main=True).update(main=False)
-

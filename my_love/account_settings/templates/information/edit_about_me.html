@@ -11,6 +11,13 @@
                 <div class="block block-themed">
                     <div class="block-header bg-flat-dark">
                         <h3 class="block-title">Edit About Me</h3>
+                        <div class="col-sm-4">
+                            <div class="form-material">
+                                {{form.activate}}
+                                <label for="{{form.activate.id_for_label}}">{{form.activate.label}}</label>
+                                {{ form.activate.errors }}
+                            </div>
+                        </div>
                     </div>
                     <div class="block-content">
                         {% csrf_token %}
@@ -34,7 +41,13 @@
                             <div class="col-sm-4">
                                 <div class="form-material">
                                     {{form.country}}
-                                    <label for="{{form.country.id_for_label}}">{{form.country.label}}</label>
+                                    <label for="{{form.country.id_for_label}}">{{form.country.label}}
+                                        <button id="{{form.countries.id_for_label}}_button" type="button"
+                                                onclick="myWindowOpen(this,'{% url 'background.accounts_data.countries' %}')"
+                                                class="btn-block-option"
+                                                data-toggle="modal" data-target="#addAnotherOne"><i
+                                                class="fa fa-plus"></i></button>
+                                    </label>
                                     {{ form.country.errors }}
                                 </div>
                             </div>
@@ -193,5 +206,8 @@ var myWindow;
 function myWindowOpen(elem, url) {
   myWindow = window.open(url, "myWindow", "width=600, height=350");
 }
+
+
+
 </script>
 {% endblock %}

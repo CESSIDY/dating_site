@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
@@ -17,9 +18,8 @@ class AccountsListView(LoginRequiredMixin, ListView):
 
 
 def partners_search(request):
-    #request.user.make_candidate(2)
-    #request.user.make_candidate(3)
-    redirect('accounts_list')
+    print(request.user.search_candidates())
+    return HttpResponse('666')
 
 
 class AccountDetailView(LoginRequiredMixin, DetailView):

@@ -1,5 +1,9 @@
 import datetime
+from dateutil.relativedelta import relativedelta
+from account_settings.models import AboutCommonInfo as commonInfo
+from accounts_search.candidates_search_level.Level1 import Level1
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User
 
 
@@ -10,6 +14,12 @@ class Candidates(models.Model):
 
     def __str__(self):
         return str("{} - {}".format(self.creator, self.candidate))
+
+
+def search_candidates(self):
+    candidates = Level1(self).search()
+
+    return candidates
 
 
 def get_followers(self):
@@ -44,3 +54,4 @@ User.add_to_class("get_followers", get_followers)
 User.add_to_class("get_candidates", get_candidates)
 User.add_to_class("make_candidate", make_candidate)
 User.add_to_class("remove_candidate", remove_candidate)
+User.add_to_class("search_candidates", search_candidates)

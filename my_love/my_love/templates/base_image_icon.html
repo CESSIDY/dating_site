@@ -6,6 +6,7 @@
             </div>
             <div class="image_down col p-4 d-flex flex-column position-static">
                 <h3 class="my-1">{{ image.name }}</h3>
+                <h6>({{image.pub_date}})</h6>
                 <div style="display:flex">
                     {% for tag in image.tags.all %}
                     <a href="" class="mr-1 badge badge-info">#{{ tag }}</a>

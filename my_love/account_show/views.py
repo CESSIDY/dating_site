@@ -15,7 +15,7 @@ class GalleryList(ListView):
 
     def get_queryset(self):
         _pk = self.request.user.pk
-        data = self.model.objects.filter(user=_pk)
+        data = self.model.objects.filter(user=_pk).order_by('-pub_date')
         return data
 
     def get_context_data(self, **kwargs):

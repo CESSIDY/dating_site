@@ -16,6 +16,7 @@
                         {% csrf_token %}
                         {{form.pk}}
                         {{form.user}}
+                        {{form.pub_date}}
                         <div class="form-group row justify-content-center">
                             <label id="{{form.name.id_for_label}}_label" class="col-sm-8"
                                    for="{{form.name.id_for_label}}">{{form.name.label}}

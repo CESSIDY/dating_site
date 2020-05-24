@@ -27,9 +27,10 @@ class GalleryForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'user': TextInput(attrs={'type': 'hidden', 'value': '1'}),
-            #'tags': TextInput(attrs={'data-role': 'tagsinput', 'type': 'text'}),
+            'pub_date': TextInput(attrs={'type': 'hidden'}),
+            # 'tags': TextInput(attrs={'data-role': 'tagsinput', 'type': 'text'}),
         }
-        #exclude = ('user',)
+        # exclude = ('user',)
 
 
 class AboutYouForm(forms.ModelForm):
@@ -46,8 +47,8 @@ class AboutYouForm(forms.ModelForm):
         widgets = {
             'user': TextInput(attrs={'type': 'hidden'}),
             'birthday': TextInput(attrs={'type': 'date'}),
-            #'color_aye': forms.ChoiceField(required=False),
-            #'color_hair': forms.ChoiceField(required=False),
+            # 'color_aye': forms.ChoiceField(required=False),
+            # 'color_hair': forms.ChoiceField(required=False),
             'color_aye': s2forms.Select2MultipleWidget(),
             'color_hair': s2forms.Select2MultipleWidget(),
             'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.genres'),
@@ -82,6 +83,6 @@ class AboutMeForm(forms.ModelForm):
             'books': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.books'),
             'hobbies': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.hobbies'),
             'foods': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.foods'),
-            'country': s2forms.Select2Widget,
+            'country': s2forms.HeavySelect2Widget(data_view='heavy_data.about_me.countries'),
         }
         # exclude = ('user',)

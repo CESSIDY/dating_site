@@ -1,5 +1,5 @@
 from django import forms
-from account_settings import models
+from . import models
 from django.forms import TextInput
 from django_select2 import forms as s2forms
 
