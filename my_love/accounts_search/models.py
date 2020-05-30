@@ -3,6 +3,7 @@ from dateutil.relativedelta import relativedelta
 from account_settings.models import AboutCommonInfo as commonInfo
 from accounts_search.candidates_search_level.Level1 import Level1
 from accounts_search.candidates_search_level.Level2 import Level2
+from accounts_search.candidates_search_level.Level3 import Level3
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -20,6 +21,7 @@ class Candidates(models.Model):
 def search_candidates(self):
     candidates = Level1(self).search()
     candidates = Level2(self, candidates).search()
+    candidates = Level3(self, candidates).search()
 
     return candidates
 
