@@ -3,6 +3,9 @@
 {% block content %}
 <div class="container my-sm-3">
     <div class="row">
+     <a class="btn btn-primary" href="{% url 'partners_search' %}">Find New</a>
+    </div>
+    <div class="row">
         {% for account in accounts %}
         <div class="col-md-6 col-xl-3">
             <a class="block text-center" href="javascript:void(0)">
