@@ -14,45 +14,11 @@ class AccountsListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         users = self.request.user.get_candidates()
-        print(users)
         return users
 
 
 def partners_search(request):
     users = request.user.search_candidates()
-    print('= Hobbies: {}. Me about You: {}. Partners: {}'.format(
-        users[0].count_similar_hobbies,
-        request.user.aboutyou.hobbies.all(),
-        users[0].aboutme.hobbies.all()))
-    print('= Music Types: {}. Me about You: {}. Partners: {}'.format(
-        users[0].count_similar_music_types,
-        request.user.aboutyou.music_types.all(),
-        users[0].aboutme.music_types.all()))
-    print('= Foods Types: {}. Me about You: {}. Partners: {}'.format(
-        users[0].count_similar_foods,
-        request.user.aboutyou.foods.all(),
-        users[0].aboutme.foods.all()))
-    print('= Books Types: {}. Me about You: {}. Partners: {}'.format(
-        users[0].count_similar_books,
-        request.user.aboutyou.books.all(),
-        users[0].aboutme.books.all()))
-    print('= Films Types: {}. Me about You: {}. Partners: {}'.format(
-        users[0].count_similar_films,
-        request.user.aboutyou.films.all(),
-        users[0].aboutme.films.all()))
-    print('= Genres Types: {}. Me about You: {}. Partners: {}'.format(
-        users[0].count_similar_genres,
-        request.user.aboutyou.genres.all(),
-        users[0].aboutme.genres.all()))
-    print('= Weight: {}. Me about You: {} - {}. Partners: {}'.format(users[0].bool_similar_weight,
-                                                                     request.user.aboutyou.min_weight,
-                                                                     request.user.aboutyou.max_weight,
-                                                                     users[0].aboutme.weight))
-    print('= Growth: {}. Me about You: {} - {}. Partners: {}'.format(users[0].bool_similar_growth,
-                                                                     request.user.aboutyou.min_growth,
-                                                                     request.user.aboutyou.max_growth,
-                                                                     users[0].aboutme.growth))
-    print('= Name: {}'.format(users[0].aboutme.name))
 
     return HttpResponseRedirect(reverse('accounts_list'))
 
