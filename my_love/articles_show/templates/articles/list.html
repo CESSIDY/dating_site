@@ -11,7 +11,13 @@
                     </h2>
                     <h3 class="h5 text-muted mb-0">
                         ({{article.pub_date}})
+                        {% if article.candidate %}
+                        <i class="fa fa-user mr-5"></i> {{article.user.username}}
+                        {% elif article.user_id == user.id %}
+                        <i class="fa fa-user mr-5"></i> Your's
+                        {% else %}
                         <i class="fa fa-user-secret mr-5"></i> Annonimus
+                        {% endif %}
                     </h3>
                 </div>
                 <div class="block-content block-content-full">

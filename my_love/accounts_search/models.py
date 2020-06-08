@@ -25,45 +25,22 @@ class Candidates(models.Model):
     def __str__(self):
         return str("{} - {}".format(self.creator, self.candidate))
 
+    def common_percentage(self):
+        common = ((self.percentage_similar_hobbies +
+                   self.percentage_similar_music_types +
+                   self.percentage_similar_foods +
+                   self.percentage_similar_books +
+                   self.percentage_similar_films +
+                   self.percentage_similar_genres +
+                   self.percentage_similar_weight +
+                   self.percentage_similar_growth) / 8)
+        return common
+
 
 def search_candidates(self):
     candidates = Level1(self).search()
     candidates = Level2(self, candidates).search()
     candidates = Level3(self, candidates).search()
-
-    print('= Hobbies: {}. Me about You: {}. Partners: {}'.format(
-        candidates[0].count_similar_hobbies,
-        self.aboutyou.hobbies.all(),
-        candidates[0].aboutme.hobbies.all()))
-    print('= Music Types: {}. Me about You: {}. Partners: {}'.format(
-        candidates[0].count_similar_music_types,
-        self.aboutyou.music_types.all(),
-        candidates[0].aboutme.music_types.all()))
-    print('= Foods Types: {}. Me about You: {}. Partners: {}'.format(
-        candidates[0].count_similar_foods,
-        self.aboutyou.foods.all(),
-        candidates[0].aboutme.foods.all()))
-    print('= Books Types: {}. Me about You: {}. Partners: {}'.format(
-        candidates[0].count_similar_books,
-        self.aboutyou.books.all(),
-        candidates[0].aboutme.books.all()))
-    print('= Films Types: {}. Me about You: {}. Partners: {}'.format(
-        candidates[0].count_similar_films,
-        self.aboutyou.films.all(),
-        candidates[0].aboutme.films.all()))
-    print('= Genres Types: {}. Me about You: {}. Partners: {}'.format(
-        candidates[0].count_similar_genres,
-        self.aboutyou.genres.all(),
-        candidates[0].aboutme.genres.all()))
-    print('= Weight: {}. Me about You: {} - {}. Partners: {}'.format(candidates[0].bool_similar_weight,
-                                                                     self.aboutyou.min_weight,
-                                                                     self.aboutyou.max_weight,
-                                                                     candidates[0].aboutme.weight))
-    print('= Growth: {}. Me about You: {} - {}. Partners: {}'.format(candidates[0].bool_similar_growth,
-                                                                     self.aboutyou.min_growth,
-                                                                     self.aboutyou.max_growth,
-                                                                     candidates[0].aboutme.growth))
-    print('= Name: {}'.format(candidates[0].aboutme.name))
 
     self.make_candidates(candidates)
     return candidates
@@ -76,8 +53,8 @@ def get_followers(self):
 
 def get_candidates(self):
     candidates = Candidates.objects.filter(creator=self)
-    users = {candidate.candidate for candidate in candidates}
-    return users
+    # users = {candidate.candidate for candidate in candidates}
+    return candidates
 
 
 def make_candidates(self, candidates):

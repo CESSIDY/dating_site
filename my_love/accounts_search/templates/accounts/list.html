@@ -1,26 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container my-sm-3">
-    <div class="row">
-     <a class="btn btn-primary" href="{% url 'partners_search' %}">Find New</a>
-    </div>
-    <div class="row">
-        {% for account in accounts %}
-        <div class="col-md-6 col-xl-3">
-            <a class="block text-center" href="javascript:void(0)">
-                <div class="block-content block-content-full bg-gd-sun">
-                    <img class="img-avatar img-avatar-thumb" src="{{ account.aboutme.main_photo }}" alt="">
-                </div>
-                <div class="block-content block-content-full">
-                    <div class="font-w600 mb-5">{{ account.aboutme.name }} {{ account.aboutme.surname }}</div>
-                </div>
-                <div class="block-content block-content-full block-content-sm bg-body-light">
-                    <span class="font-w600 font-size-sm text-danger">{{ account.username }}</span>
-                </div>
-            </a>
-        </div>
-        {% endfor %}
+
+<div class="row justify-content-center text-center">
+    <div class="col-md-12">
+                <a class="btn btn-square btn-warning btn-lg btn-block" href="{% url 'partners_search' %}">SEARCH OF LOVE</a>
     </div>
 </div>
+<div class="container my-sm-3">
+    <div class="content">
+        <div class="row gutters-tiny">
+            {% for candidate in candidates %}
+            <div class="col-md-6 col-xl-3">
+                <a class="block" href="javascript:void(0)">
+                    <div class="block-content block-content-full">
+                        <div class="py-20 text-center">
+                            <div class="js-pie-chart pie-chart mb-20" data-percent="90" data-line-width="4"
+                                 data-size="100"
+                                 data-bar-color="#ef5350" data-track-color="#e9e9e9">
+                                            <span>
+                                                <img class="img-avatar" src="{{candidate.candidate.aboutme.main_photo}}"
+                                                     alt="">
+                                            </span>
+                            </div>
+                            <div class="font-size-h3 font-w600">{{candidate.common_percentage}}%</div>
+                            <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                {{candidate.candidate.aboutme.name}} {{candidate.candidate.aboutme.surname}}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts%}
+<!-- Page JS Plugins -->
+<script src="/static/assets/js/plugins/easy-pie-chart/jquery.easypiechart.min.js"></script>
+
+<script>jQuery(function(){ Codebase.helpers('easy-pie-chart'); });</script>
+
 {% endblock %}

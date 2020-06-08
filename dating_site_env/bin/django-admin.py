@@ -1,4 +1,4 @@
-#!/home/lizard/PycharmProjects/all_venv/dating_site_env/bin/python3.8
+#!/home/lizard/Programing/Python/dating_site_env/bin/python
 from django.core import management
 
 if __name__ == "__main__":

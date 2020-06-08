@@ -1,22 +1,21 @@
 import datetime
 from django.db import models
 from multiselectfield import MultiSelectField
-from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils import timezone
-from django.db.models.signals import post_save, pre_delete, pre_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.urls import reverse
-from django.core.exceptions import ValidationError
 from taggit.managers import TaggableManager
 from django.conf.urls.static import static
 from django.conf import settings
-import re
+from PIL import Image
 from background_data.models import Genres, MusicType, Films, Foods, Countries, Books, Hobbies
+import sys
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 def delete_file(path):
@@ -75,6 +74,15 @@ class Gallery(models.Model):
     def __str__(self):
         return '%s - %s' % (self.user.username, self.name)
 
+    def image(self):
+        try:
+            if not Image.open(self.path):
+                return settings.MEDIA_URL + settings.DEFAULT_IMAGE
+            else:
+                return self.path.url
+        except:
+            return settings.MEDIA_URL + settings.DEFAULT_IMAGE
+
     @staticmethod
     def image_del(image_pk, user_pk):
         image = Gallery.objects.get(pk=image_pk)
@@ -82,11 +90,35 @@ class Gallery(models.Model):
             image.delete()
 
     def delete(self, *args, **kwargs):
-        self.path.delete()
+        try:
+            self.path.delete()
+        except:
+            pass
         super().delete(*args, **kwargs)
 
     def save(self, *args, **kwargs):
+        if not self.pk:
+            self.path = self.compressImage(self.path)
         super().save(*args, **kwargs)
+
+    def compressImage(self, uploadedImage):
+        imageTemproary = Image.open(uploadedImage)
+        outputIoStream = BytesIO()
+        #imageTemproary = imageTemproary.resize((300, 350))
+        imageTemproary.save(outputIoStream, format=imageTemproary.format, quality=60)
+        outputIoStream.seek(0)
+        uploadedImage = InMemoryUploadedFile(outputIoStream, 'ImageField', "%s.jpg" % uploadedImage.name.split('.')[0],
+                                             'image/jpeg', sys.getsizeof(outputIoStream), None)
+        return uploadedImage
+
+
+@receiver(pre_save, sender=Gallery)
+def pre_save_main_image(sender, instance, **kwargs):
+    try:
+        if instance.main:
+            Gallery.objects.filter(user=instance.user, main=True).update(main=False)
+    except:
+        pass
 
 
 class AboutMe(AboutCommonInfo):
@@ -156,9 +188,3 @@ class AboutYou(AboutCommonInfo):
 
     def get_absolute_url(self):
         return reverse("about_you")
-
-
-@receiver(pre_save, sender=Gallery)
-def pre_save_main_image(sender, instance, **kwargs):
-    if instance.main:
-        Gallery.objects.filter(user=instance.user, main=True).update(main=False)

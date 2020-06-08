@@ -33,37 +33,6 @@
     <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
     <!-- END Stylesheets -->
     <title>{% block title%}{% endblock %}</title>
-    <style>
-        .name {
-            background-color: black;
-            color: white;
-            padding: 8px;
-        }
-        .image_all {
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-        }
-        .image_top {
-        }
-        .image_down {
-            background-color: #900c3e;
-            border-top: 6px solid red;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-    </style>
     {{ form.media.css }}
 </head>
 <body>
@@ -228,10 +197,6 @@
 </div>
 <!-- END Page Container -->
 <!--
-<script src="/static/js/jquery-3.5.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-crossorigin="anonymous"></script>
     Codebase JS Core
 
     Vital libraries and plugins used in all pages. You can choose to not include this file if you would like
@@ -269,14 +234,10 @@ crossorigin="anonymous"></script>
         e.preventDefault();
     });
 
-
-
-
-
 </script>
 <script src="/static/js/tagsinput.js"></script>
-{{ form.media.js }}
 {% block scripts %}
 {% endblock %}
+{{ form.media.js }}
 </body>
 </html>
