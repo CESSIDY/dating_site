@@ -42,7 +42,7 @@
                         {% for tag in article.tags.all %}
                         <div class="col-md">
                             <p>
-                                <i class="r-1 badge badge-info">#{{ tag }}</i>
+                                <i class="r-1 badge badge-info">#<a href="{% url 'articles_show' tag %}">{{ tag }}</a></i>
                             </p>
                         </div>
                         {% endfor %}

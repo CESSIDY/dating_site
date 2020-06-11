@@ -1,9 +1,9 @@
-from django.urls import path
+from django.urls import path, re_path
 from .views import (
     ArticlesList,
 )
 
 # app_name = 'account_settings'
 urlpatterns = [
-    path('', ArticlesList.as_view(), name='articles_show'),
+    re_path(r'^(?P<tag>.*)$', ArticlesList.as_view(),  name='articles_show'),
 ]
