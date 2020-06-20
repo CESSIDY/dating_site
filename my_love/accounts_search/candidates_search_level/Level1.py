@@ -8,14 +8,17 @@ from django.contrib.auth.models import User
 
 class Level1:
 
-    # конструктор
     def __init__(self, user):
         self.user = user
+        # the search will be performed only on active profiles
         self.candidates = User.objects.filter(aboutme__activate=True)
 
     def search(self):
+        # we will exclude users of inappropriate age, by criteria for current user in (AboutYou model)
         self.aboutyou_age()
+        # we will exclude users of inappropriate gander, by criteria for current user in (AboutYou model)
         self.aboutyou_gender()
+        # we will exclude users of inappropriate countries, by criteria for current user in (AboutYou model)
         self.aboutyou_countries()
         return self.candidates
 

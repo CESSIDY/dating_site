@@ -12,7 +12,7 @@
         <div class="row gutters-tiny">
             {% for candidate in candidates %}
             <div class="col-md-6 col-xl-3">
-                <a class="block" href="javascript:void(0)">
+                <a class="block" href="{% url 'show_detail' candidate.candidate.pk %}">
                     <div class="block-content block-content-full">
                         <div class="py-20 text-center">
                             <div class="js-pie-chart pie-chart mb-20" data-percent="90" data-line-width="4"

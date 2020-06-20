@@ -20,7 +20,7 @@ from django.views.generic import (
 
 # @login_required
 
-
+# deleted one article of (Gallery Model) vie
 class ArticleDelete(DeleteView):
     template_name = 'information/delete_article.html'
 
@@ -32,6 +32,7 @@ class ArticleDelete(DeleteView):
         return reverse('gallery')
 
 
+# create one article of (Gallery Model) view
 class ArticleCreate(LoginRequiredMixin, CreateView):
     model = Gallery
     form_class = GalleryForm
@@ -49,6 +50,7 @@ class ArticleCreate(LoginRequiredMixin, CreateView):
         return reverse('gallery')
 
 
+# update one article of (Gallery Model) view
 class ArticleUpdate(LoginRequiredMixin, UpdateView):
     model = Gallery
     form_class = GalleryForm
@@ -62,6 +64,7 @@ class ArticleUpdate(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         pk_ = self.kwargs.get('pk')
+        # check whether the user edits his article
         if pk_ is not None or pk_.isnumeric():
             article = self.model.objects.get(id=pk_)
             if article.user == self.request.user:
@@ -79,6 +82,7 @@ class ArticleUpdate(LoginRequiredMixin, UpdateView):
         return reverse('gallery')
 
 
+# update of (AboutYou Model) view
 class AboutYouUpdate(LoginRequiredMixin, UpdateView):
     model = AboutYou
     form_class = AboutYouForm
@@ -97,6 +101,7 @@ class AboutYouUpdate(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
+# update of (AboutMe Model) view
 class AboutMeUpdate(LoginRequiredMixin, UpdateView):
     model = AboutMe
     form_class = AboutMeForm
@@ -111,14 +116,17 @@ class AboutMeUpdate(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
+# auxiliary method for searching fields by pattern
 def select2_json_for(model, value):
     results = list()
     values = model.objects.filter(name__icontains=value).values()
+    # 'id', 'text' are required keys for each field
     for value in values:
         results.append({'id': value['id'], 'text': value['name']})
     return json.dumps({'err': 'nil', 'results': results})
 
 
+# this view used to search and automatic data downloads according to a given template, for the following models
 def heavy_data_about_me(request, model):
     term = request.GET.get("term", )
     Model = {

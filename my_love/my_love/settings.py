@@ -29,12 +29,17 @@ ALLOWED_HOSTS = ['127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'django_select2',
+    # app for store and manipulate ancillary data
     'background_data.apps.BackgroundDataConfig',
+    # app contains the logic of user logging
     'logging_user.apps.LoggingUserConfig',
+    # app for manipulation of the user account
     'account_settings.apps.AccountSettingsConfig',
+    # app for display user data
     'account_show.apps.AccountShowConfig',
+    # app for search of candidates
     'accounts_search.apps.AccountsSearchConfig',
+    # app for display articles
     'articles_show.apps.ArticlesShowConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,9 +47,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # The app includes Select2 driven Django Widgets.
+    'django_select2',
+    # The best way to have Django DRY forms. Build programmatic reusable layouts out of components,
+    # having full control of the rendered HTML without writing HTML in templates.
     'crispy_forms',
+    # A simpler approach to tagging with Django
     'taggit',
+    # A new model field and form field. With this you can get a multiple select from a choices.
+    # Stores to the database as a CharField of comma-separated values.
     'multiselectfield',
+    # The Django Debug Toolbar is a configurable set of panels that display various debug information
+    # about the current request/response and when clicked, display more details about the panel’s content.
     'debug_toolbar',
 ]
 
@@ -131,9 +145,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-# SELECT2_CSS = '/static/js/select2/css/select2.css'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -142,13 +153,15 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR, 'media'),
 ]
-# os.path.join(BASE_DIR, 'media'),
-DEFAULT_IMAGE = 'images/default.png'
 
+# ROUTE FOR DEFAULT IMAGE:
+DEFAULT_IMAGE = 'images/default.png'
+# DEFAULT LOGIN AND LOGOUT URL
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
-
+# EMAIL SEND LOGIC
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# crispy_forms SETTINGS:
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # DEBUG SETTINGS:

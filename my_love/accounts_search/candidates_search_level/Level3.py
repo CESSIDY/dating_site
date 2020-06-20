@@ -11,9 +11,9 @@ from django.db.models import Case, BooleanField, Value, When
 
 class Level3:
 
-    # конструктор
     def __init__(self, user, candidates):
         self.user = user
+        # candidates after level 2
         self.candidates = candidates
 
     def search(self):
@@ -22,6 +22,7 @@ class Level3:
         return self.candidates
 
     def aboutyou_weight(self):
+        # add annotate bool_similar_weight field (bool)
         self.candidates = self.candidates.annotate(
             bool_similar_weight=Case(
                 When(aboutme__weight__range=(self.user.aboutyou.min_weight, self.user.aboutyou.max_weight),
@@ -31,6 +32,7 @@ class Level3:
             ))
 
     def aboutyou_growth(self):
+        # add annotate bool_similar_growth field (bool)
         self.candidates = self.candidates.annotate(
             bool_similar_growth=Case(
                 When(aboutme__growth__range=(self.user.aboutyou.min_growth, self.user.aboutyou.max_growth),

@@ -6,12 +6,8 @@ from taggit.forms import *
 from django_select2 import forms as s2forms
 
 
-class MyWidget(s2forms.ModelSelect2MultipleWidget):
-    data_view = 'heavy_data_about_me'
-    max_results = 25
-
-
 class GalleryForm(forms.ModelForm):
+    # Add for correct use tags widget
     tags = TagField()
     tags.widget.attrs.update({'data-role': 'tagsinput'})
 
@@ -19,6 +15,7 @@ class GalleryForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
+            # Change 'id' of input for easy use in javascript
                 'id': 'id_create_' + field, 'class': 'form-control'
             })
 
@@ -26,6 +23,7 @@ class GalleryForm(forms.ModelForm):
         model = Gallery
         fields = '__all__'
         widgets = {
+            # Default value for user field to avoid mistakes
             'user': TextInput(attrs={'type': 'hidden', 'value': '1'}),
             'pub_date': TextInput(attrs={'type': 'hidden'}),
             # 'tags': TextInput(attrs={'data-role': 'tagsinput', 'type': 'text'}),
@@ -38,6 +36,7 @@ class AboutYouForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
+            # Change 'id' of input for easy use in javascript
                 'id': 'id_edit_' + field, 'class': 'form-control'
             })
 
@@ -47,8 +46,6 @@ class AboutYouForm(forms.ModelForm):
         widgets = {
             'user': TextInput(attrs={'type': 'hidden'}),
             'birthday': TextInput(attrs={'type': 'date'}),
-            # 'color_aye': forms.ChoiceField(required=False),
-            # 'color_hair': forms.ChoiceField(required=False),
             'color_aye': s2forms.Select2MultipleWidget(),
             'color_hair': s2forms.Select2MultipleWidget(),
             'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.genres'),
@@ -66,6 +63,7 @@ class AboutMeForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
+            # Change 'id' of input for easy use in javascript
                 'id': 'id_edit_' + field, 'class': 'form-control'
             })
 

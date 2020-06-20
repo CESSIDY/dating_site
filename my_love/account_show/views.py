@@ -1,10 +1,12 @@
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import GalleryForm
 from account_settings.models import Gallery
 
-
+# show articles list of (Gallery Model) view for current user
 class GalleryList(ListView):
     model = Gallery
     context_object_name = 'gallery'
@@ -23,10 +25,20 @@ class GalleryList(ListView):
         context['form'] = GalleryForm()
         return context
 
-
+# show information of (AboutMe Model) view for current user
 class AboutMeView(LoginRequiredMixin, TemplateView):
     template_name = 'account/about_me.html'
 
-
+# show information of (AboutYou Model) view for current user
 class AboutYouView(LoginRequiredMixin, TemplateView):
     template_name = 'account/about_you.html'
+
+# show information of User by (pk)
+class ShowDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'account/show_detail.html'
+    model = User
+    context_object_name = 'candidate'
+
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+

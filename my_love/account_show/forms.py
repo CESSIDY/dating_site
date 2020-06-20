@@ -5,7 +5,6 @@ from django.forms import TextInput
 
 class GalleryForm(forms.ModelForm):
     #tags = forms.CharField(required=False, type: 'hidden')
-
     class Meta:
         model = Gallery
         fields = '__all__'

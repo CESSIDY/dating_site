@@ -18,11 +18,7 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
-def delete_file(path):
-    print("DELETE_" + path)
-    return True
-
-
+# Abstract model with common fields for models AboutMe, AboutYou
 class AboutCommonInfo(models.Model):
     # object.get_gender_display()
     # object.get_color_hair_display()
@@ -61,9 +57,9 @@ class AboutCommonInfo(models.Model):
         abstract = True
 
 
+# Model for store a users articles
 class Gallery(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='gallery_set')
-    # tags = models.ManyToManyField(Tags, related_name='gallery_set', blank=True)
     description = models.TextField(max_length=1000)
     tags = TaggableManager()
     path = models.ImageField(upload_to='images/', default='images/default.png')
@@ -74,6 +70,7 @@ class Gallery(models.Model):
     def __str__(self):
         return '%s - %s' % (self.user.username, self.name)
 
+    # Check if there is an image on the server if not then return the path to the standard image
     def image(self):
         try:
             if not Image.open(self.path):
@@ -84,11 +81,13 @@ class Gallery(models.Model):
             return settings.MEDIA_URL + settings.DEFAULT_IMAGE
 
     @staticmethod
+    # checks whether the field passed as an argument (user_pk) matches the field of the article owner, if so, it will be deleted
     def image_del(image_pk, user_pk):
         image = Gallery.objects.get(pk=image_pk)
         if image.user.pk == user_pk:
             image.delete()
 
+    # before deleting the article from the database, the image was first deleted from the server
     def delete(self, *args, **kwargs):
         try:
             self.path.delete()
@@ -96,15 +95,17 @@ class Gallery(models.Model):
             pass
         super().delete(*args, **kwargs)
 
+    # before saving the article to the database, the image will be compressed
     def save(self, *args, **kwargs):
         if not self.pk:
             self.path = self.compressImage(self.path)
         super().save(*args, **kwargs)
 
+    # image compress logic
     def compressImage(self, uploadedImage):
         imageTemproary = Image.open(uploadedImage)
         outputIoStream = BytesIO()
-        #imageTemproary = imageTemproary.resize((300, 350))
+        # imageTemproary = imageTemproary.resize((300, 350))
         imageTemproary.save(outputIoStream, format=imageTemproary.format, quality=60)
         outputIoStream.seek(0)
         uploadedImage = InMemoryUploadedFile(outputIoStream, 'ImageField', "%s.jpg" % uploadedImage.name.split('.')[0],
@@ -113,6 +114,7 @@ class Gallery(models.Model):
 
 
 @receiver(pre_save, sender=Gallery)
+# logic to change the main article to the current one
 def pre_save_main_image(sender, instance, **kwargs):
     try:
         if instance.main:
@@ -121,6 +123,7 @@ def pre_save_main_image(sender, instance, **kwargs):
         pass
 
 
+# a model for storing key information about yourself that will be used to find partners
 class AboutMe(AboutCommonInfo):
     activate = models.BooleanField('Activate in search?', default=False)
     birthday = models.DateField('Your birthday', null=True)
@@ -142,6 +145,7 @@ class AboutMe(AboutCommonInfo):
     def __str__(self):
         return self.user.username
 
+    # get image from main article
     def main_photo(self):
         try:
             main = self.user.gallery_set.get(main=True)
@@ -152,6 +156,7 @@ class AboutMe(AboutCommonInfo):
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
+        # before creating a new user, a AboutMe model will be created
         if created:
             AboutMe.objects.create(user=instance)
 
@@ -159,6 +164,7 @@ class AboutMe(AboutCommonInfo):
         return reverse("about_me")
 
 
+# model to store key information about your future partner, this information will also be used to search
 class AboutYou(AboutCommonInfo):
     min_age = models.IntegerField('Minimal age', null=True)
     max_age = models.IntegerField('Maximum age', null=True)
@@ -183,6 +189,7 @@ class AboutYou(AboutCommonInfo):
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
+        # before creating a new user, a AboutYou model will be created
         if created:
             AboutYou.objects.create(user=instance)
 
