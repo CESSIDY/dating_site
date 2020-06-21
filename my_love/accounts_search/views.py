@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+import datetime
+from django.utils import timezone
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth.models import User
 from .models import Candidates
 from django.urls import reverse
@@ -6,6 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+
 
 # list of candidates for the current user
 class AccountsListView(LoginRequiredMixin, ListView):
@@ -18,11 +22,30 @@ class AccountsListView(LoginRequiredMixin, ListView):
         candidates = self.request.user.get_candidates()
         return candidates
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        dt = timezone.now() - relativedelta(days=2)
+        if dt > self.request.user.aboutyou.last_search_date:
+            context['search_active'] = True
+            context['access_date'] = 1
+        else:
+            last_search_date = self.request.user.aboutyou.last_search_date
+            access_date = (datetime.timedelta(days=2) + last_search_date)
+
+            context['access_date'] = str(access_date)
+            context['search_active'] = False
+        return context
+
+
 # search of candidates for current user
 def partners_search(request):
-    users = request.user.search_candidates()
+    dt = timezone.now() - relativedelta(days=2)
+    if dt > request.user.aboutyou.last_search_date:
+        print("SEARCH!!!!!!")
+        users = request.user.search_candidates()
 
     return HttpResponseRedirect(reverse('accounts_list'))
+
 
 # show information of User by (pk) view
 class AccountDetailView(LoginRequiredMixin, DetailView):

@@ -1,11 +1,34 @@
 {% extends 'base.html' %}
 
+{% block styles%}
+<style>
+html{background-color:#000}
+.countdown{width:100%;float:left;margin:20px auto}
+.timer{font:72px Courier;color:#fff;text-align:center}
+
+
+
+
+</style>
+{% endblock %}
 {% block content %}
 
 <div class="row justify-content-center text-center">
+    {% if search_active %}
     <div class="col-md-12">
-                <a class="btn btn-square btn-warning btn-lg btn-block" href="{% url 'partners_search' %}">SEARCH OF LOVE</a>
+        <a class="btn btn-square btn-warning btn-lg btn-block" href="{% url 'partners_search' %}">SEARCH OF LOVE</a>
     </div>
+    {% else %}
+    <div class="col-md-12 countdown">
+        <a class="timer btn btn-square btn-danger btn-lg btn-block" href="#">
+            <span id="days"></span>
+            <span id="hours"></span>
+            <span id="minutes"></span>
+            <span id="seconds"></span>
+        </a>
+    </div>
+    <input type="hidden" id="access_date" value="{{ access_date }}">
+    {% endif %}
 </div>
 <div class="container my-sm-3">
     <div class="content">
@@ -42,4 +65,48 @@
 
 <script>jQuery(function(){ Codebase.helpers('easy-pie-chart'); });</script>
 
+<script>
+var days, hours, minutes, seconds; // переменные для единиц времени
+
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+var str_access_date = $("#access_date").val();
+var target_date = new Date(str_access_date);
+if( str_access_date != ''){
+getCountdown();
+setInterval(function () { getCountdown(); }, 1000);
+}
+
+function getCountdown(){
+    var current_date = new Date().getTime();
+    var seconds_left = (target_date - current_date) / 1000;
+    days = pad( parseInt(seconds_left / 86400) );
+    seconds_left = seconds_left % 86400;
+
+    hours = pad( parseInt(seconds_left / 3600) );
+    seconds_left = seconds_left % 3600;
+
+    minutes = pad( parseInt(seconds_left / 60) );
+    seconds = pad( parseInt( seconds_left % 60 ) );
+
+      document.getElementById("days").innerHTML    = parseInt(days, 10);
+      document.getElementById("hours").innerHTML   = ("0" + hours).slice(-2);
+      document.getElementById("minutes").innerHTML = ("0" + minutes).slice(-2);
+      document.getElementById("seconds").innerHTML = ("0" + seconds).slice(-2);
+      }
+
+function pad(n) {
+    return (n < 10 ? '0' : '') + n;
+}
+
+
+
+
+
+
+</script>
 {% endblock %}

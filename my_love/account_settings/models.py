@@ -3,6 +3,7 @@ from django.db import models
 from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
 from django.utils import timezone
+from datetime import datetime
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.core.files.storage import FileSystemStorage
@@ -65,7 +66,7 @@ class Gallery(models.Model):
     path = models.ImageField(upload_to='images/', default='images/default.png')
     name = models.CharField(max_length=200)
     main = models.BooleanField(default=False)
-    pub_date = models.DateTimeField(default=timezone.now().now())
+    pub_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '%s - %s' % (self.user.username, self.name)
@@ -166,6 +167,7 @@ class AboutMe(AboutCommonInfo):
 
 # model to store key information about your future partner, this information will also be used to search
 class AboutYou(AboutCommonInfo):
+    last_search_date = models.DateTimeField(auto_now=True)
     min_age = models.IntegerField('Minimal age', null=True)
     max_age = models.IntegerField('Maximum age', null=True)
     min_growth = models.FloatField('Minimum growth', null=True)
