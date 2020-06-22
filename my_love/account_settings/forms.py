@@ -1,34 +1,11 @@
 from django import forms
 from . import models
-from .models import AboutYou, AboutMe, Gallery
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.models import User
+from .models import AboutYou, AboutMe, ContactInfo
 from django.forms import TextInput
 from taggit.forms import *
 from django_select2 import forms as s2forms
-
-
-class GalleryForm(forms.ModelForm):
-    # Add for correct use tags widget
-    tags = TagField()
-    tags.widget.attrs.update({'data-role': 'tagsinput'})
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-            # Change 'id' of input for easy use in javascript
-                'id': 'id_create_' + field, 'class': 'form-control'
-            })
-
-    class Meta:
-        model = Gallery
-        fields = '__all__'
-        widgets = {
-            # Default value for user field to avoid mistakes
-            'user': TextInput(attrs={'type': 'hidden', 'value': '1'}),
-            'pub_date': TextInput(attrs={'type': 'hidden'}),
-            # 'tags': TextInput(attrs={'data-role': 'tagsinput', 'type': 'text'}),
-        }
-        # exclude = ('user',)
 
 
 class AboutYouForm(forms.ModelForm):
@@ -36,7 +13,7 @@ class AboutYouForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-            # Change 'id' of input for easy use in javascript
+                # Change 'id' of input for easy use in javascript
                 'id': 'id_edit_' + field, 'class': 'form-control'
             })
 
@@ -63,7 +40,7 @@ class AboutMeForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-            # Change 'id' of input for easy use in javascript
+                # Change 'id' of input for easy use in javascript
                 'id': 'id_edit_' + field, 'class': 'form-control'
             })
 
@@ -84,3 +61,23 @@ class AboutMeForm(forms.ModelForm):
             'country': s2forms.HeavySelect2Widget(data_view='heavy_data.about_me.countries'),
         }
         # exclude = ('user',)
+
+
+class EditProfileForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = (
+            'email',
+            'first_name',
+            'last_name',
+        )
+        exclude = ('password',)
+
+
+class EditContactInfoForm(forms.ModelForm):
+    class Meta:
+        model = ContactInfo
+        fields = '__all__'
+        widgets = {
+            'user': TextInput(attrs={'type': 'hidden'}),
+        }

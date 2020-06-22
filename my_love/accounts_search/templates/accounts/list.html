@@ -35,10 +35,10 @@ html{background-color:#000}
         <div class="row gutters-tiny">
             {% for candidate in candidates %}
             <div class="col-md-6 col-xl-3">
-                <a class="block" href="{% url 'show_detail' candidate.candidate.pk %}">
+                <a class="block" href="{% url 'account_show' candidate.candidate.pk %}">
                     <div class="block-content block-content-full">
                         <div class="py-20 text-center">
-                            <div class="js-pie-chart pie-chart mb-20" data-percent="90" data-line-width="4"
+                            <div class="js-pie-chart pie-chart mb-20" data-percent="{{candidate.common_percentage}}" data-line-width="4"
                                  data-size="100"
                                  data-bar-color="#ef5350" data-track-color="#e9e9e9">
                                             <span>
@@ -48,7 +48,7 @@ html{background-color:#000}
                             </div>
                             <div class="font-size-h3 font-w600">{{candidate.common_percentage}}%</div>
                             <div class="font-size-sm font-w600 text-uppercase text-muted">
-                                {{candidate.candidate.aboutme.name}} {{candidate.candidate.aboutme.surname}}
+                                {{candidate.candidate.first_name}} {{candidate.candidate.last_name}}
                             </div>
                         </div>
                     </div>

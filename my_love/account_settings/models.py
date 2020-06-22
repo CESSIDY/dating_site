@@ -1,22 +1,12 @@
-import datetime
 from django.db import models
 from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
-from django.utils import timezone
-from datetime import datetime
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.files.storage import FileSystemStorage
-from django.conf import settings
 from django.urls import reverse
-from taggit.managers import TaggableManager
-from django.conf.urls.static import static
 from django.conf import settings
-from PIL import Image
+from articles_settings.models import Gallery
 from background_data.models import Genres, MusicType, Films, Foods, Countries, Books, Hobbies
-import sys
-from io import BytesIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 # Abstract model with common fields for models AboutMe, AboutYou
@@ -58,78 +48,10 @@ class AboutCommonInfo(models.Model):
         abstract = True
 
 
-# Model for store a users articles
-class Gallery(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='gallery_set')
-    description = models.TextField(max_length=1000)
-    tags = TaggableManager()
-    path = models.ImageField(upload_to='images/', default='images/default.png')
-    name = models.CharField(max_length=200)
-    main = models.BooleanField(default=False)
-    pub_date = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return '%s - %s' % (self.user.username, self.name)
-
-    # Check if there is an image on the server if not then return the path to the standard image
-    def image(self):
-        try:
-            if not Image.open(self.path):
-                return settings.MEDIA_URL + settings.DEFAULT_IMAGE
-            else:
-                return self.path.url
-        except:
-            return settings.MEDIA_URL + settings.DEFAULT_IMAGE
-
-    @staticmethod
-    # checks whether the field passed as an argument (user_pk) matches the field of the article owner, if so, it will be deleted
-    def image_del(image_pk, user_pk):
-        image = Gallery.objects.get(pk=image_pk)
-        if image.user.pk == user_pk:
-            image.delete()
-
-    # before deleting the article from the database, the image was first deleted from the server
-    def delete(self, *args, **kwargs):
-        try:
-            self.path.delete()
-        except:
-            pass
-        super().delete(*args, **kwargs)
-
-    # before saving the article to the database, the image will be compressed
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.path = self.compressImage(self.path)
-        super().save(*args, **kwargs)
-
-    # image compress logic
-    def compressImage(self, uploadedImage):
-        imageTemproary = Image.open(uploadedImage)
-        outputIoStream = BytesIO()
-        # imageTemproary = imageTemproary.resize((300, 350))
-        imageTemproary.save(outputIoStream, format=imageTemproary.format, quality=60)
-        outputIoStream.seek(0)
-        uploadedImage = InMemoryUploadedFile(outputIoStream, 'ImageField', "%s.jpg" % uploadedImage.name.split('.')[0],
-                                             'image/jpeg', sys.getsizeof(outputIoStream), None)
-        return uploadedImage
-
-
-@receiver(pre_save, sender=Gallery)
-# logic to change the main article to the current one
-def pre_save_main_image(sender, instance, **kwargs):
-    try:
-        if instance.main:
-            Gallery.objects.filter(user=instance.user, main=True).update(main=False)
-    except:
-        pass
-
-
 # a model for storing key information about yourself that will be used to find partners
 class AboutMe(AboutCommonInfo):
     activate = models.BooleanField('Activate in search?', default=False)
     birthday = models.DateField('Your birthday', null=True)
-    name = models.CharField(max_length=100, help_text='100 characters max.', null=True)
-    surname = models.CharField(max_length=100, null=True)
     growth = models.FloatField(null=True)
     weight = models.FloatField(null=True)
     genres = models.ManyToManyField(Genres, blank=True, related_name='my_genres_set')
@@ -157,7 +79,7 @@ class AboutMe(AboutCommonInfo):
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
-        # before creating a new user, a AboutMe model will be created
+        # after creating a new user, a AboutMe model will be created
         if created:
             AboutMe.objects.create(user=instance)
 
@@ -191,9 +113,28 @@ class AboutYou(AboutCommonInfo):
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
-        # before creating a new user, a AboutYou model will be created
+        # after creating a new user, a AboutYou model will be created
         if created:
             AboutYou.objects.create(user=instance)
 
     def get_absolute_url(self):
         return reverse("about_you")
+
+
+# model to store user contact information
+class ContactInfo(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    instagram = models.URLField(max_length=200, blank=True)
+    facebook = models.URLField(max_length=200, blank=True)
+    twitter = models.URLField(max_length=200, blank=True)
+    telegram = models.URLField(max_length=200, blank=True)
+    phone = models.CharField(max_length=20, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+    @receiver(post_save, sender=User)
+    def create_user_contactInfo(sender, instance, created, **kwargs):
+        # after creating a new user, a ContactInfo model will be created
+        if created:
+            ContactInfo.objects.create(user=instance)

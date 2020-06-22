@@ -1,85 +1,14 @@
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, render
-from django.core.files.storage import FileSystemStorage
-from django.contrib.auth.decorators import login_required
-from .models import AboutMe, AboutYou, Gallery
+from django.shortcuts import get_object_or_404
+from .models import AboutMe, AboutYou
 from background_data.models import Genres, MusicType, Films, Foods, Countries, Books, Hobbies
-from .forms import GalleryForm
-from .forms import AboutYouForm, AboutMeForm
+from .forms import AboutYouForm, AboutMeForm, EditProfileForm, EditContactInfoForm
 import json
-from django_select2.views import AutoResponseView
 from django.http import HttpResponse
 from django.views.generic import (
-    CreateView,
     UpdateView,
-    DeleteView
 )
-
-
-# @login_required
-
-# deleted one article of (Gallery Model) vie
-class ArticleDelete(DeleteView):
-    template_name = 'information/delete_article.html'
-
-    def get_object(self, queryset=None):
-        pk_ = self.kwargs.get("pk")
-        return get_object_or_404(Gallery, pk=pk_)
-
-    def get_success_url(self):
-        return reverse('gallery')
-
-
-# create one article of (Gallery Model) view
-class ArticleCreate(LoginRequiredMixin, CreateView):
-    model = Gallery
-    form_class = GalleryForm
-    template_name = 'information/create_article.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse('gallery')
-
-
-# update one article of (Gallery Model) view
-class ArticleUpdate(LoginRequiredMixin, UpdateView):
-    model = Gallery
-    form_class = GalleryForm
-    queryset = Gallery.objects.all()
-    template_name = 'information/create_article.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['image_url'] = context['gallery'].path.url
-        return context
-
-    def get_object(self, queryset=None):
-        pk_ = self.kwargs.get('pk')
-        # check whether the user edits his article
-        if pk_ is not None or pk_.isnumeric():
-            article = self.model.objects.get(id=pk_)
-            if article.user == self.request.user:
-                return article
-
-        return None
-
-    def form_valid(self, form):
-        if self.request.user.gallery_set.filter(pk=form.instance.pk):
-            form.instance.user = self.request.user
-            return super().form_valid(form)
-        return None
-
-    def get_success_url(self):
-        return reverse('gallery')
 
 
 # update of (AboutYou Model) view
@@ -114,6 +43,30 @@ class AboutMeUpdate(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+# update of user profile info (email, first_name, second_name) view
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
+    form_class = EditProfileForm
+    template_name = 'information/edit_profile.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_success_url(self):
+        return reverse('user.profile')
+
+
+# update of user contact info (phone_number, ...) view
+class ContactInfoUpdate(LoginRequiredMixin, UpdateView):
+    form_class = EditContactInfoForm
+    template_name = 'information/edit_contact_info.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user.contactinfo
+
+    def get_success_url(self):
+        return reverse('user.profile')
 
 
 # auxiliary method for searching fields by pattern

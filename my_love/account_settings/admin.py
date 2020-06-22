@@ -6,8 +6,7 @@ from .models import *
 # class ChoiceAdmin(admin.StackedAdmin):
 
 class AboutMeAdmin(admin.ModelAdmin):
-    list_display = ('username', 'name', 'surname', 'country')
-    search_fields = ['name', 'surname']
+    list_display = ('username', 'country')
 
     def username(self, instance):
         return instance.user.username
@@ -17,14 +16,13 @@ class AboutMeAdmin(admin.ModelAdmin):
 
 class AboutYouAdmin(admin.ModelAdmin):
     list_display = ('username',)
-    search_fields = ['name', 'surname']
 
     def username(self, instance):
         return instance.user.username
 
     username.short_description = 'User'
 
-admin.site.register(Gallery)
 
+admin.site.register(ContactInfo)
 admin.site.register(AboutMe, AboutMeAdmin)
 admin.site.register(AboutYou, AboutYouAdmin)

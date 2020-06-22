@@ -31,6 +31,7 @@ urlpatterns = [
     path('settings/', include('account_settings.urls')),
     path('account/', include('account_show.urls')),
     path('accounts/', include('accounts_search.urls')),
+    path('articles/settings/', include('articles_settings.urls')),
     path('articles/', include('articles_show.urls')),
 ]
 if settings.DEBUG:  # new

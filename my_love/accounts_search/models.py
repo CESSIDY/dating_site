@@ -54,7 +54,6 @@ def search_candidates(self):
     # call of method for store all candidates(users) in candidate model for current user
     self.make_candidates(candidates)
     self.aboutyou.save()
-    return candidates
 
 
 # User method what returns all followers from Candidate Model for current user

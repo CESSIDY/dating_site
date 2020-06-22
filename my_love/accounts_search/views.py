@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 import datetime
 from django.utils import timezone
 from dateutil.relativedelta import relativedelta
+import pytz
 from django.contrib.auth.models import User
 from .models import Candidates
 from django.urls import reverse
@@ -24,36 +25,32 @@ class AccountsListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        dt = timezone.now() - relativedelta(days=2)
-        if dt > self.request.user.aboutyou.last_search_date:
+        last_search_date = self.request.user.aboutyou.last_search_date
+        access_date = timezone.timedelta(days=2) + last_search_date
+        if timezone.now() > access_date:
             context['search_active'] = True
             context['access_date'] = 1
         else:
-            last_search_date = self.request.user.aboutyou.last_search_date
-            access_date = (datetime.timedelta(days=2) + last_search_date)
-
-            context['access_date'] = str(access_date)
             context['search_active'] = False
+            context['access_date'] = str(access_date)
         return context
 
 
 # search of candidates for current user
 def partners_search(request):
-    dt = timezone.now() - relativedelta(days=2)
-    if dt > request.user.aboutyou.last_search_date:
-        print("SEARCH!!!!!!")
-        users = request.user.search_candidates()
+    last_search_date = request.user.aboutyou.last_search_date
+    access_date = timezone.timedelta(days=2) + last_search_date
+    if timezone.now() > access_date:
+        request.user.search_candidates()
 
     return HttpResponseRedirect(reverse('accounts_list'))
 
 
 # show information of User by (pk) view
 class AccountDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'accounts/show_detail.html'
     model = User
-    template_name = 'accounts/show.html'
-    context_object_name = 'account'
+    context_object_name = 'candidate'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # context['now'] = timezone.now()
-        return context
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)

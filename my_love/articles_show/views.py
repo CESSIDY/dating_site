@@ -1,5 +1,5 @@
 from django.views.generic import ListView
-from account_settings.models import Gallery
+from articles_settings.models import Gallery
 
 # show list of articles by (tag or all)
 class ArticlesList(ListView):

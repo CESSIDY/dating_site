@@ -15,7 +15,17 @@
             <!-- END Avatar -->
 
             <!-- Personal -->
-            <h1 class="h3 text-white font-w700 mb-10">{{ candidate.aboutme.name }} {{ candidate.aboutme.surname }}</h1>
+            <h1 class="h3 text-white font-w700 mb-10">{{ candidate.first_name }} {{ candidate.last_name }}</h1>
+            <h1 class="h3 text-white font-w700 mb-10">
+                <div class="font-w600">
+                    <a href="{{ candidate.contactinfo.instagram }}"><i class="fa fa-instagram"></i></a>
+                    <a href="{{ user.contactinfo.facebook }}"><i class="fa fa-facebook"></i></a>
+                    <a href="{{ user.contactinfo.twitter }}"><i class="fa fa-twitter"></i></a>
+                    <a href="{{ user.contactinfo.telegram }}"><i class="fa fa-telegram"></i></a>
+                </div>
+            </h1>
+            <h1 class="h3 text-white font-w700 mb-10"><i class="fa fa-mobile-phone">{{ user.contactinfo.phone }}</i>
+            </h1>
             <!-- END Personal -->
 
         </div>
@@ -307,5 +317,10 @@
 <!-- Page JS Helpers (Table Tools helper) -->
 <script>
 jQuery(function () {  Codebase.helpers('table-tools');     });
+
+
+
+
+
 </script>
 {% endblock %}

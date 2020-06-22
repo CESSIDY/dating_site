@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content content-full text-left">
+    <div class="block-content block-content-full">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="block text-center">
+                    <div class="font-w600">{{ user.first_name }} {{ user.last_name }}
+                        <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
+                           href="{% url 'edit.profile' %}">
+                            <i class="fa fa-pencil"></i>
+                        </a></div>
+                    <div class="col-sm-7 col-md-6 col-lg-4 col-xl-10 animated fadeIn">
+                        <div class="options-container fx-item-zoom-in fx-overlay-zoom-out">
+                            <img class="img-fluid options-item rounded mx-auto" src="{{ user.aboutme.main_photo }}"
+                                 alt="">
+                            <div class="options-overlay bg-black-op">
+                                <div class="options-overlay-content">
+                                    <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
+                                       href="{% url 'gallery' %}">
+                                        <i class="fa fa-pencil"></i> Change
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 col-md-6 col-lg-8 col-xl-10">
+                        <div class="block-content">
+                            <div class="font-w600">INSTAGRAM: <a href="{{ user.contactinfo.instagram }}"><i
+                                    class="fa fa-instagram"></i></a></div>
+                            <div class="font-w600">FACEBOOK: <a href="{{ user.contactinfo.facebook }}"><i
+                                    class="fa fa-facebook"></i></a></div>
+                            <div class="font-w600">TWITTER: <a href="{{ user.contactinfo.twitter }}"><i
+                                    class="fa fa-twitter"></i></a></div>
+                            <div class="font-w600">TELEGRAM: <a href="{{ user.contactinfo.telegram }}"><i
+                                    class="fa fa-telegram"></i></a></div>
+                            <div class="font-w600">PHONE: <i class="fa fa-mobile-phone">{{ user.contactinfo.phone }}</i>
+                            </div>
+                        </div>
+                        <div class="block-content block-content-full">
+                            <a href="{% url 'edit.contactInfo' %}">Edit Contact Info</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-content block-content-full">
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<!-- Page JS Helpers (Table Tools helper) -->
+<script>
+jQuery(function () {  Codebase.helpers('table-tools');     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+{% endblock %}

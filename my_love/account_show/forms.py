@@ -1,5 +1,5 @@
 from django import forms
-from account_settings.models import Gallery
+from articles_settings.models import Gallery
 from django.forms import TextInput
 
 

@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'accounts_search.apps.AccountsSearchConfig',
     # app for display articles
     'articles_show.apps.ArticlesShowConfig',
+    # app for store and manipulate articles
+    'articles_settings.apps.ArticlesSettingsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,6 +85,8 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'account_settings/templates'),
             os.path.join(BASE_DIR, 'account_show/templates'),
             os.path.join(BASE_DIR, 'accounts_search/templates'),
+            os.path.join(BASE_DIR, 'articles_settings/templates'),
+            os.path.join(BASE_DIR, 'articles_show/templates'),
             os.path.join(BASE_DIR, 'logging_user/templates'),
             os.path.join(BASE_DIR, 'background_data/templates'),
         ],

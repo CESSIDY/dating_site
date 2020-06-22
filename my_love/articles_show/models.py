@@ -1,7 +1,7 @@
 from django.db.models import Case, BooleanField, Value, When
-from django.db import models
 from django.contrib.auth.models import User
-from account_settings.models import Gallery
+from articles_settings.models import Gallery
+
 
 # User method what returns articles by (tag or all)
 def get_articles(self, tag=''):
