@@ -100,25 +100,24 @@
                         </a>
                         <div class="dropdown-divider"></div>
 
-                        <!-- Toggle Side Overlay -->
-                        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                        <a class="dropdown-item" href="{% url 'password_change' %}">
-                            <i class=""></i>Change Password
+                        <a class="dropdown-item" href="{% url 'account_reset_password' %}">
+                            <i class=""></i>Reset Password
                         </a>
-                        <!-- END Side Overlay -->
-
+                        <a class="dropdown-item" href="{% url 'account_email' %}">
+                            <i class=""></i>Change E-mail
+                        </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'logout' %}">
+                        <a class="dropdown-item" href="{% url 'account_logout' %}">
                             <i class="fas fa-sign-out-alt mr-5"></i> Sign Out
                         </a>
                     </div>
                 </div>
                 {% else %}
                 <div class="btn-group" role="group">
-                    <a class="dropdown-item" href="{% url 'login' %}">
+                    <a class="dropdown-item" href="{% url 'account_login' %}">
                         <i class="fas sign-in-alt mr-5"></i>Log In
                     </a>
-                    <a class="dropdown-item" href="{% url 'signup' %}">
+                    <a class="dropdown-item" href="{% url 'account_signup' %}">
                         <i class="fas user-plus mr-5"></i>Sign Up
                     </a>
                 </div>
@@ -236,6 +235,7 @@
     $("#post-form").submit(function(e){
         e.preventDefault();
     });
+
 
 </script>
 <script src="/static/js/tagsinput.js"></script>

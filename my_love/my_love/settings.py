@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     # app for store and manipulate ancillary data
     'background_data.apps.BackgroundDataConfig',
     # app contains the logic of user logging
-    'logging_user.apps.LoggingUserConfig',
+    #'logging_user.apps.LoggingUserConfig',
     # app for manipulation of the user account
     'account_settings.apps.AccountSettingsConfig',
     # app for display user data
@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'articles_show.apps.ArticlesShowConfig',
     # app for store and manipulate articles
     'articles_settings.apps.ArticlesSettingsConfig',
+    # app contains some staff to user social auth
+    'accounts_social_auth.apps.AccountsSocialAuthConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -62,6 +64,34 @@ INSTALLED_APPS = [
     # The Django Debug Toolbar is a configurable set of panels that display various debug information
     # about the current request/response and when clicked, display more details about the panel’s content.
     'debug_toolbar',
+    # The following apps are required:
+    'django.contrib.sites',
+    # Auth from social
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # include the providers you want to enable:
+    # 'allauth.socialaccount.providers.discord',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.instagram',
+    # 'allauth.socialaccount.providers.steam',
+    # 'allauth.socialaccount.providers.twitter',
+]
+
+SITE_ID = 1
+
+# EMAIL SEND LOGIC
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_EMAIL_VERIFICATION = True
+ACCOUNT_EMAIL_REQUIRED = True
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 MIDDLEWARE = [
@@ -85,9 +115,9 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'account_settings/templates'),
             os.path.join(BASE_DIR, 'account_show/templates'),
             os.path.join(BASE_DIR, 'accounts_search/templates'),
+            os.path.join(BASE_DIR, 'accounts_social_auth/templates'),
             os.path.join(BASE_DIR, 'articles_settings/templates'),
             os.path.join(BASE_DIR, 'articles_show/templates'),
-            os.path.join(BASE_DIR, 'logging_user/templates'),
             os.path.join(BASE_DIR, 'background_data/templates'),
         ],
         'APP_DIRS': True,
@@ -163,8 +193,6 @@ DEFAULT_IMAGE = 'images/default.png'
 # DEFAULT LOGIN AND LOGOUT URL
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
-# EMAIL SEND LOGIC
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # crispy_forms SETTINGS:
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

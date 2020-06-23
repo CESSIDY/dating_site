@@ -28,6 +28,7 @@ urlpatterns = [
     path('select2/', include('django_select2.urls')),
     path('data/', include('background_data.urls')),
     path('logging/', include('logging_user.urls')),
+    path('social-auth/', include('allauth.urls')),
     path('settings/', include('account_settings.urls')),
     path('account/', include('account_show.urls')),
     path('accounts/', include('accounts_search.urls')),
