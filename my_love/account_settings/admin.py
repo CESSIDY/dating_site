@@ -23,6 +23,5 @@ class AboutYouAdmin(admin.ModelAdmin):
     username.short_description = 'User'
 
 
-admin.site.register(ContactInfo)
 admin.site.register(AboutMe, AboutMeAdmin)
 admin.site.register(AboutYou, AboutYouAdmin)

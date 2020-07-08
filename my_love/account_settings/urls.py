@@ -3,15 +3,13 @@ from .views import (
     AboutYouUpdate,
     AboutMeUpdate,
     heavy_data_about_me,
-    ProfileUpdate,
-    ContactInfoUpdate,
+    ProfileUpdate
 )
 
 # app_name = 'account_settings'
 urlpatterns = [
     path('about_me', AboutMeUpdate.as_view(), name='edit_about_me'),
     path('profile/edit', ProfileUpdate.as_view(), name='edit.profile'),
-    path('contactInfo/edit', ContactInfoUpdate.as_view(), name='edit.contactInfo'),
     path('about_you', AboutYouUpdate.as_view(), name='edit_about_you'),
     path('heavy_data_about_me/genres', heavy_data_about_me, {'model': 'genres'}, name='heavy_data.about_me.genres'),
     path('heavy_data_about_me/music_types', heavy_data_about_me, {'model': 'music_types'},

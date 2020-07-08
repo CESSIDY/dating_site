@@ -1,10 +1,13 @@
+from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import GalleryForm
+from allauth.socialaccount.forms import SignupForm
 from articles_settings.models import Gallery
+from allauth.socialaccount.models import SocialAccount
 
 
 # show articles list of (Gallery Model) view for current user
@@ -39,3 +42,12 @@ class AboutYouView(LoginRequiredMixin, TemplateView):
 
 class UserInfoView(LoginRequiredMixin, TemplateView):
     template_name = 'account/info.html'
+
+    # def get(self, request, *args, **kwargs):
+    #     return render(request, self.template_name)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        social_accounts = SocialAccount.objects.filter(user_id=self.request.user.id)
+        context['social_accounts'] = social_accounts
+        return context

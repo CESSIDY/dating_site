@@ -10,6 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from allauth.socialaccount.models import SocialAccount
 
 
 # list of candidates for the current user
@@ -52,5 +53,8 @@ class AccountDetailView(LoginRequiredMixin, DetailView):
     model = User
     context_object_name = 'candidate'
 
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        social_accounts = SocialAccount.objects.filter(user_id=self.object.pk)
+        context['social_accounts'] = social_accounts
+        return context
