@@ -24,7 +24,7 @@ SECRET_KEY = '74a=5tfq0@ljlw6=^ez)ovmo$kd8o5gb@+kiz1ztcp-2%1vq)w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.0.108']
 
 # Application definition
 
@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     # app for store and manipulate ancillary data
     'background_data.apps.BackgroundDataConfig',
     # app contains the logic of user logging
-    #'logging_user.apps.LoggingUserConfig',
+    # 'logging_user.apps.LoggingUserConfig',
     # app for manipulation of the user account
     'account_settings.apps.AccountSettingsConfig',
     # app for display user data
@@ -71,8 +71,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     # include the providers you want to enable:
-    # 'allauth.socialaccount.providers.discord',
-    # 'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.discord',
+    'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.instagram',
@@ -86,6 +86,36 @@ SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_VERIFICATION = True
 ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_FORMS = {'login': 'accounts_social_auth.forms.MyCustomLoginForm'}
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'js_sdk',
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'VERIFIED_EMAIL': False,
+    },
+    'discord': {
+        'METHOD': 'js_sdk',
+    },
+    'telegram': {
+        'TOKEN': '1328729898:AAHJGSYMBB4JH_S8QhdkhH-W9TYcxjQ0qes'
+    }
+}
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`

@@ -2,7 +2,7 @@ from django import forms
 from . import models
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
-from .models import AboutYou, AboutMe, ContactInfo
+from .models import AboutYou, AboutMe
 from django.forms import TextInput
 from taggit.forms import *
 from django_select2 import forms as s2forms
@@ -73,11 +73,3 @@ class EditProfileForm(UserChangeForm):
         )
         exclude = ('password',)
 
-
-class EditContactInfoForm(forms.ModelForm):
-    class Meta:
-        model = ContactInfo
-        fields = '__all__'
-        widgets = {
-            'user': TextInput(attrs={'type': 'hidden'}),
-        }

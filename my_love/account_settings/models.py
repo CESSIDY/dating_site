@@ -120,21 +120,3 @@ class AboutYou(AboutCommonInfo):
     def get_absolute_url(self):
         return reverse("about_you")
 
-
-# model to store user contact information
-class ContactInfo(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    instagram = models.URLField(max_length=200, blank=True)
-    facebook = models.URLField(max_length=200, blank=True)
-    twitter = models.URLField(max_length=200, blank=True)
-    telegram = models.URLField(max_length=200, blank=True)
-    phone = models.CharField(max_length=20, blank=True)
-
-    def __str__(self):
-        return self.user.username
-
-    @receiver(post_save, sender=User)
-    def create_user_contactInfo(sender, instance, created, **kwargs):
-        # after creating a new user, a ContactInfo model will be created
-        if created:
-            ContactInfo.objects.create(user=instance)
