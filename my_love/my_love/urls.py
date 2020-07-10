@@ -24,6 +24,7 @@ from .views import (
 
 urlpatterns = [
     path('', home, name='home'),
+    path('like/', include('articles_likes.urls')),
     path('admin/', admin.site.urls),
     path('select2/', include('django_select2.urls')),
     path('data/', include('background_data.urls')),

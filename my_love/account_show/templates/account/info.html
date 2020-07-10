@@ -1,6 +1,4 @@
 {% extends 'base.html' %}
-{% load socialaccount %}
-
 {% block content %}
 <div class="content content-full text-left">
     <div class="block-content block-content-full">
@@ -28,23 +26,15 @@
                     </div>
                     <div class="col-sm-5 col-md-6 col-lg-8 col-xl-10">
                         <div class="block-content">
-                            </a><a href='{% provider_login_url "facebook" method="js_sdk" %}'>Facebook Connect</a>
                             {% for account in social_accounts %}
                             <div class="font-w600">{{ account.provider }}:
-                                <a href="{{ account.get_profile_url }}"><i
-                                        class="fa fa-{{account.provider}}" aria-hidden="true"></i></a>
+                                <a href="{{ account.get_profile_url }}">
+                                    <i class="fa fa-{{account.provider }}" aria-hidden="true"></i></a>
                             </div>
                             {% endfor %}
-                            <div>
-                                <ul class="socialaccount_providers">
-                                    {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
-                                </ul>
-
-                                {% include "socialaccount/snippets/login_extra.html" %}
-                            </div>
                         </div>
-                        <div class="block-content block-content-full">
-                            <a href="{% url 'socialaccount_connections' %}">Connect social accounts</a>
+                        <div class="block-content block-content-full"><a href="{% url 'socialaccount_connections' %}">Connect
+                            social accounts</a>
                         </div>
                     </div>
                 </div>
@@ -56,5 +46,4 @@
 </div>
 {% endblock %}
 {% block scripts %}
-{% providers_media_js %}
 {% endblock %}

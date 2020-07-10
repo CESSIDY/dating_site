@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 import datetime
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 from dateutil.relativedelta import relativedelta
 import pytz
 from django.contrib.auth.models import User
@@ -38,6 +39,7 @@ class AccountsListView(LoginRequiredMixin, ListView):
 
 
 # search of candidates for current user
+@login_required
 def partners_search(request):
     last_search_date = request.user.aboutyou.last_search_date
     access_date = timezone.timedelta(days=2) + last_search_date
