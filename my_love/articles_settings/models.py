@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
+from django.contrib.contenttypes.models import ContentType
 from django.dispatch import receiver
+from django.contrib.contenttypes.fields import GenericRelation
+from articles_likes.models import Like
 from taggit.managers import TaggableManager
 from django.conf import settings
 from PIL import Image
@@ -19,6 +22,19 @@ class Gallery(models.Model):
     name = models.CharField(max_length=200)
     main = models.BooleanField(default=False)
     pub_date = models.DateTimeField(auto_now_add=True)
+    likes = GenericRelation(Like)
+
+    @property
+    def total_likes(self):
+        return self.likes.count()
+
+    def is_fan(self, user) -> bool:
+        if not user.is_authenticated:
+            return False
+        obj_type = ContentType.objects.get_for_model(self)
+        likes = Like.objects.filter(
+            content_type=obj_type, object_id=self.id, user=user)
+        return likes.exists()
 
     def __str__(self):
         return '%s - %s' % (self.user.username, self.name)

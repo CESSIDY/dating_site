@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'articles_show.apps.ArticlesShowConfig',
     # app for store and manipulate articles
     'articles_settings.apps.ArticlesSettingsConfig',
+    # app to make likes on articles
+    'articles_likes.apps.ArticlesLikesConfig',
     # app contains some staff to user social auth
     'accounts_social_auth.apps.AccountsSocialAuthConfig',
     'django.contrib.admin',

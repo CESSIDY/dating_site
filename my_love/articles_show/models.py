@@ -16,7 +16,7 @@ def get_articles(self, tag=''):
             When(user_id__in=candidates, then=Value(True)),
             default=Value(False),
             output_field=BooleanField(),
-        )
+        ),
     ).order_by('-pub_date')
     # if tag  variable is not empty than star the search
     if tag:
