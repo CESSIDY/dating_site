@@ -40,8 +40,8 @@ class AboutYouView(LoginRequiredMixin, TemplateView):
     template_name = 'account/about_you.html'
 
 
-class UserInfoView(LoginRequiredMixin, TemplateView):
-    template_name = 'account/info.html'
+class UserProfileInfoView(LoginRequiredMixin, TemplateView):
+    template_name = 'account/profile.html'
 
     # def get(self, request, *args, **kwargs):
     #     return render(request, self.template_name)

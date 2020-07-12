@@ -12,5 +12,5 @@ class ArticlesList(ListView):
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
-        data = self.request.user.get_articles(self.kwargs["tag"])
+        data = self.request.user.get_articles_by_tag(self.kwargs["tag"])
         return data

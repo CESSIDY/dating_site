@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load check_likes %}
+{% load likes %}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -52,8 +52,8 @@
                 </div>
                 <div class="block-content block-content-full border-top clearfix">
                     <div>
-                        {% check_likes article user as like_res %}
-                        {% if like_res %}
+                        {% check_like_on_article article user as like %}
+                        {% if like %}
                         <button id="like_{{ article.pk }}" class="btn btn-hero btn-alt-danger float-right active"
                                 onclick="like(this,'{% url 'make_like' article.pk %}')">
                             <i class="fa fa-heart">

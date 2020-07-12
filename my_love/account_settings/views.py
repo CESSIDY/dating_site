@@ -55,29 +55,3 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('user.profile')
-
-
-# auxiliary method for searching fields by pattern
-def select2_json_for(model, value):
-    results = list()
-    values = model.objects.filter(name__icontains=value).values()
-    # 'id', 'text' are required keys for each field
-    for value in values:
-        results.append({'id': value['id'], 'text': value['name']})
-    return json.dumps({'err': 'nil', 'results': results})
-
-
-# this view used to search and automatic data downloads according to a given template, for the following models
-def heavy_data_about_me(request, model):
-    term = request.GET.get("term", )
-    Model = {
-        'genres': Genres,
-        'music_types': MusicType,
-        'films': Films,
-        'books': Books,
-        'hobbies': Hobbies,
-        'foods': Foods,
-        'countries': Countries,
-    }[model]
-
-    return HttpResponse(select2_json_for(Model, term), content_type='application/json')

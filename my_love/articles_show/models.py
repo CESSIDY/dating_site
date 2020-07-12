@@ -4,7 +4,7 @@ from articles_settings.models import Gallery
 
 
 # User method what returns articles by (tag or all)
-def get_articles(self, tag=''):
+def get_articles_by_tag(self, tag=''):
     # candidates_creator_sets
     # gallery_set
     # Get all candidates for current user
@@ -24,4 +24,4 @@ def get_articles(self, tag=''):
     return articles
 
 
-User.add_to_class("get_articles", get_articles)
+User.add_to_class("get_articles_by_tag", get_articles_by_tag)

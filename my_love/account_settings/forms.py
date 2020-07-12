@@ -25,13 +25,13 @@ class AboutYouForm(forms.ModelForm):
             'birthday': TextInput(attrs={'type': 'date'}),
             'color_aye': s2forms.Select2MultipleWidget(),
             'color_hair': s2forms.Select2MultipleWidget(),
-            'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.genres'),
-            'music_types': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.music_types'),
-            'films': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.films'),
-            'books': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.books'),
-            'hobbies': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.hobbies'),
-            'foods': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.foods'),
-            'countries': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.countries'),
+            'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.genres'),
+            'music_types': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.music_types'),
+            'films': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.films'),
+            'books': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.books'),
+            'hobbies': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.hobbies'),
+            'foods': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.foods'),
+            'countries': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.countries'),
         }
 
 
@@ -52,13 +52,13 @@ class AboutMeForm(forms.ModelForm):
             'birthday': TextInput(attrs={'type': 'date'}),
             'color_aye': s2forms.Select2MultipleWidget(),
             'color_hair': s2forms.Select2MultipleWidget(),
-            'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.genres'),
-            'music_types': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.music_types'),
-            'films': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.films'),
-            'books': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.books'),
-            'hobbies': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.hobbies'),
-            'foods': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.foods'),
-            'country': s2forms.HeavySelect2Widget(data_view='heavy_data.about_me.countries'),
+            'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.genres'),
+            'music_types': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.music_types'),
+            'films': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.films'),
+            'books': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.books'),
+            'hobbies': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.hobbies'),
+            'foods': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.foods'),
+            'country': s2forms.HeavySelect2Widget(data_view='heavy_data.background.countries'),
         }
         # exclude = ('user',)
 
