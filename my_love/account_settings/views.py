@@ -3,11 +3,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from .models import AboutMe, AboutYou
 from background_data.models import Genres, MusicType, Films, Foods, Countries, Books, Hobbies
-from .forms import AboutYouForm, AboutMeForm, EditProfileForm
+from .forms import *
 import json
 from django.http import HttpResponse
 from django.views.generic import (
-    UpdateView,
+    UpdateView, FormView,
 )
 
 

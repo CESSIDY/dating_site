@@ -6,6 +6,7 @@ from .models import AboutYou, AboutMe
 from django.forms import TextInput
 from taggit.forms import *
 from django_select2 import forms as s2forms
+from .questions.questionary import get_original_questions, get_original_questions_keys
 
 
 class AboutYouForm(forms.ModelForm):
@@ -63,6 +64,34 @@ class AboutMeForm(forms.ModelForm):
         # exclude = ('user',)
 
 
+class AboutMeQuestionaryForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        questions = get_original_questions()
+
+        for key, context in questions.items():
+            self.fields[key] = forms.ChoiceField(widget=forms.RadioSelect,
+                                                 label=context['question_me'],
+                                                 choices=context['answers'])
+
+    class Meta:
+        fields = get_original_questions_keys
+
+
+class AboutYouQuestionaryForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        questions = get_original_questions()
+
+        for key, context in questions.items():
+            self.fields[key] = forms.ChoiceField(widget=forms.RadioSelect,
+                                                 label=context['question_you'],
+                                                 choices=context['answers'])
+
+    class Meta:
+        fields = get_original_questions_keys
+
+
 class EditProfileForm(UserChangeForm):
     class Meta:
         model = User
@@ -72,4 +101,3 @@ class EditProfileForm(UserChangeForm):
             'last_name',
         )
         exclude = ('password',)
-

@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     AboutYouUpdate,
     AboutMeUpdate,
-    ProfileUpdate
+    ProfileUpdate,
 )
 
 # app_name = 'account_settings'
