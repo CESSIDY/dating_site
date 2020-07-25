@@ -9,6 +9,34 @@ from django_select2 import forms as s2forms
 from .questions.questionary import get_original_questions, get_original_questions_keys
 
 
+class AboutMeQuestionaryForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        questions = get_original_questions()
+
+        for key, context in questions.items():
+            self.fields[key] = forms.ChoiceField(widget=forms.RadioSelect,
+                                                 label=context['question_me'],
+                                                 choices=context['answers'])
+
+    class Meta:
+        fields = get_original_questions_keys
+
+
+class AboutYouQuestionaryForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        questions = get_original_questions()
+
+        for key, context in questions.items():
+            self.fields[key] = forms.ChoiceField(widget=forms.RadioSelect,
+                                                 label=context['question_you'],
+                                                 choices=context['answers'])
+
+    class Meta:
+        fields = get_original_questions_keys
+
+
 class AboutYouForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -62,34 +90,6 @@ class AboutMeForm(forms.ModelForm):
             'country': s2forms.HeavySelect2Widget(data_view='heavy_data.background.countries'),
         }
         # exclude = ('user',)
-
-
-class AboutMeQuestionaryForm(forms.Form):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        questions = get_original_questions()
-
-        for key, context in questions.items():
-            self.fields[key] = forms.ChoiceField(widget=forms.RadioSelect,
-                                                 label=context['question_me'],
-                                                 choices=context['answers'])
-
-    class Meta:
-        fields = get_original_questions_keys
-
-
-class AboutYouQuestionaryForm(forms.Form):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        questions = get_original_questions()
-
-        for key, context in questions.items():
-            self.fields[key] = forms.ChoiceField(widget=forms.RadioSelect,
-                                                 label=context['question_you'],
-                                                 choices=context['answers'])
-
-    class Meta:
-        fields = get_original_questions_keys
 
 
 class EditProfileForm(UserChangeForm):

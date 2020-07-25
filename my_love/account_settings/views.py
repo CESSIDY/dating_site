@@ -40,8 +40,15 @@ class AboutMeUpdate(LoginRequiredMixin, UpdateView):
         pk_ = self.request.user.aboutme.pk
         return get_object_or_404(self.model, pk=pk_)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #context['questionary_form'] = AboutMeQuestionaryForm
+        return context
+
     def form_valid(self, form):
         form.instance.user = self.request.user
+        #tera = AboutMeQuestionaryForm(self.request.POST)
+        #print(tera)
         return super().form_valid(form)
 
 
