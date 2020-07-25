@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="content">
     <div class="row justify-content-center">
@@ -169,6 +170,9 @@
                                 {{form.foods}}
                             </div>
                         </div>
+                    </div>
+                    <div class="block-content">
+                        {{ questionary_form|crispy }}
                     </div>
                     <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm bg-flat-dark text-right">
                         <button type="submit" class="btn btn-rounded btn-noborder btn-secondary">

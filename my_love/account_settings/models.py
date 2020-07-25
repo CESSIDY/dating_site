@@ -1,7 +1,9 @@
 from django.db import models
 from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import post_save
+from django.contrib.postgres.fields import JSONField
 from django.dispatch import receiver
 from django.urls import reverse
 from django.conf import settings
@@ -48,6 +50,17 @@ class AboutCommonInfo(models.Model):
         abstract = True
 
 
+# class Question(models.Model):
+#     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+#     object_id = models.PositiveIntegerField()
+#     answers = models.ManyToOneRel()
+#
+#
+# class Answer(models.Model):
+#     title = models.CharField('Answer', max_length=200)
+#     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+
 # a model for storing key information about yourself that will be used to find partners
 class AboutMe(AboutCommonInfo):
     activate = models.BooleanField('Activate in search?', default=False)
@@ -64,6 +77,7 @@ class AboutMe(AboutCommonInfo):
     foods = models.ManyToManyField(Foods, blank=True, related_name='my_foods_set', verbose_name='Favorite foods')
     country = models.ForeignKey(Countries, blank=True, related_name='my_country_set', on_delete=models.DO_NOTHING,
                                 verbose_name='Where are you from?', null=True)
+    questionary = JSONField()
 
     def __str__(self):
         return self.user.username
@@ -107,6 +121,7 @@ class AboutYou(AboutCommonInfo):
     foods = models.ManyToManyField(Foods, blank=True, related_name='you_foods_set', verbose_name='Foods')
     countries = models.ManyToManyField(Countries, related_name='you_countries_set',
                                        verbose_name='Where is this person from?')
+    questionary = JSONField()
 
     def __str__(self):
         return self.user.username
@@ -119,4 +134,3 @@ class AboutYou(AboutCommonInfo):
 
     def get_absolute_url(self):
         return reverse("about_you")
-

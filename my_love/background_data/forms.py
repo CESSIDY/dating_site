@@ -27,7 +27,7 @@ class FilmsForm(forms.ModelForm):
         model = models.Films
         fields = '__all__'
         widgets = {
-            'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.genres'),
+            'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.genres'),
         }
 
 
@@ -36,7 +36,7 @@ class BooksForm(forms.ModelForm):
         model = models.Books
         fields = '__all__'
         widgets = {
-            'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.genres'),
+            'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.genres'),
         }
 
 
@@ -51,6 +51,6 @@ class MusicTypesForm(forms.ModelForm):
         model = models.MusicType
         fields = '__all__'
         widgets = {
-            'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.about_me.genres'),
+            'genres': s2forms.HeavySelect2MultipleWidget(data_view='heavy_data.background.genres'),
         }
 
