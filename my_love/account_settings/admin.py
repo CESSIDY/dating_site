@@ -25,3 +25,6 @@ class AboutYouAdmin(admin.ModelAdmin):
 
 admin.site.register(AboutMe, AboutMeAdmin)
 admin.site.register(AboutYou, AboutYouAdmin)
+admin.site.register(Question)
+admin.site.register(Answer)
+admin.site.register(Questionary)

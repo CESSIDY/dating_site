@@ -27,25 +27,16 @@ class AccountsListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        last_search_date = self.request.user.aboutyou.last_search_date
-        access_date = timezone.timedelta(days=2) + last_search_date
-        if timezone.now() > access_date:
-            context['search_active'] = True
-            context['access_date'] = 1
-        else:
-            context['search_active'] = False
-            context['access_date'] = str(access_date)
+        context['search_active'] = self.request.user.permission_search_candidates()
+        context['access_date'] = str(self.request.user.get_permission_date_search_candidates())
         return context
 
 
 # search of candidates for current user
 @login_required
 def partners_search(request):
-    last_search_date = request.user.aboutyou.last_search_date
-    access_date = timezone.timedelta(days=2) + last_search_date
-    if timezone.now() > access_date:
+    if request.user.permission_search_candidates():
         request.user.search_candidates()
-
     return HttpResponseRedirect(reverse('accounts_list'))
 
 
@@ -57,6 +48,5 @@ class AccountDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        social_accounts = SocialAccount.objects.filter(user_id=self.object.pk)
-        context['social_accounts'] = social_accounts
+        context['social_accounts'] = SocialAccount.objects.filter(user_id=self.object.pk)
         return context

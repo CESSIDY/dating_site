@@ -21,9 +21,9 @@ class GalleryForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             # Default value for user field to avoid mistakes
-            'user': TextInput(attrs={'type': 'hidden', 'value': '1'}),
+            #'user': TextInput(attrs={'type': 'hidden', 'value': '1'}),
             'pub_date': TextInput(attrs={'type': 'hidden'}),
-            # 'tags': TextInput(attrs={'data-role': 'tagsinput', 'type': 'text'}),
+            #'tags': TextInput(attrs={'data-role': 'tagsinput', 'type': 'text'}),
         }
-        # exclude = ('user',)
+        exclude = ('user',)
 

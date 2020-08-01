@@ -1,12 +1,14 @@
 from django.db import models
 from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
+from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import post_save
 from django.contrib.postgres.fields import JSONField
 from django.dispatch import receiver
 from django.urls import reverse
 from django.conf import settings
+from django.contrib.auth.models import User
 from articles_settings.models import Gallery
 from background_data.models import Genres, MusicType, Films, Foods, Countries, Books, Hobbies
 
@@ -50,17 +52,6 @@ class AboutCommonInfo(models.Model):
         abstract = True
 
 
-# class Question(models.Model):
-#     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-#     object_id = models.PositiveIntegerField()
-#     answers = models.ManyToOneRel()
-#
-#
-# class Answer(models.Model):
-#     title = models.CharField('Answer', max_length=200)
-#     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-
-
 # a model for storing key information about yourself that will be used to find partners
 class AboutMe(AboutCommonInfo):
     activate = models.BooleanField('Activate in search?', default=False)
@@ -77,7 +68,7 @@ class AboutMe(AboutCommonInfo):
     foods = models.ManyToManyField(Foods, blank=True, related_name='my_foods_set', verbose_name='Favorite foods')
     country = models.ForeignKey(Countries, blank=True, related_name='my_country_set', on_delete=models.DO_NOTHING,
                                 verbose_name='Where are you from?', null=True)
-    questionary = JSONField()
+    questionary = JSONField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username
@@ -121,7 +112,7 @@ class AboutYou(AboutCommonInfo):
     foods = models.ManyToManyField(Foods, blank=True, related_name='you_foods_set', verbose_name='Foods')
     countries = models.ManyToManyField(Countries, related_name='you_countries_set',
                                        verbose_name='Where is this person from?')
-    questionary = JSONField()
+    questionary = JSONField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username
@@ -134,3 +125,40 @@ class AboutYou(AboutCommonInfo):
 
     def get_absolute_url(self):
         return reverse("about_you")
+
+
+class Question(models.Model):
+    title = models.CharField('Question', max_length=1000)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Answer(models.Model):
+    title = models.CharField('Answer', max_length=200)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '{} - {}'.format(self.question.title, self.title)
+
+
+class Questionary(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+
+    def __str__(self):
+        return '{} - {}'.format(self.question.title, self.answer.title)
+
+
+def permission_search_candidates(self):
+    return timezone.now() > self.get_permission_date_search_candidates()
+
+
+def get_permission_date_search_candidates(self):
+    return timezone.timedelta(days=2) + self.aboutyou.last_search_date
+
+
+User.add_to_class("permission_search_candidates", permission_search_candidates)
+User.add_to_class("get_permission_date_search_candidates", get_permission_date_search_candidates)

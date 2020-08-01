@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <ul class="errorlist nonfield">
+                {{ form.errors }}
+            </ul>
+
+            <form action="{% url 'edit_about_me_questionary' %}" method="post">
+                <div class="block block-themed">
+                    {% csrf_token %}
+                    {% for i in formset %}
+                    <fieldset id="answer_{{ i.question_id.value }}">
+                        {{ i|crispy }}
+                    </fieldset>
+                    {% endfor %}
+                    <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm bg-flat-dark text-right">
+                        <button type="submit" class="btn btn-rounded btn-noborder btn-secondary">
+                            <i class="fa fa-check"></i> Submit
+                        </button>
+                        <button type="reset" class="btn btn-rounded btn-noborder btn-secondary">
+                            <i class="fa fa-repeat"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

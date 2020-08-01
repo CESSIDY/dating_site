@@ -172,7 +172,13 @@
                         </div>
                     </div>
                     <div class="block-content">
-                        {{ questionary_form|crispy }}
+                        <div class="form-group row justify-content-center ">
+                            {% for i in questionary_forms %}
+                            <fieldset id="answer_{{ i.question_id.value }}">
+                                {{ i|crispy }}
+                            </fieldset>
+                            {% endfor %}
+                        </div>
                     </div>
                     <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm bg-flat-dark text-right">
                         <button type="submit" class="btn btn-rounded btn-noborder btn-secondary">
@@ -196,6 +202,8 @@ var myWindow;
 function myWindowOpen(elem, url) {
   myWindow = window.open(url, "myWindow", "width=600, height=350");
 }
+
+
 
 
 

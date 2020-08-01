@@ -1,9 +1,12 @@
+from django.contrib.contenttypes.models import ContentType
+from django.forms import formset_factory, modelformset_factory
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
-from .models import AboutMe, AboutYou
+from .models import AboutMe, AboutYou, Questionary, Question, Answer
 from background_data.models import Genres, MusicType, Films, Foods, Countries, Books, Hobbies
 from .forms import *
+from .questionary import services
 import json
 from django.http import HttpResponse
 from django.views.generic import (
@@ -42,13 +45,20 @@ class AboutMeUpdate(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        #context['questionary_form'] = AboutMeQuestionaryForm
+        context['questionary_forms'] = services.get_edit_form(self.request)
         return context
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        #tera = AboutMeQuestionaryForm(self.request.POST)
-        #print(tera)
+        print(self.request.POST)
+        # tera = AboutMeQuestionaryForm(self.request.POST)
+        # print(tera)
+        # don't save to the database
+        #instances = formset.save(commit=False)
+        #for instance in instances:
+        ## do something with instance
+        #...
+        #instance.save()
         return super().form_valid(form)
 
 
@@ -62,3 +72,18 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('user.profile')
+
+
+class AboutMeQuestionary(LoginRequiredMixin, FormView):
+    model = Questionary
+    form_class = QuestionaryForm
+    template_name = 'questionary/edit_about_me.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['formset'] = services.get_edit_form(self.request)
+        return context
+
+    def form_valid(self, form):
+        form.instance.object_id = self.request.user.aboutme.pk
+        return super().form_valid(form)

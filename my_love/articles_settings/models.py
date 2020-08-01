@@ -15,14 +15,14 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 
 # Model for store a users articles
 class Gallery(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='gallery_set')
-    description = models.TextField(max_length=1000)
-    tags = TaggableManager()
-    path = models.ImageField(upload_to='images/', default='images/default.png')
-    name = models.CharField(max_length=200)
-    main = models.BooleanField(default=False)
-    pub_date = models.DateTimeField(auto_now_add=True)
-    likes = GenericRelation(Like)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='gallery_set', verbose_name='User')
+    description = models.TextField(max_length=1000, verbose_name='Descriptions')
+    tags = TaggableManager(blank=True, verbose_name='Tags')
+    path = models.ImageField(upload_to='images/', default='images/default.png', verbose_name='Image')
+    name = models.CharField(max_length=200, verbose_name='Title')
+    main = models.BooleanField(default=False, verbose_name='Main?')
+    pub_date = models.DateTimeField(auto_now_add=True, verbose_name='Publication date')
+    likes = GenericRelation(Like, blank=True, verbose_name='Likes')
 
     @property
     def total_likes(self):
