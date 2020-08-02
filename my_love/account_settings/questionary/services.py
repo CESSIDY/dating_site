@@ -1,25 +1,36 @@
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
-from ..forms import AboytMeQuestionaryForm
+from ..forms import AboutMeQuestionaryForm, AboutYouQuestionaryForm
 from .settings import form_answer_prefix
 from ..models import Questionary, Question, Answer, AboutMe, AboutYou
 
 User = get_user_model()
 
 
-def get_edit_form(request):
+def get_aboutMe_edit_form(request):
     questions = Question.objects.filter(content_type=ContentType.objects.get_for_model(request.user.aboutme))
     formset_init = []
     for question in questions:
         answers_list = []
         for answer in Answer.objects.filter(question=question):
             answers_list.append(answer)
-        QuestionarySet = AboytMeQuestionaryForm(user=request.user, question_obj=question)
+        QuestionarySet = AboutMeQuestionaryForm(user=request.user, question_obj=question)
         formset_init.append(QuestionarySet)
     return formset_init
 
 
-# make like to article(obj)
+def get_aboutYou_edit_form(request):
+    questions = Question.objects.filter(content_type=ContentType.objects.get_for_model(request.user.aboutyou))
+    formset_init = []
+    for question in questions:
+        answers_list = []
+        for answer in Answer.objects.filter(question=question):
+            answers_list.append(answer)
+        QuestionarySet = AboutYouQuestionaryForm(user=request.user, question_obj=question)
+        formset_init.append(QuestionarySet)
+    return formset_init
+
+
 def save_questionary_form(request):
     for field in request.POST:
         if form_answer_prefix in str(field):

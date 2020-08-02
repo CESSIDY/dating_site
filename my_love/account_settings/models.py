@@ -104,8 +104,7 @@ class AboutYou(AboutCommonInfo):
     genres = models.ManyToManyField(Genres, blank=True, related_name='you_genres_set',
                                     verbose_name='What genres should this person love?')
     music_types = models.ManyToManyField(MusicType, blank=True, related_name='you_music_types_set',
-                                         verbose_name='What music?'
-                                         )
+                                         verbose_name='What music?')
     films = models.ManyToManyField(Films, blank=True, related_name='you_films_set', verbose_name='What films?')
     books = models.ManyToManyField(Books, blank=True, related_name='you_books_set', verbose_name='Favorite books?')
     hobbies = models.ManyToManyField(Hobbies, blank=True, related_name='you_hobbies_set', verbose_name='Hobbies')

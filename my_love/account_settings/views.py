@@ -23,11 +23,17 @@ class AboutYouUpdate(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['questionary_forms'] = services.get_aboutYou_edit_form(self.request)
         return context
 
     def get_object(self, queryset=None):
         pk_ = self.request.user.aboutyou.pk
         return get_object_or_404(self.model, pk=pk_)
+
+    def post(self, request, *args, **kwargs):
+        post_context = super().post(request, args, kwargs)
+        services.save_questionary_form(request)
+        return post_context
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -46,7 +52,7 @@ class AboutMeUpdate(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['questionary_forms'] = services.get_edit_form(self.request)
+        context['questionary_forms'] = services.get_aboutMe_edit_form(self.request)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -56,7 +62,6 @@ class AboutMeUpdate(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        print(self.request.POST)
         return super().form_valid(form)
 
 
@@ -72,16 +77,3 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
         return reverse('user.profile')
 
 
-class AboutMeQuestionary(LoginRequiredMixin, FormView):
-    model = Questionary
-    form_class = QuestionaryForm
-    template_name = 'questionary/edit_about_me.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['formset'] = services.get_edit_form(self.request)
-        return context
-
-    def form_valid(self, form):
-        form.instance.object_id = self.request.user.aboutme.pk
-        return super().form_valid(form)
