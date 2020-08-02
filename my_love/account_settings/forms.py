@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.contenttypes.models import ContentType
-
+from .questionary.settings import form_answer_prefix as answer_prefix
 from . import models
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
@@ -40,13 +40,12 @@ from .questions.questionary import get_original_questions, get_original_question
 #         fields = get_original_questions_keys
 
 class QuestionaryForm(forms.Form):
+    object_id = forms.HiddenInput()
+    question_id = forms.HiddenInput()
+    answer = forms.RadioSelect()
+
     class Meta:
         fields = 'object_id, answer, question_id'
-        widgets = {
-            'object_id': TextInput(attrs={'type': 'hidden'}),
-            'question_id': TextInput(attrs={'type': 'hidden'}),
-            'answer': forms.Select(),
-        }
 
 
 class AboytMeQuestionaryForm(QuestionaryForm):
@@ -65,7 +64,7 @@ class AboytMeQuestionaryForm(QuestionaryForm):
             pass
         self.fields['question_id'] = forms.CharField(widget=forms.HiddenInput())
         self.fields['question_id'].initial = question_obj.pk
-        self.fields['answer_{}'.format(question_obj.pk)] = forms.ChoiceField(
+        self.fields['{}{}'.format(answer_prefix, question_obj.pk)] = forms.ChoiceField(
             initial=answer_init,
             widget=forms.RadioSelect, label=question_obj.title,
             choices=tuple(answers_list))

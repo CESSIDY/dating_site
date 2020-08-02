@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from ..forms import AboytMeQuestionaryForm
+from .settings import form_answer_prefix
 from ..models import Questionary, Question, Answer, AboutMe, AboutYou
 
 User = get_user_model()
@@ -17,10 +18,20 @@ def get_edit_form(request):
         formset_init.append(QuestionarySet)
     return formset_init
 
+
 # make like to article(obj)
-def add_to_questionary(obj, questionary):
-    obj_type = ContentType.objects.get_for_model(obj)
-    for question_id, answer_id in questionary:
-        questionary_obj, is_created = Questionary.objects.get_or_create(
-            content_type=obj_type, object_id=obj.id, question=question_id, defaults={'answer': answer_id})
-        questionary_obj.save()
+def save_questionary_form(request):
+    for field in request.POST:
+        if form_answer_prefix in str(field):
+            question_id = str(field)[len(form_answer_prefix):]
+            answer_id = request.POST[field]
+            obj = request.user.aboutme
+            try:
+                question = Question.objects.get(pk=question_id)
+                answer = Answer.objects.get(pk=answer_id)
+                questionary_obj, is_created = Questionary.objects.get_or_create(
+                    object_id=obj.pk, question=question, defaults={'answer': answer})
+                questionary_obj.answer = answer
+                questionary_obj.save()
+            except:
+                pass

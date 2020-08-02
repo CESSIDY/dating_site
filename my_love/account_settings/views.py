@@ -7,6 +7,7 @@ from .models import AboutMe, AboutYou, Questionary, Question, Answer
 from background_data.models import Genres, MusicType, Films, Foods, Countries, Books, Hobbies
 from .forms import *
 from .questionary import services
+from .questionary.settings import form_answer_prefix
 import json
 from django.http import HttpResponse
 from django.views.generic import (
@@ -48,17 +49,14 @@ class AboutMeUpdate(LoginRequiredMixin, UpdateView):
         context['questionary_forms'] = services.get_edit_form(self.request)
         return context
 
+    def post(self, request, *args, **kwargs):
+        post_context = super().post(request, args, kwargs)
+        services.save_questionary_form(request)
+        return post_context
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         print(self.request.POST)
-        # tera = AboutMeQuestionaryForm(self.request.POST)
-        # print(tera)
-        # don't save to the database
-        #instances = formset.save(commit=False)
-        #for instance in instances:
-        ## do something with instance
-        #...
-        #instance.save()
         return super().form_valid(form)
 
 
