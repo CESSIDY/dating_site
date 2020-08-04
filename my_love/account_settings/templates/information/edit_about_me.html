@@ -225,14 +225,6 @@
 </div>
 {% endblock %}
 {% block scripts%}
-<script>
-//создать переменную, в которой будем хранить ссылку на объект window открытого окна
-var myWindow;
-function myWindowOpen(elem, url) {
-  myWindow = window.open(url, "myWindow", "width=600, height=350");}
-
-
-</script>
 <!-- Page JS Plugins -->
 <script src="/static/assets/js/plugins/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
 <script src="/static/assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
@@ -240,4 +232,5 @@ function myWindowOpen(elem, url) {
 
 <!-- Page JS Code -->
 <script src="/static/assets/js/pages/be_forms_wizard.min.js"></script>
+<script src="/static/js/open_litle_browser_window.js"></script>
 {% endblock %}

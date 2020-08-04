@@ -3,228 +3,244 @@
 {% block content %}
 <div class="content">
     <div class="row justify-content-center">
-        <div class="col-md-12">
-            <ul class="errorlist nonfield">
-                {{ form.errors }}
-            </ul>
-
-            <form action="{% url 'edit_about_you' %}" method="post">
-                <div class="block block-themed">
-                    <div class="block-header bg-flat-dark">
-                        <h3 class="block-title">Edit About You</h3>
-                    </div>
-                    <div class="block-content">
-                        {% csrf_token %}
-                        {{form.id}}
-                        {{form.user}}
-                        <div class="form-group row justify-content-center ">
-                            <div class="col-sm-4">
-                                <div class="form-material">
+        <div class="col-md-10">
+            <div class="js-wizard-validation-material block">
+                <!-- Step Tabs -->
+                <ul class="nav nav-tabs nav-tabs-alt nav-fill" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#wizard-validation-material-step1"
+                           data-toggle="tab">1. Personal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#wizard-validation-material-step2" data-toggle="tab">2.
+                            Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#wizard-validation-material-step3" data-toggle="tab">3.
+                            Extra</a>
+                    </li>
+                </ul>
+                <!-- END Step Tabs -->
+                <form class="js-wizard-validation-material-form" action="{% url 'edit_about_you' %}" method="post"
+                      novalidate="novalidate">
+                    <!-- Steps Content -->
+                    <div class="block-content block-content-full tab-content" style="min-height: 267px;">
+                        <!-- Step 1 -->
+                        <div class="tab-pane active" id="wizard-validation-material-step1" role="tabpanel">
+                            <div class="form-group">
+                                {% csrf_token %}
+                                {{form.id}}
+                                {{form.user}}
+                                <div class="form-material floating">
+                                    <label id="{{form.countries.id_for_label}}_label" class="col-sm-8"
+                                           for="{{form.countries.id_for_label}}">{{form.countries.label}}
+                                        <button id="{{form.countries.id_for_label}}_button"
+                                                onclick="myWindowOpen(this,'{% url 'background.accounts_data.countries' %}')"
+                                                type="button" class="btn-block-option">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </label>
+                                    {{form.countries}}
+                                    {{ form.countries.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-material floating">
                                     {{form.min_age}}
                                     <label for="{{form.min_age.id_for_label}}">{{form.min_age.label}}</label>
                                     {{ form.min_age.errors }}
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-material">
+                                <div class="form-material floating">
                                     {{form.max_age}}
                                     <label for="{{form.max_age.id_for_label}}">{{form.max_age.label}}</label>
                                     {{ form.max_age.errors }}
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="form-material">
+                            <div class="form-group">
+                                <div class="form-material floating">
                                     {{form.min_growth}}
                                     <label for="{{form.min_growth.id_for_label}}">{{form.min_growth.label}}</label>
                                     {{ form.min_growth.errors }}
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row justify-content-center ">
-                            <div class="col-sm-4">
-                                <div class="form-material">
+                                <div class="form-material floating">
                                     {{form.max_growth}}
                                     <label for="{{form.max_growth.id_for_label}}">{{form.max_growth.label}}</label>
                                     {{ form.max_growth.errors }}
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="form-material">
+                            <div class="form-group">
+                                <div class="form-material floating">
                                     {{form.min_weight}}
                                     <label for="{{form.min_weight.id_for_label}}">{{form.min_weight.label}}</label>
                                     {{ form.min_weight.errors }}
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-material">
+                                <div class="form-material floating">
                                     {{form.max_weight}}
                                     <label for="{{form.max_weight.id_for_label}}">{{form.max_weight.label}}</label>
                                     {{ form.max_weight.errors }}
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row justify-content-center">
-                            <div class="col-sm-4">
-                                <div class="form-material">
+                            <div class="form-group">
+                                <div class="form-material floating">
+                                    {{form.color_hair}}
+                                    <label for="{{form.color_hair.id_for_label}}">{{form.color_hair.label}}</label>
+                                    {{ form.color_hair.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-material floating">
+                                    {{form.color_aye}}
+                                    <label for="{{form.color_aye.id_for_label}}">{{form.color_aye.label}}</label>
+                                    {{ form.color_aye.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-material floating">
                                     {{form.gender}}
                                     <label for="{{form.gender.id_for_label}}">{{form.gender.label}}</label>
                                     {{ form.gender.errors }}
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row justify-content-center">
-                            <label id="{{form.color_hair.id_for_label}}_label" class="col-sm-8"
-                                   for="{{form.color_hair.id_for_label}}">{{form.color_hair.label}}
-                            </label>
-                            {{ form.color_hair.errors }}
-                            <div class="col-sm-8">
-                                {{form.color_hair}}
+                        <!-- END Step 1 -->
+                        <!-- Step 2 -->
+                        <div class="tab-pane" id="wizard-validation-material-step2" role="tabpanel">
+                            <div class="form-group">
+                                <div class="form-material floating">
+                                    <label id="{{form.genres.id_for_label}}_label" class="col-sm-8"
+                                           for="{{form.genres.id_for_label}}">{{form.genres.label}}
+                                        <button id="{{form.genres.id_for_label}}_button"
+                                                onclick="myWindowOpen(this,'{% url 'background.accounts_data.genres' %}')"
+                                                type="button" class="btn-block-option">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </label>
+                                    {{form.genres}}
+                                    {{ form.genres.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-material floating">
+                                    <label id="{{form.music_types.id_for_label}}_label" class="col-sm-8"
+                                           for="{{form.music_types.id_for_label}}">{{form.music_types.label}}
+                                        <button id="{{form.music_types.id_for_label}}_button"
+                                                onclick="myWindowOpen(this,'{% url 'background.accounts_data.music_types' %}')"
+                                                type="button" class="btn-block-option"
+                                                data-toggle="modal" data-target="#addAnotherOne"><i
+                                                class="fa fa-plus"></i></button>
+                                    </label>
+                                    {{form.music_types}}
+                                    {{ form.music_types.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-material floating">
+                                    <label id="{{form.films.id_for_label}}_label" class="col-sm-8"
+                                           for="{{form.films.id_for_label}}">{{form.films.label}}
+                                        <button id="{{form.films.id_for_label}}_button" type="button"
+                                                onclick="myWindowOpen(this,'{% url 'background.accounts_data.films' %}')"
+                                                class="btn-block-option"
+                                                data-toggle="modal" data-target="#addAnotherOne"><i
+                                                class="fa fa-plus"></i></button>
+                                    </label>
+                                    {{form.films}}
+                                    {{ form.films.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-material floating">
+                                    <label id="{{form.books.id_for_label}}_label" class="col-sm-8"
+                                           for="{{form.books.id_for_label}}">{{form.books.label}}
+                                        <button id="{{form.books.id_for_label}}_button" type="button"
+                                                onclick="myWindowOpen(this,'{% url 'background.accounts_data.books' %}')"
+                                                class="btn-block-option"
+                                                data-toggle="modal" data-target="#addAnotherOne"><i
+                                                class="fa fa-plus"></i></button>
+
+                                    </label>
+                                    {{form.books}}
+                                    {{ form.books.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-material floating">
+                                    <label id="{{form.hobbies.id_for_label}}_label" class="col-sm-8"
+                                           for="{{form.hobbies.id_for_label}}">{{form.hobbies.label}}
+                                        <button id="{{form.hobbies.id_for_label}}_button" type="button"
+                                                onclick="myWindowOpen(this,'{% url 'background.accounts_data.hobbies' %}')"
+                                                class="btn-block-option"
+                                                data-toggle="modal" data-target="#addAnotherOne"><i
+                                                class="fa fa-plus"></i></button>
+                                    </label>
+                                    {{form.hobbies}}
+                                    {{ form.hobbies.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-material floating">
+                                    <label id="{{form.foods.id_for_label}}_label" class="col-sm-8"
+                                           for="{{form.foods.id_for_label}}">{{form.foods.label}}
+                                        <button id="{{form.foods.id_for_label}}_button" type="button"
+                                                onclick="myWindowOpen(this,'{% url 'background.accounts_data.foods' %}')"
+                                                class="btn-block-option"
+                                                data-toggle="modal" data-target="#addAnotherOne"><i
+                                                class="fa fa-plus"></i></button>
+                                    </label>
+                                    {{form.foods}}
+                                    {{ form.foods.errors }}
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row justify-content-center">
-                            <label id="{{form.color_aye.id_for_label}}_label" class="col-sm-8"
-                                   for="{{form.color_aye.id_for_label}}">{{form.color_aye.label}}
-                            </label>
-                            {{ form.color_aye.errors }}
-                            <div class="col-sm-8">
-                                {{form.color_aye}}
+                        <!-- END Step 2 -->
+                        <!-- Step 3 -->
+                        <div class="tab-pane" id="wizard-validation-material-step3" role="tabpanel">
+                            <div class="form-group">
+                                <div class="form-material floating">
+                                    {% for i in questionary_forms %}
+                                    <fieldset id="answer_{{ i.question_id.value }}">
+                                        {{ i|crispy }}
+                                    </fieldset>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row justify-content-center">
-                            <label id="{{form.genres.id_for_label}}_label" class="col-sm-8"
-                                   for="{{form.genres.id_for_label}}">{{form.genres.label}}
-                                <button id="{{form.genres.id_for_label}}_button"
-                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.genres' %}')"
-                                        type="button" class="btn-block-option"><i class="fa fa-plus"></i>
+                        <!-- END Step 3 -->
+                    </div>
+                    <!-- END Steps Content -->
+                    <!-- Steps Navigation -->
+                    <div class="block-content block-content-sm block-content-full bg-body-light">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-alt-secondary disabled"
+                                        data-wizard="prev">
+                                    <i class="fa fa-angle-left mr-5"></i> Previous
                                 </button>
-                            </label>
-                            {{ form.genres.errors }}
-                            <div class="col-sm-8">
-                                {{form.genres}}
                             </div>
-                        </div>
-                        <div class="form-group row justify-content-center">
-                            <label id="{{form.music_types.id_for_label}}_label" class="col-sm-8"
-                                   for="{{form.music_types.id_for_label}}">{{form.music_types.label}}
-                                <button id="{{form.music_types.id_for_label}}_button"
-                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.music_types' %}')"
-                                        type="button" class="btn-block-option"
-                                        data-toggle="modal" data-target="#addAnotherOne"><i
-                                        class="fa fa-plus"></i></button>
-                            </label>
-                            {{ form.music_types.errors }}
-                            <div class="col-sm-8">
-                                {{form.music_types}}
-                            </div>
-                        </div>
-                        <div class="form-group row justify-content-center">
-                            <label id="{{form.films.id_for_label}}_label" class="col-sm-8"
-                                   for="{{form.films.id_for_label}}">{{form.films.label}}
-                                <button id="{{form.films.id_for_label}}_button" type="button"
-                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.films' %}')"
-                                        class="btn-block-option"
-                                        data-toggle="modal" data-target="#addAnotherOne"><i
-                                        class="fa fa-plus"></i></button>
-                            </label>
-                            {{ form.films.errors }}
-                            <div class="col-sm-8">
-                                {{form.films}}
-                            </div>
-                        </div>
-                        <div class="form-group row justify-content-center">
-                            <label id="{{form.books.id_for_label}}_label" class="col-sm-8"
-                                   for="{{form.books.id_for_label}}">{{form.books.label}}
-                                <button id="{{form.books.id_for_label}}_button" type="button"
-                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.books' %}')"
-                                        class="btn-block-option"
-                                        data-toggle="modal" data-target="#addAnotherOne"><i
-                                        class="fa fa-plus"></i></button>
-
-                            </label>
-                            {{ form.books.errors }}
-                            <div class="col-sm-8">
-                                {{form.books}}
-                            </div>
-                        </div>
-                        <div class="form-group row justify-content-center">
-                            <label id="{{form.hobbies.id_for_label}}_label" class="col-sm-8"
-                                   for="{{form.hobbies.id_for_label}}">{{form.hobbies.label}}
-                                <button id="{{form.hobbies.id_for_label}}_button" type="button"
-                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.hobbies' %}')"
-                                        class="btn-block-option"
-                                        data-toggle="modal" data-target="#addAnotherOne"><i
-                                        class="fa fa-plus"></i></button>
-                            </label>
-                            {{ form.hobbies.errors }}
-                            <div class="col-sm-8">
-                                {{form.hobbies}}
-                            </div>
-                        </div>
-                        <div class="form-group row justify-content-center">
-                            <label id="{{form.foods.id_for_label}}_label" class="col-sm-8"
-                                   for="{{form.foods.id_for_label}}">{{form.foods.label}}
-                                <button id="{{form.foods.id_for_label}}_button" type="button"
-                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.foods' %}')"
-                                        class="btn-block-option"
-                                        data-toggle="modal" data-target="#addAnotherOne"><i
-                                        class="fa fa-plus"></i></button>
-                            </label>
-                            {{ form.foods.errors }}
-                            <div class="col-sm-8">
-                                {{form.foods}}
-                            </div>
-                        </div>
-                        <div class="form-group row justify-content-center">
-                            <label id="{{form.countries.id_for_label}}_label" class="col-sm-8"
-                                   for="{{form.countries.id_for_label}}">{{form.countries.label}}
-                                <button id="{{form.countries.id_for_label}}_button" type="button"
-                                        onclick="myWindowOpen(this,'{% url 'background.accounts_data.countries' %}')"
-                                        class="btn-block-option"
-                                        data-toggle="modal" data-target="#addAnotherOne"><i
-                                        class="fa fa-plus"></i></button>
-                            </label>
-                            {{ form.countries.errors }}
-                            <div class="col-sm-8">
-                                {{form.countries}}
+                            <div class="col-6 text-right">
+                                <button type="button" class="btn btn-alt-secondary" data-wizard="next">
+                                    Next <i class="fa fa-angle-right ml-5"></i>
+                                </button>
+                                <button type="submit" class="btn btn-alt-primary d-none"
+                                        data-wizard="finish">
+                                    <i class="fa fa-check mr-5"></i> Submit
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="block-content">
-                        <div class="form-group row justify-content-center ">
-                            {% for i in questionary_forms %}
-                            <fieldset id="answer_{{ i.question_id.value }}">
-                                {{ i|crispy }}
-                            </fieldset>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm bg-flat-dark text-right">
-                        <button type="submit" class="btn btn-rounded btn-noborder btn-secondary">
-                            <i class="fa fa-check"></i> Submit
-                        </button>
-                        <button type="reset" class="btn btn-rounded btn-noborder btn-secondary">
-                            <i class="fa fa-repeat"></i> Reset
-                        </button>
-
-                    </div>
-                </div>
-            </form>
+                    <!-- END Steps Navigation -->
+                </form>
+            </div>
         </div>
     </div>
 </div>
 {% endblock %}
 {% block scripts%}
-<script>
-//создать переменную, в которой будем хранить ссылку на объект window открытого окна
-var myWindow;
-function myWindowOpen(elem, url) {
-  myWindow = window.open(url, "myWindow", "width=600, height=350");
-}
+<!-- Page JS Plugins -->
+<script src="/static/assets/js/plugins/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+<script src="/static/assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="/static/assets/js/plugins/jquery-validation/additional-methods.js"></script>
 
-
-
-
-
-</script>
+<!-- Page JS Code -->
+<script src="/static/assets/js/pages/be_forms_wizard.min.js"></script>
+<script src="/static/js/open_litle_browser_window.js"></script>
 {% endblock %}

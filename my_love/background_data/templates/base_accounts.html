@@ -51,8 +51,10 @@
     $("#post-form").submit(function(e){
         e.preventDefault();
     });
+
 </script>
 {{ form.media.js }}
-    {% block javascript %}{% endblock %}
+<script src="/static/js/open_litle_browser_window.js"></script>
+{% block javascript %}{% endblock %}
 </body>
 </html>

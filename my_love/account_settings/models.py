@@ -127,11 +127,11 @@ class AboutYou(AboutCommonInfo):
 
 
 class Question(models.Model):
-    title = models.CharField('Question', max_length=1000)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, blank=True, null=True)
+    me_title = models.CharField('Me question', max_length=1000)
+    you_title = models.CharField('You question', max_length=1000, default='Empty')
 
     def __str__(self):
-        return self.title
+        return self.me_title
 
 
 class Answer(models.Model):
@@ -139,16 +139,16 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{} - {}'.format(self.question.title, self.title)
+        return '{} - {}'.format(self.question.me_title, self.title)
 
 
 class Questionary(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{} - {}'.format(self.question.title, self.answer.title)
+        return '{} - {}'.format(self.question.me_title, self.answer.title)
 
 
 def permission_search_candidates(self):

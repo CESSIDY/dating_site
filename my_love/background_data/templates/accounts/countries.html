@@ -6,7 +6,7 @@
     <ul class="errorlist nonfield">
         {{ form.non_field_errors }}
     </ul>
-    <form  data-validate-url="{% url 'background.accounts_data.countries' %}" method="post">
+    <form data-validate-url="{% url 'background.accounts_data.countries' %}" method="post">
         <div class="block block-themed">
             <div class="block-header bg-flat-dark">
                 <h3 class="block-title">Create a new countries</h3>
@@ -30,49 +30,17 @@
                             {{ form.description.errors }}
                         </div>
                     </div>
+                </div>
+                <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm bg-flat-dark text-right">
+                    <button type="submit" class="btn btn-rounded btn-noborder btn-secondary">
+                        <i class="fa fa-check"></i> Submit
+                    </button>
+                    <button type="reset" class="btn btn-rounded btn-noborder btn-secondary">
+                        <i class="fa fa-repeat"></i> Reset
+                    </button>
+                </div>
             </div>
-            <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm bg-flat-dark text-right">
-                <button type="submit" class="btn btn-rounded btn-noborder btn-secondary">
-                    <i class="fa fa-check"></i> Submit
-                </button>
-                <button type="reset" class="btn btn-rounded btn-noborder btn-secondary">
-                    <i class="fa fa-repeat"></i> Reset
-                </button>
-            </div>
-        </div>
         </div>
     </form>
 </div>
-{% endblock %}
-
-{% block javascript %}
-<script>
-function myWindowClose(){
-    window.close();
-}
-
-    $("#id_name").change(function () {
-      var form = $(this).closest("form");
-      $.ajax({
-        url: form.attr("data-validate-url"),
-        data: form.serialize(),
-        dataType: 'json',
-        success: function (data) {
-        var obj = JSON.parse(json);
-          if (obj.status) {
-            window.close();
-          }else{
-          alert("Some error!");
-          }
-        }
-      });
-
-    });
-    $( document ).ready(function() {
-    var status = $('#status_of_page').val();
-    if(status == '1'){
-         window.close();
-    }
-});
-  </script>
 {% endblock %}
