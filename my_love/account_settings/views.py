@@ -32,7 +32,7 @@ class AboutYouUpdate(LoginRequiredMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         post_context = super().post(request, args, kwargs)
-        services.save_questionary_form(request)
+        services.save_aboutYou_questionary_form(request)
         return post_context
 
     def form_valid(self, form):
@@ -57,7 +57,7 @@ class AboutMeUpdate(LoginRequiredMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         post_context = super().post(request, args, kwargs)
-        services.save_questionary_form(request)
+        services.save_aboutMe_questionary_form(request)
         return post_context
 
     def form_valid(self, form):

@@ -145,7 +145,10 @@ class Answer(models.Model):
 class Questionary(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name="questionarys",
+                             related_query_name="questionary", blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="questionarys",
+                             related_query_name="questionary")
 
     def __str__(self):
         return '{} - {}'.format(self.question.me_title, self.answer.title)

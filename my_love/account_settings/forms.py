@@ -25,7 +25,11 @@ class QuestionaryForm(forms.Form):
 
         answer_init = ''
         try:
-            question = Questionary.objects.get(user=user, question=question_obj.pk)
+            if type == 'me':
+                obj_type = ContentType.objects.get_for_model(AboutMe)
+            else:
+                obj_type = ContentType.objects.get_for_model(AboutYou)
+            question = Questionary.objects.get(content_type=obj_type, user=user, question=question_obj.pk)
             if question:
                 answer_init = question.answer.pk
         except:

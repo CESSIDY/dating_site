@@ -1,7 +1,9 @@
 import datetime
 from dateutil.relativedelta import relativedelta
-from account_settings.models import AboutCommonInfo as commonInfo
+from django.contrib.contenttypes.models import ContentType
+from account_settings.models import AboutCommonInfo as commonInfo, AboutYou
 from django.db import models
+from account_settings.models import Questionary, Question, Answer
 from django.db.models import Q
 from django.contrib.auth.models import User
 from datetime import date, timedelta
@@ -21,7 +23,9 @@ class Level4:
         return self.candidates
 
     def aboutyou_questionary(self):
-
+        obj_type = ContentType.objects.get_for_model(AboutYou)
+        answers = Answer.objects.filter(
+            pk__in=Questionary.objects.filter(user=self.user, content_type=obj_type).values('answer'))
         self.candidates = self.candidates.annotate(
-            count_similar_questionary=1
-        )
+            count_similar_questionary=Count('questionary__pk', filter=Q(questionary__answer__in=answers),
+                                            distinct=True))

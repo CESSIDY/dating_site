@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # app contains some staff to user social auth
     'accounts_social_auth.apps.AccountsSocialAuthConfig',
     'django.contrib.admin',
+    'django.contrib.postgres',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
