@@ -4,14 +4,13 @@ from account_settings.models import AboutCommonInfo as commonInfo
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
-
+from datetime import date
 
 class Level1:
 
-    def __init__(self, user):
+    def __init__(self, user, candidates):
         self.user = user
-        # the search will be performed only on active profiles
-        self.candidates = User.objects.filter(aboutme__activate=True)
+        self.candidates = candidates
 
     def search(self):
         # we will exclude users of inappropriate age, by criteria for current user in (AboutYou model)
@@ -20,6 +19,9 @@ class Level1:
         self.aboutyou_gender()
         # we will exclude users of inappropriate countries, by criteria for current user in (AboutYou model)
         self.aboutyou_countries()
+        self.aboutme_age()
+        self.aboutme_gender()
+        self.aboutme_countries()
         return self.candidates
 
     def aboutyou_age(self):
@@ -43,5 +45,24 @@ class Level1:
             self.candidates = self.candidates.filter(aboutme__gender=self.user.aboutyou.gender)
 
     def aboutyou_countries(self):
-        tera = self.user.aboutyou.countries.values_list('pk')
-        self.candidates = self.candidates.filter(aboutme__country__in=tera)
+        countries_pk = self.user.aboutyou.countries.values_list('pk')
+        self.candidates = self.candidates.filter(aboutme__country__in=countries_pk)
+
+    def aboutme_age(self):
+        age = self.calculate_age(self.user.aboutme.birthday)
+        self.candidates = self.candidates.filter(Q(aboutyou__min_age__gte=age) | Q(aboutyou__min_age__lte=age))
+
+    def aboutme_gender(self):
+        if self.user.aboutyou.gender == commonInfo.DEFAULT_VAL:
+            candidates = self.candidates.filter(
+                Q(aboutyou__gender=commonInfo.FEMALE) | Q(aboutyou__gender=commonInfo.MALL))
+        else:
+            self.candidates = self.candidates.filter(aboutyou__gender=self.user.aboutme.gender)
+
+    def aboutme_countries(self):
+        country_pk = self.user.aboutme.country.pk
+        self.candidates = self.candidates.filter(aboutyou__countries__pk__contains=country_pk)
+
+    def calculate_age(self, born):
+        today = date.today()
+        return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
