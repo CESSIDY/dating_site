@@ -82,47 +82,48 @@ class Level2:
     def aboutyou_questionary(self):
         # get AboutYou model for search all answers in Questionary model
         obj_type = ContentType.objects.get_for_model(AboutYou)
+        obj_type_for_candidates = ContentType.objects.get_for_model(AboutMe)
         answers = Answer.objects.filter(
             pk__in=Questionary.objects.filter(user=self.user, content_type=obj_type).values('answer'))
         # add annotate count_similar_questionary field (number) for count of similar
         self.candidates = self.candidates.annotate(
-            count_you_similar_questionary=Count('questionary__pk', filter=Q(questionary__answer__in=answers),
+            count_you_similar_questionary=Count('questionary__pk', filter=(Q(questionary__answer__in=answers) & Q(questionary__content_type=obj_type_for_candidates)),
                                                 distinct=True))
 
     def aboutme_books(self):
         # add annotate count_similar_books field (number) for count of similar
         self.candidates = self.candidates.annotate(
             count_me_similar_books=Count('aboutyou__books',
-                                          filter=Q(aboutyou__books__in=self.user.aboutme.books.all()), distinct=True)
+                                         filter=Q(aboutyou__books__in=self.user.aboutme.books.all()), distinct=True)
         )
 
     def aboutme_films(self):
         # add annotate count_similar_films field (number) for count of similar
         self.candidates = self.candidates.annotate(
             count_me_similar_films=Count('aboutyou__films',
-                                          filter=Q(aboutyou__films__in=self.user.aboutme.films.all()), distinct=True)
+                                         filter=Q(aboutyou__films__in=self.user.aboutme.films.all()), distinct=True)
         )
 
     def aboutme_genres(self):
         # add annotate count_similar_genres field (number) for count of similar
         self.candidates = self.candidates.annotate(
             count_me_similar_genres=Count('aboutyou__genres',
-                                           filter=Q(aboutyou__genres__in=self.user.aboutme.genres.all()), distinct=True)
+                                          filter=Q(aboutyou__genres__in=self.user.aboutme.genres.all()), distinct=True)
         )
 
     def aboutme_foods(self):
         # add annotate count_similar_foods field (number) for count of similar
         self.candidates = self.candidates.annotate(
             count_me_similar_foods=Count('aboutyou__foods',
-                                          filter=Q(aboutyou__foods__in=self.user.aboutme.foods.all()), distinct=True)
+                                         filter=Q(aboutyou__foods__in=self.user.aboutme.foods.all()), distinct=True)
         )
 
     def aboutme_music_types(self):
         # add annotate count_similar_music_types field (number) for count of similar
         self.candidates = self.candidates.annotate(
             count_me_similar_music_types=Count('aboutyou__music_types',
-                                                filter=Q(aboutyou__music_types__in=self.user.aboutme.music_types.all()),
-                                                distinct=True)
+                                               filter=Q(aboutyou__music_types__in=self.user.aboutme.music_types.all()),
+                                               distinct=True)
         )
 
     def aboutme_hobbies(self):
@@ -131,17 +132,17 @@ class Level2:
         # self.candidates = self.candidates.all().annotate(
         self.candidates = self.candidates.annotate(
             count_me_similar_hobbies=Count('aboutyou__hobbies',
-                                            filter=Q(aboutyou__hobbies__in=self.user.aboutme.hobbies.all()),
-                                            distinct=True)
+                                           filter=Q(aboutyou__hobbies__in=self.user.aboutme.hobbies.all()),
+                                           distinct=True)
         )
 
     def aboutme_questionary(self):
-        # get AboutYou model for search all answers in Questionary model
-        #FIX.... filter AboutYou and AdoutMe
         obj_type = ContentType.objects.get_for_model(AboutMe)
+        obj_type_for_candidates = ContentType.objects.get_for_model(AboutYou)
         answers = Answer.objects.filter(
             pk__in=Questionary.objects.filter(user=self.user, content_type=obj_type).values('answer'))
         # add annotate count_similar_questionary field (number) for count of similar
         self.candidates = self.candidates.annotate(
-            count_me_similar_questionary=Count('questionary__pk', filter=Q(questionary__answer__in=answers),
-                                                distinct=True))
+            count_me_similar_questionary=Count('questionary__pk', filter=(
+                        Q(questionary__answer__in=answers) & Q(questionary__content_type=obj_type_for_candidates)),
+                                               distinct=True))

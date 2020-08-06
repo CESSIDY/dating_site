@@ -27,6 +27,7 @@ class MainLevel:
         # At this level users will not defend, but will sum up at the expense
         # of coincidences in percent for each field
         self.candidates = Level2(self.user, self.candidates).search()
+        print(self.candidates)
         # At this level, only those fields are presented, in the comparison of which,u
         # it is possible to give an unambiguous answer, true or false.
         self.candidates = Level3(self.user, self.candidates).search()
