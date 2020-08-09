@@ -19,10 +19,12 @@
             <h1 class="h3 text-white font-w700 mb-10">
                 <div class="font-w600">
                     {% for account in social_accounts %}
-                    <div class="font-w600">{{ account.provider }}:
-                        <a href="{{ account.get_profile_url }}"><i
-                                class="fa fa-{{account.provider}}" aria-hidden="true"></i></a>
-                    </div>
+                        {% if account.get_profile_url %}
+                            <div class="font-w600">{{ account.provider }}:
+                                <a href="{{ account.get_profile_url }}"><i
+                                        class="fa fa-{{account.provider}}" aria-hidden="true"></i></a>
+                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </h1>

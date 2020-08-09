@@ -3,38 +3,59 @@
 <div class="content content-full text-left">
     <div class="block-content block-content-full">
         <div class="container-fluid">
-            <div class="row">
-                <div class="block text-center">
-                    <div class="font-w600">{{ user.first_name }} {{ user.last_name }}
-                        <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
-                           href="{% url 'edit.profile' %}">
-                            <i class="fa fa-pencil"></i>
-                        </a></div>
-                    <div class="col-sm-7 col-md-6 col-lg-4 col-xl-10 animated fadeIn">
-                        <div class="options-container fx-item-zoom-in fx-overlay-zoom-out">
-                            <img class="img-fluid options-item rounded mx-auto" src="{{ user.aboutme.main_photo }}"
-                                 alt="">
-                            <div class="options-overlay bg-black-op">
-                                <div class="options-overlay-content">
-                                    <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
-                                       href="{% url 'gallery' %}">
-                                        <i class="fa fa-pencil"></i> Change
-                                    </a>
+            <div class="row text-center">
+                <div class="col-sm-7 col-md-6 col-lg-2 col-xl-5">
+                    <div class="block">
+                        <div class="block-content center">
+                            <div class="animated fadeIn mr-auto">
+                                <div class="options-container fx-item-zoom-in fx-overlay-zoom-out">
+                                    <img class="img-fluid options-item rounded mx-auto"
+                                         src="{{ user.aboutme.main_photo }}"
+                                         alt="">
+                                    <div class="options-overlay bg-black-op">
+                                        <div class="options-overlay-content">
+                                            <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
+                                               href="{% url 'gallery' %}">
+                                                <i class="fa fa-pencil"></i> Change
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-5 col-md-6 col-lg-8 col-xl-10">
+                </div>
+                <div class="col-md-6">
+                    <div class="block">
                         <div class="block-content">
-                            {% for account in social_accounts %}
-                            <div class="font-w600">{{ account.provider }}:
-                                <a href="{{ account.get_profile_url }}">
-                                    <i class="fa fa-{{account.provider }}" aria-hidden="true"></i></a>
+                            <div class="font-w600 ml-auto">
+                                <p>You'r name: {{ user.first_name }} {{ user.last_name }}</p>
+                                <p>Email: {{ user.email }}</p>
+                                <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
+                                   href="{% url 'edit.profile' %}">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
                             </div>
-                            {% endfor %}
                         </div>
-                        <div class="block-content block-content-full"><a href="{% url 'socialaccount_connections' %}">Connect
-                            social accounts</a>
+                    </div>
+                    <div class="block">
+                        <div class="block-content">
+                            <div class="block-content">
+                                {% for account in social_accounts %}
+                                <div class="font-w600"><i class="fa fa-{{account.provider}}" aria-hidden="true">
+                                    {{account.provider }}</i>:
+                                    {% if account.get_profile_url %}
+                                    <a href="{{ account.get_profile_url }}">
+                                        <i class="fa fa-{{account.provider }}" aria-hidden="true"></i></a>
+                                    {% else %}
+                                    {{ account.get_provider_account }}
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="block-content block-content-full">
+                                <a href="{% url 'socialaccount_connections' %}">Connect social accounts</a>
+                            </div>
                         </div>
                     </div>
                 </div>

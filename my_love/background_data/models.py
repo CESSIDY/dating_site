@@ -19,7 +19,6 @@ class Genres(models.Model):
 
 class Films(models.Model):
     name = models.CharField(max_length=300)
-    genres = models.ManyToManyField(Genres)
 
     def __str__(self):
         return self.name
@@ -27,7 +26,6 @@ class Films(models.Model):
 
 class Books(models.Model):
     name = models.CharField(max_length=300, unique=True)
-    genres = models.ManyToManyField(Genres)
 
     def __str__(self):
         return self.name
@@ -35,7 +33,6 @@ class Books(models.Model):
 
 class Hobbies(models.Model):
     name = models.CharField(max_length=300, unique=True)
-    description = models.TextField(max_length=1000)
 
     def __str__(self):
         return self.name
@@ -48,7 +45,6 @@ class Foods(models.Model):
         ('3', 'organic'),
     )
     name = models.CharField(max_length=300, unique=True)
-    description = models.TextField(max_length=1000)
     type = models.CharField(max_length=20, choices=FOOD_TYPES)
 
     def __str__(self):
@@ -57,7 +53,6 @@ class Foods(models.Model):
 
 class Countries(models.Model):
     name = models.CharField(max_length=300)
-    description = models.TextField(max_length=1000)
 
     def __str__(self):
         return self.name
