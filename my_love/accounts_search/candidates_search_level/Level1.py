@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from datetime import date
 
+
 class Level1:
 
     def __init__(self, user, candidates):
@@ -13,14 +14,18 @@ class Level1:
         self.candidates = candidates
 
     def search(self):
-        # we will exclude users of inappropriate age, by criteria for current user in (AboutYou model)
         self.aboutyou_age()
-        # we will exclude users of inappropriate gander, by criteria for current user in (AboutYou model)
+
         self.aboutyou_gender()
-        # we will exclude users of inappropriate countries, by criteria for current user in (AboutYou model)
+        print(self.candidates)
+
         self.aboutyou_countries()
+
         self.aboutme_age()
+
         self.aboutme_gender()
+        print(self.candidates)
+
         self.aboutme_countries()
         return self.candidates
 
@@ -39,8 +44,9 @@ class Level1:
 
     def aboutyou_gender(self):
         if self.user.aboutyou.gender == commonInfo.DEFAULT_VAL:
-            candidates = self.candidates.filter(
-                Q(aboutme__gender=commonInfo.FEMALE) | Q(aboutme__gender=commonInfo.MALL))
+            pass
+            # self.candidates = self.candidates.filter(
+            #     Q(aboutme__gender=commonInfo.FEMALE) | Q(aboutme__gender=commonInfo.MALL))
         else:
             self.candidates = self.candidates.filter(aboutme__gender=self.user.aboutyou.gender)
 
@@ -53,11 +59,9 @@ class Level1:
         self.candidates = self.candidates.filter(Q(aboutyou__min_age__gte=age) | Q(aboutyou__min_age__lte=age))
 
     def aboutme_gender(self):
-        if self.user.aboutyou.gender == commonInfo.DEFAULT_VAL:
-            candidates = self.candidates.filter(
-                Q(aboutyou__gender=commonInfo.FEMALE) | Q(aboutyou__gender=commonInfo.MALL))
-        else:
-            self.candidates = self.candidates.filter(aboutyou__gender=self.user.aboutme.gender)
+        self.candidates = self.candidates.filter(
+            Q(aboutyou__gender=commonInfo.DEFAULT_VAL) | Q(aboutyou__gender=self.user.aboutme.gender)
+        )
 
     def aboutme_countries(self):
         country_pk = self.user.aboutme.country.pk

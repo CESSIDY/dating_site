@@ -68,7 +68,6 @@ class AboutMe(AboutCommonInfo):
     foods = models.ManyToManyField(Foods, blank=True, related_name='my_foods_set', verbose_name='Favorite foods')
     country = models.ForeignKey(Countries, blank=True, related_name='my_country_set', on_delete=models.DO_NOTHING,
                                 verbose_name='Where are you from?', null=True)
-    questionary = JSONField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username
@@ -111,7 +110,6 @@ class AboutYou(AboutCommonInfo):
     foods = models.ManyToManyField(Foods, blank=True, related_name='you_foods_set', verbose_name='Foods')
     countries = models.ManyToManyField(Countries, related_name='you_countries_set',
                                        verbose_name='Where is this person from?')
-    questionary = JSONField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username
@@ -146,7 +144,7 @@ class Questionary(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name="questionarys",
-                             related_query_name="questionary", blank=True)
+                                     related_query_name="questionary", blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="questionarys",
                              related_query_name="questionary")
 
