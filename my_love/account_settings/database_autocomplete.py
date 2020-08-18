@@ -1,8 +1,10 @@
 from datetime import datetime
 from random import randrange, sample, choice
 
+from articles_likes.services import *
 from django.contrib.contenttypes.models import ContentType
-
+from taggit.managers import TaggableManager
+from articles_settings.models import Gallery
 from background_data.models import Genres, MusicType, Films, Books, Hobbies, Foods, Countries
 from dateutil.relativedelta import relativedelta
 from account_settings.models import AboutCommonInfo as commonInfo, Question, Answer, Questionary, AboutMe
@@ -132,3 +134,37 @@ class Users:
         listOfRandomDataIds = sample(list(modelDataIds), k=randDataCount)
         multipleData = Objects.filter(id__in=listOfRandomDataIds)
         return multipleData
+
+
+class Articles:
+    def __init__(self):
+        self.generic = Generic('en')
+        self.loreipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ex leo, pulvinar ac congue eu, cursus vitae ligula. Donec consectetur in felis a lobortis. Vivamus ac sem molestie, aliquet orci sit amet, condimentum magna. Nulla tristique vel nunc nec vehicula. In placerat dolor eget nunc ullamcorper, sed varius risus iaculis. Mauris nec molestie tellus. Proin vestibulum maximus pharetra. Duis maximus elementum nulla, non convallis massa ultricies non.' \
+                         'Donec mollis neque quis ex aliquam, quis ullamcorper mi suscipit. Ut scelerisque efficitur eros, vitae auctor erat congue nec. Integer accumsan urna eu mi porta pretium. Duis vitae quam sed ex hendrerit ultricies vitae eu felis. Phasellus lacus libero, ornare non turpis vel, auctor aliquam eros. Maecenas vel vulputate ante, ac molestie arcu. Sed ac mauris egestas, accumsan enim vel, bibendum nunc. Aenean mollis nibh vitae turpis fermentum, a egestas augue dictum. Suspendisse ultricies non leo eget mollis.' \
+                         'Sed nec lacus felis. Suspendisse commodo augue nisl, non dapibus eros ultricies at. Nam quis dapibus neque, a maximus tortor. Suspendisse pulvinar purus id tincidunt consectetur. Sed vel mauris at erat blandit eleifend. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus turpis lectus, finibus ac volutpat a, vulputate sit amet tortor.'
+
+    def generate(self):
+        users = User.objects.all()
+        for user in users:
+            for index in range(1, 5):
+                article = Gallery.objects.create(user=user, main=False, description=self.loreipsum,
+                                                 name='Article Test Generator - {}'.format(index))
+                article.tags.add("article", "test", "generate", "make love")
+                article.save()
+
+
+class Likes:
+    def __init__(self):
+        self.generic = Generic('en')
+
+    def generate(self):
+        users = User.objects.all()
+        articles = Gallery.objects.all()
+        for user in users:
+            randArticlesCount = randrange(1, 10)
+            listOfRandomArticles = sample(list(articles), k=randArticlesCount)
+            for article in listOfRandomArticles:
+                if is_fan(article, user):
+                    remove_like(article, user)
+                else:
+                    add_like(article, user)

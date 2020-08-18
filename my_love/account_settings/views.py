@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from .models import AboutMe, AboutYou, Questionary, Question, Answer
 from background_data.models import Genres, MusicType, Films, Foods, Countries, Books, Hobbies
 from .forms import *
-from .database_autocomplete import Users
+from .database_autocomplete import Users, Articles, Likes
 from .questionary import services
 from .questionary.settings import form_answer_prefix
 import json
@@ -79,5 +79,7 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
 
 def DataBaseAutoComplete(request):
-    Users().generate()
+    #Users().generate()
+    #Articles().generate()
+    #Likes().generate()
     return HttpResponse(status=200)
