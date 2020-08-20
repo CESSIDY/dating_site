@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'articles_likes.apps.ArticlesLikesConfig',
     # app contains some staff to user social auth
     'accounts_social_auth.apps.AccountsSocialAuthConfig',
+    'news.apps.NewsConfig',
     'django.contrib.admin',
     'django.contrib.postgres',
     'django.contrib.auth',
@@ -152,6 +153,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'articles_settings/templates'),
             os.path.join(BASE_DIR, 'articles_show/templates'),
             os.path.join(BASE_DIR, 'background_data/templates'),
+            os.path.join(BASE_DIR, 'news/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -164,6 +166,8 @@ TEMPLATES = [
         },
     },
 ]
+
+PATH_TO_GENERATIVE_TEMPLATES = os.path.join(BASE_DIR, 'news/templates')
 
 WSGI_APPLICATION = 'my_love.wsgi.application'
 

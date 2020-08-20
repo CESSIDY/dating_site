@@ -105,26 +105,10 @@
                         <thead>
                         </thead>
                         {% for value in candidate.aboutme.films.all %}
-                        <tbody class="js-table-sections-header">
+                        <tbody class="">
                         <tr>
-                            <td class="text-left">
-                                <i class="fa fa-angle-right"></i>
-                            </td>
                             <td class="text-left">{{ value.name }}</td>
                         </tr>
-                        </tbody>
-                        <tbody>
-                        {% for genre in value.genres.all %}
-                        <tr>
-                            <td class="text-center"></td>
-                            <td class="font-w600 text-success">{{ genre.name }}</td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td class="text-center"></td>
-                            <td class="font-w600 text-success"></td>
-                        </tr>
-                        {% endfor %}
                         </tbody>
                         {% endfor %}
                     </table>
@@ -147,26 +131,10 @@
                         <thead>
                         </thead>
                         {% for value in candidate.aboutme.books.all %}
-                        <tbody class="js-table-sections-header">
+                        <tbody class="">
                         <tr>
-                            <td class="text-left">
-                                <i class="fa fa-angle-right"></i>
-                            </td>
                             <td class="text-left">{{ value.name }}</td>
                         </tr>
-                        </tbody>
-                        <tbody>
-                        {% for genre in value.genres.all %}
-                        <tr>
-                            <td class="text-center"></td>
-                            <td class="font-w600 text-success">{{ genre.name }}</td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td class="text-center"></td>
-                            <td class="font-w600 text-success"></td>
-                        </tr>
-                        {% endfor %}
                         </tbody>
                         {% endfor %}
                     </table>
@@ -189,18 +157,9 @@
                         <thead>
                         </thead>
                         {% for value in candidate.aboutme.hobbies.all %}
-                        <tbody class="js-table-sections-header">
+                        <tbody class="">
                         <tr>
-                            <td class="text-left">
-                                <i class="fa fa-angle-right"></i>
-                            </td>
                             <td class="text-left">{{ value.name }}</td>
-                        </tr>
-                        </tbody>
-                        <tbody>
-                        <tr>
-                            <td class="text-center"></td>
-                            <td class="font-w600 text-success">{{ value.description }}</td>
                         </tr>
                         </tbody>
                         {% endfor %}
@@ -224,19 +183,10 @@
                         <thead>
                         </thead>
                         {% for value in candidate.aboutme.foods.all %}
-                        <tbody class="js-table-sections-header">
+                        <tbody class="">
                         <tr>
-                            <td class="text-left">
-                                <i class="fa fa-angle-right"></i>
-                            </td>
                             <td class="text-left">{{ value.name }}</td>
                             <td class="text-right">({{ value.get_type_display }})</td>
-                        </tr>
-                        </tbody>
-                        <tbody>
-                        <tr>
-                            <td class="text-center"></td>
-                            <td class="font-w600 text-success">{{ value.description }}</td>
                         </tr>
                         </tbody>
                         {% endfor %}

@@ -24,6 +24,9 @@ class Gallery(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True, verbose_name='Publication date')
     likes = GenericRelation(Like, blank=True, verbose_name='Likes')
 
+    def __str__(self):
+        return '%s - %s' % (self.user.username, self.name)
+
     @property
     def total_likes(self):
         return self.likes.count()
@@ -36,8 +39,12 @@ class Gallery(models.Model):
             content_type=obj_type, object_id=self.id, user=user)
         return likes.exists()
 
-    def __str__(self):
-        return '%s - %s' % (self.user.username, self.name)
+    def get_fans(self):
+        """Получает всех пользователей, которые лайкнули `obj`.
+        """
+        obj_type = ContentType.objects.get_for_model(self)
+        return User.objects.filter(
+            likes__content_type=obj_type, likes__object_id=self.pk)
 
     # Check if there is an image on the server if not then return the path to the standard image
     def image(self):

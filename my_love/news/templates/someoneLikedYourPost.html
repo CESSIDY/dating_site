@@ -1,0 +1,8 @@
+{% load getUser %}
+{% load getFact %}
+{% who_like_some_of_your_article user as follower %}
+{% chose_answer follower as answer %}
+<p>
+    <strong>TEST</strong>
+    Some user "{{ follower.username }}", who like your post, chose "{{answer}}"
+</p>

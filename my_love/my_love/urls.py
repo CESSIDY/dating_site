@@ -35,6 +35,7 @@ urlpatterns = [
     path('accounts/', include('accounts_search.urls')),
     path('articles/settings/', include('articles_settings.urls')),
     path('articles/', include('articles_show.urls')),
+    path('news/', include('news.urls')),
 ]
 if settings.DEBUG:  # new
     urlpatterns = [
