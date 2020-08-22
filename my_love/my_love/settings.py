@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     # The following apps are required:
     'django.contrib.sites',
+    'channels',
     # Auth from social
     'allauth',
     'allauth.account',
@@ -170,6 +171,17 @@ TEMPLATES = [
 PATH_TO_GENERATIVE_TEMPLATES = os.path.join(BASE_DIR, 'news/templates')
 
 WSGI_APPLICATION = 'my_love.wsgi.application'
+
+ASGI_APPLICATION = "my_love.routing.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
