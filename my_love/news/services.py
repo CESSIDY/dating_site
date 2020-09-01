@@ -6,14 +6,20 @@ from django.template.response import TemplateResponse
 
 
 class News:
-    def __init__(self, user):
+    def __init__(self, user, lang_code):
         self.user = user
+        self.lang_code = lang_code
+
 
     def generate(self):
-        #t = TemplateResponse(self.request, self.get_random_template(), {})
-        #t.render()
-        #print(t.content)
-        rendered = render_to_string(self.get_random_template(), {'user': self.user})
+        for index in range(1, 10):
+            try:
+                template = self.get_random_template()
+                rendered = render_to_string(template, {'user': self.user, 'lang_code': self.lang_code})
+            except:
+                rendered = ''
+            if rendered:
+                break
         return rendered
 
     def get_random_template(self):

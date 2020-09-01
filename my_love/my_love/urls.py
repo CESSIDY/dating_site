@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path
+from django.conf.urls.i18n import i18n_patterns
 from .views import (
     home
 )
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
+    path('i18n/', include('django.conf.urls.i18n')),
     path('', home, name='home'),
     path('like/', include('articles_likes.urls')),
     path('admin/', admin.site.urls),
@@ -36,7 +38,7 @@ urlpatterns = [
     path('articles/settings/', include('articles_settings.urls')),
     path('articles/', include('articles_show.urls')),
     path('news/', include('news.urls')),
-]
+)
 if settings.DEBUG:  # new
     urlpatterns = [
                       path('__debug__/', include(debug_toolbar.urls)),

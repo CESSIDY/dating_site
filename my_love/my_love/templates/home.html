@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
 
 {% block content %}
-<div class="bg-image" style="background-image: url('static/media/images/main.jpg');">
+<div class="bg-image" style="background-image: url('{% static "media/images/main.jpg" %}');">
     <div class="hero bg-primary-dark-op">
         <div class="hero-inner">
             <div class="content content-full text-center">

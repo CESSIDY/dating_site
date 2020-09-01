@@ -1,8 +1,10 @@
 {% load getUser %}
 {% load getFact %}
+{% if user %}
 {% you_like_some_one_article user as article_owner %}
 {% chose_answer article_owner as answer %}
 <p>
     <strong>TEST</strong>
     You like post from "{{ article_owner.username }}", and in secret I will tell you he chooses "{{answer}}"
 </p>
+{% endif %}

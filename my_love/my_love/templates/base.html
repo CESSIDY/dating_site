@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% load static i18n %}
+<html lang="{{ LANGUAGE_CODE }}" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -67,14 +68,14 @@
                     <button type="button" class="btn btn-rounded btn-dual-secondary" aria-haspopup="true"
                             aria-expanded="false">
                         <a href="{% url 'accounts_list' %}"><i class="fa fa-users d-sm-none"></i></a>
-                        <a class="d-none d-sm-inline-block" href="{% url 'accounts_list' %}">Candidates</a>
+                        <a class="d-none d-sm-inline-block" href="{% url 'accounts_list' %}">{% trans 'Candidates' %}</a>
                     </button>
                 </div>
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-rounded btn-dual-secondary" aria-haspopup="true"
                             aria-expanded="false">
                         <a href="{% url 'articles_show' '' %}"><i class="fa fa-newspaper-o d-sm-none"></i></a>
-                        <a class="d-none d-sm-inline-block" href="{% url 'articles_show' '' %}">Posts</a>
+                        <a class="d-none d-sm-inline-block" href="{% url 'articles_show' '' %}">{% trans 'Publications' %}</a>
                     </button>
                 </div>
                 <div class="btn-group" role="group">
@@ -86,26 +87,26 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right min-width-200"
                          aria-labelledby="page-header-user-dropdown">
-                        <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase">User</h5>
+                        <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase">{% trans 'User' %}</h5>
                         <a class="dropdown-item" href="{% url 'user.profile' %}">
-                            <i class=""></i>Profile
+                            <i class=""></i>{% trans 'Profile' %}
                         </a>
                         <a class="dropdown-item" href="{% url 'about_me' %}">
-                            <i class=""></i>About Me
+                            <i class=""></i>{% trans 'About Me' %}
                         </a>
                         <a class="dropdown-item" href="{% url 'about_you' %}">
-                            <i class=""></i>About You
+                            <i class=""></i>{% trans 'About You' %}
                         </a>
                         <a class="dropdown-item" href="{% url 'gallery' %}">
-                            <i class=""></i>Gallery
+                            <i class=""></i>{% trans 'Gallery' %}
                         </a>
                         <div class="dropdown-divider"></div>
 
                         <a class="dropdown-item" href="{% url 'account_reset_password' %}">
-                            <i class=""></i>Reset Password
+                            <i class=""></i>{% trans 'Reset Password' %}
                         </a>
                         <a class="dropdown-item" href="{% url 'account_email' %}">
-                            <i class=""></i>Change E-mail
+                            <i class=""></i>{% trans 'Change E-mail' %}
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'account_logout' %}">
@@ -192,13 +193,14 @@
                 </div>
                 <img class="img-avatar img-avatar-thumb" src="/static/media/images/cupid.jpg" alt="">
                 <div class="font-w600 mt-15 mb-5 text-white">
-                    Cupid<span class="font-italic text-white-op"> spy</span>
+                    Cupid<span class="font-italic text-white-op"> spy </span>
                 </div>
             </div>
             <!-- END Chat Header -->
 
             <!-- Messages (demonstration messages are added with JS code at the bottom of this page) -->
-            <div id="chat-log" class="js-chat-talk block-content block-content-full text-wrap-break-word overflow-y-auto"
+            <div id="chat-log"
+                 class="js-chat-talk block-content block-content-full text-wrap-break-word overflow-y-auto"
                  data-chat-id="4" style="height: 296px;">
                 <div class="font-size-sm font-italic text-muted text-center mt-20 mb-10">Let's spy someone</div>
             </div>
@@ -213,6 +215,22 @@
         <div class="content py-20 font-size-xs clearfix">
             <div class="float-right">
                 Crafted with <i class="fa fa-heart text-pulse"></i><a class="font-w600" target="_blank"> Love</a>
+            </div>
+            <div>
+                <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{redirect_to}}">
+                    <select name="language" id="">
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{language.code}}" {% if language.code == LANGUAGE_CODE %} selected {% endif %} >
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="GO">
+                </form>
             </div>
             <div class="float-left">
                 <a class="font-w600" href="" target="_blank">Space Lizard 0.1</a> &copy; <span
@@ -262,11 +280,14 @@
     });
 
 
+
 </script>
 <script src="/static/js/tagsinput.js"></script>
+{% get_current_language as LANGUAGE_CODE %}
 <script>
     var roomName = '{{ user.username }}';
-    var chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomName + '/');
+    var url = 'ws://' + window.location.host + '/ws/chat/' + '{{ LANGUAGE_CODE }}' + '/';
+    var chatSocket = new WebSocket(url);
 
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
@@ -279,6 +300,7 @@
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
     };
+
 
 
 </script>
