@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 14:56+0300\n"
+"POT-Creation-Date: 2020-09-02 19:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,125 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: account_show/templates/account/about_me.html:25
+#: account_show/templates/account/about_you.html:9
+#: account_show/templates/account/profile.html:19
+#, fuzzy
+#| msgid "Change E-mail"
+msgid "Change"
+msgstr "Изменить электронную почту"
+
+#: account_show/templates/account/about_me.html:36
+#: accounts_search/templates/accounts/show_detail.html:43
+msgid "Genres"
+msgstr "Жанры"
+
+#: account_show/templates/account/about_me.html:64
+#: account_show/templates/account/about_you.html:29
+#: accounts_search/templates/accounts/show_detail.html:71
+msgid "Music types"
+msgstr "Типы музыки"
+
+#: account_show/templates/account/about_me.html:90
+#: account_show/templates/account/about_you.html:35
+#: accounts_search/templates/accounts/show_detail.html:97
+msgid "Films"
+msgstr "Фильмы"
+
+#: account_show/templates/account/about_me.html:142
+#: account_show/templates/account/about_you.html:49
+#: accounts_search/templates/accounts/show_detail.html:149
+msgid "Hobbies"
+msgstr "Хобби"
+
+#: account_show/templates/account/about_me.html:197
+msgid "Birth Day"
+msgstr "День рождения"
+
+#: account_show/templates/account/about_me.html:206
+msgid "Country"
+msgstr "Страна"
+
+#: account_show/templates/account/about_me.html:224
+#: account_show/templates/account/about_you.html:15
+msgid "Weight"
+msgstr "Вес"
+
+#: account_show/templates/account/about_me.html:233
+#: account_show/templates/account/about_you.html:16
+msgid "Gender"
+msgstr "Пол"
+
+#: account_show/templates/account/about_me.html:242
+msgid "Hair color"
+msgstr "Цвет волос"
+
+#: account_show/templates/account/about_me.html:251
+#, fuzzy
+#| msgid "Hair color"
+msgid "Eyes color"
+msgstr "Цвет волос"
+
+#: account_show/templates/account/about_you.html:12
+msgid "Countries"
+msgstr "Страны"
+
+#: account_show/templates/account/about_you.html:13
+msgid "Age"
+msgstr "Возраст"
+
+#: account_show/templates/account/about_you.html:14
+msgid "Growth"
+msgstr "Рост"
+
+#: account_show/templates/account/about_you.html:17
+msgid "Hair"
+msgstr "Волосы"
+
+#: account_show/templates/account/about_you.html:18
+msgid "Eyes"
+msgstr ""
+
+#: account_show/templates/account/about_you.html:43
+#: accounts_search/templates/accounts/show_detail.html:123
+msgid "Books"
+msgstr "Книги"
+
+#: account_show/templates/account/about_you.html:55
+#: accounts_search/templates/accounts/show_detail.html:175
+msgid "Foods"
+msgstr "Еда"
+
+#: account_show/templates/account/gallery.html:7
+msgid "CREATE A NEW ARTICLE"
+msgstr "СОЗДАТЬ НОВУЮ ПУБЛИКАЦЫЮ"
+
+#: account_show/templates/account/gallery.html:22
+msgid "Edit"
+msgstr "Редактировать"
+
+#: account_show/templates/account/gallery.html:26
+msgid "Delete"
+msgstr "Удалить"
+
+#: account_show/templates/account/profile.html:32
+msgid "You/'r name"
+msgstr "Ваше имя"
+
+#: account_show/templates/account/profile.html:33
+#, fuzzy
+#| msgid "Add E-mail"
+msgid "Email"
+msgstr "Добавить электронную почту"
+
+#: account_show/templates/account/profile.html:57
+msgid "Connect social accounts"
+msgstr "Подключение социальныъ аккаунтов"
+
+#: accounts_search/templates/accounts/list.html:20
+msgid "SEARCH OF LOVE"
+msgstr "ПОИСК ЛЮБВИ"
 
 #: accounts_social_auth/templates/account/account_inactive.html:5
 #: accounts_social_auth/templates/account/account_inactive.html:8
@@ -507,6 +626,35 @@ msgstr ""
 "в\n"
 "%(site_name)s. В качестве последнего шага заполните следующую форму:"
 
+#: articles_settings/templates/create_article.html:77
+msgid "Submit"
+msgstr "Отправить"
+
+#: articles_settings/templates/create_article.html:80
+msgid "Reset"
+msgstr "Сброс"
+
+#: articles_settings/templates/delete_article.html:8
+msgid "Do you want to delete the post"
+msgstr "Вы хотите удалить публикацыю"
+
+#: articles_show/templates/articles/list.html:19
+#, fuzzy
+msgid "Your's"
+msgstr "Твой"
+
+#: articles_show/templates/articles/list.html:21
+msgid "Annonimus"
+msgstr "Аноним"
+
+#: articles_show/templates/articles/list.html:90
+msgid "Previous"
+msgstr "Предыдущая"
+
+#: articles_show/templates/articles/list.html:104
+msgid "Next"
+msgstr "Следующая"
+
 #: my_love/templates/base.html:71
 msgid "Candidates"
 msgstr "Кандидаты"
@@ -551,5 +699,22 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"    Пользователь %(username)s, которому понравился ваш публикация выбирает '%(answer)s'\n"
+"    Пользователь %(username)s, которому понравился ваш публикация выбирает "
+"'%(answer)s'\n"
 "    "
+
+#: news/templates/youLikedTheSomeonePost.html:9
+#, python-format
+msgid ""
+"\n"
+"    You like post from %(username)s, and in secret I will tell you he "
+"chooses '%(answer)s'\n"
+"    "
+msgstr ""
+"\n"
+"    Вам нравится публикачыя от %(username)s, и по секрету скажу, что он "
+"выбирает '%(answer)s'\n"
+"    "
+
+#~ msgid "You"
+#~ msgstr "Ты"

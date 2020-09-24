@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
 {% block side-overlay%}
 {% endblock %}
 {% block content %}
-<div class="bg-image bg-image-bottom " style="background-image: url('static/media/images/main.jpg');">
+<div class="bg-image bg-image-bottom " style="background-image: url('{% static "media/images/main.jpg" %}');">
     <div class="bg-primary-dark-op py-30">
         <div class="content content-full text-center">
             <!-- Avatar -->
@@ -15,7 +17,8 @@
             <!-- END Avatar -->
 
             <!-- Personal -->
-            <h1 class="h3 text-white font-w700 mb-10">{{ candidate.first_name }} {{ candidate.last_name }}</h1>
+            <h3 class="h3 text-white font-w700 mb-10">{{ candidate.first_name }} {{ candidate.last_name }}</h3>
+            <h5 class="text-white font-w700 mb-10">{{ candidate.email }}</h5>
             <h1 class="h3 text-white font-w700 mb-10">
                 <div class="font-w600">
                     {% for account in social_accounts %}
@@ -38,7 +41,7 @@
         <div class="col-md-4">
             <div class="block block-bordered block-mode-hidden" id="genres-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Genres <small></small></h3>
+                    <h3 class="block-title">{% trans 'Genres' %} <small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"
@@ -66,7 +69,7 @@
         <div class="col-md-4">
             <div class="block block-mode-hidden" id="music-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Music types<small></small></h3>
+                    <h3 class="block-title">{% trans 'Music types' %}<small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"
@@ -92,7 +95,7 @@
         <div class="col-md-4">
             <div class="block block-mode-hidden" id="films-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Films <small></small></h3>
+                    <h3 class="block-title">{% trans 'Films' %} <small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"
@@ -118,7 +121,7 @@
         <div class="col-md-4">
             <div class="block block-mode-hidden" id="books-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Books <small></small></h3>
+                    <h3 class="block-title">{% trans 'Books' %} <small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"
@@ -144,7 +147,7 @@
         <div class="col-md-4">
             <div class="block block-mode-hidden" id="hobbies-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Hobbies <small></small></h3>
+                    <h3 class="block-title">{% trans 'Hobbies' %} <small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"
@@ -170,7 +173,7 @@
         <div class="col-md-4">
             <div class="block block-mode-hidden" id="foods-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Foods <small></small></h3>
+                    <h3 class="block-title">{% trans 'Foods' %} <small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"

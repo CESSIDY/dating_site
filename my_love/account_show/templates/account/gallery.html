@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="row justify-content-center text-center">
     <div class="col-md-12">
-        <a class="btn btn-square btn-warning btn-lg btn-block" href="{% url 'create_article' %}">CREATE A NEW
-            ARTICLE</a>
+        <a class="btn btn-square btn-warning btn-lg btn-block" href="{% url 'create_article' %}">{% trans 'CREATE A NEW ARTICLE' %}</a>
     </div>
 </div>
 <div class="content">
@@ -19,11 +19,11 @@
                         <h4 class="h6 text-white-op mb-15">{{image.description|truncatewords:"15"}}</h4>
                         <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
                            href="{% url 'update_article' image.id %}">
-                            <i class="fa fa-pencil"></i> Edit
+                            <i class="fa fa-pencil"></i> {% trans 'Edit' %}
                         </a>
                         <a class="btn btn-sm btn-rounded btn-alt-danger min-width-75"
                            href="{% url 'delete_article' image.pk %}">
-                            <i class="fa fa-times"></i> Delete
+                            <i class="fa fa-times"></i> {% trans 'Delete' %}
                         </a>
                     </div>
                 </div>

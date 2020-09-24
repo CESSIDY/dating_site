@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block styles%}
 <style>
@@ -16,7 +17,7 @@ html{background-color:#000}
 <div class="row justify-content-center text-center">
     {% if search_active %}
     <div class="col-md-12">
-        <a class="btn btn-square btn-warning btn-lg btn-block" href="{% url 'partners_search' %}">SEARCH OF LOVE</a>
+        <a class="btn btn-square btn-warning btn-lg btn-block" href="{% url 'partners_search' %}">{% trans 'SEARCH OF LOVE' %}</a>
     </div>
     {% else %}
     <div class="col-md-12 countdown">

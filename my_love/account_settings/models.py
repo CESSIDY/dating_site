@@ -46,7 +46,7 @@ class AboutCommonInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     gender = models.IntegerField(choices=GENDER, default=1)
     color_hair = MultiSelectField('Color of hair', choices=COLOR_HAIR, null=True)
-    color_aye = MultiSelectField('Color of aye', choices=COLOR_AYE, null=True)
+    color_aye = MultiSelectField('Color of eyes', choices=COLOR_AYE, null=True)
 
     class Meta:
         abstract = True

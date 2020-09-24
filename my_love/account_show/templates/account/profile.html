@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
 <div class="content content-full text-left">
     <div class="block-content block-content-full">
@@ -10,13 +11,12 @@
                             <div class="animated fadeIn mr-auto">
                                 <div class="options-container fx-item-zoom-in fx-overlay-zoom-out">
                                     <img class="img-fluid options-item rounded mx-auto"
-                                         src="{{ user.aboutme.main_photo }}"
-                                         alt="">
+                                         src="{{ user.aboutme.main_photo }}" alt="">
                                     <div class="options-overlay bg-black-op">
                                         <div class="options-overlay-content">
                                             <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
                                                href="{% url 'gallery' %}">
-                                                <i class="fa fa-pencil"></i> Change
+                                                <i class="fa fa-pencil"></i> {% trans 'Change' %}
                                             </a>
                                         </div>
                                     </div>
@@ -29,8 +29,8 @@
                     <div class="block">
                         <div class="block-content">
                             <div class="font-w600 ml-auto">
-                                <p>You'r name: {{ user.first_name }} {{ user.last_name }}</p>
-                                <p>Email: {{ user.email }}</p>
+                                <p>{% trans "You/'r name" %}: {{ user.first_name }} {{ user.last_name }}</p>
+                                <p>{% trans 'Email' %}: {{ user.email }}</p>
                                 <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
                                    href="{% url 'edit.profile' %}">
                                     <i class="fa fa-pencil"></i>
@@ -54,7 +54,7 @@
                                 {% endfor %}
                             </div>
                             <div class="block-content block-content-full">
-                                <a href="{% url 'socialaccount_connections' %}">Connect social accounts</a>
+                                <a href="{% url 'socialaccount_connections' %}">{% trans 'Connect social accounts' %}</a>
                             </div>
                         </div>
                     </div>

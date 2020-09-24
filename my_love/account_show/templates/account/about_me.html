@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
 {% block side-overlay%}
 {% endblock %}
 {% block content %}
-<div class="bg-image bg-image-bottom " style="background-image: url('static/media/images/main.jpg');">
+<div class="bg-image bg-image-bottom " style="background-image: url('{% static "media/images/main.jpg" %}');">
     <div class="bg-primary-dark-op py-30">
         <div class="content content-full text-center">
             <!-- Avatar -->
@@ -20,7 +22,7 @@
 
             <!-- Actions -->
             <button type="button" class="btn btn-rounded btn-hero btn-sm btn-alt-success mb-5">
-                <a href="{% url 'edit_about_me' %}"><i class="fa fa-edit mr-5"></i> Change</a>
+                <a href="{% url 'edit_about_me' %}"><i class="fa fa-edit mr-5"></i> {% trans 'Change' %}</a>
             </button>
             <!-- END Actions -->
         </div>
@@ -31,7 +33,7 @@
         <div class="col-md-4">
             <div class="block block-bordered block-mode-hidden" id="genres-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Genres <small></small></h3>
+                    <h3 class="block-title">{% trans 'Genres' %} <small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"
@@ -59,7 +61,7 @@
         <div class="col-md-4">
             <div class="block block-mode-hidden" id="music-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Music types<small></small></h3>
+                    <h3 class="block-title">{% trans 'Music types' %}<small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"
@@ -85,7 +87,7 @@
         <div class="col-md-4">
             <div class="block block-mode-hidden" id="films-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Films <small></small></h3>
+                    <h3 class="block-title">{% trans 'Films' %} <small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"
@@ -111,7 +113,7 @@
         <div class="col-md-4">
             <div class="block block-mode-hidden" id="books-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Books <small></small></h3>
+                    <h3 class="block-title">{% trans 'Books' %} <small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"
@@ -137,7 +139,7 @@
         <div class="col-md-4">
             <div class="block block-mode-hidden" id="hobbies-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Hobbies <small></small></h3>
+                    <h3 class="block-title">{% trans 'Hobbies' %} <small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"
@@ -163,7 +165,7 @@
         <div class="col-md-4">
             <div class="block block-mode-hidden" id="foods-block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Foods <small></small></h3>
+                    <h3 class="block-title">{% trans 'Foods' %} <small></small></h3>
                     <div class="block-options">
                         <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
                         <button type="button" class="btn-block-option" data-toggle="block-option"
@@ -192,7 +194,7 @@
         <div class="block-content">
             <li>
                             <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Birth Day</span></span>
+                                    class="sidebar-mini-hide">{% trans 'Birth Day' %}</span></span>
                 <ul>
                     <li>
                         <span> {{ user.aboutme.birthday }}</span>
@@ -201,7 +203,7 @@
             </li>
             <li>
                             <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Country</span></span>
+                                    class="sidebar-mini-hide">{% trans 'Country' %}</span></span>
                 <ul>
                     <li>
                         <span>{{ user.aboutme.country.name }}</span>
@@ -219,7 +221,7 @@
             </li>
             <li>
                             <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Weight</span></span>
+                                    class="sidebar-mini-hide">{% trans 'Weight' %}</span></span>
                 <ul>
                     <li>
                         <span>{{ user.aboutme.weight }}</span>
@@ -228,7 +230,7 @@
             </li>
             <li>
                             <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Gender</span></span>
+                                    class="sidebar-mini-hide">{% trans 'Gender' %}</span></span>
                 <ul>
                     <li>
                         <span>{{ user.aboutme.get_gender_display }}</span>
@@ -237,7 +239,7 @@
             </li>
             <li>
                             <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Hair color</span></span>
+                                    class="sidebar-mini-hide">{% trans 'Hair color' %}</span></span>
                 <ul>
                     <li>
                         <span>{{ user.aboutme.get_color_hair_display }}</span>
@@ -246,7 +248,7 @@
             </li>
             <li>
                             <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Aye color</span></span>
+                                    class="sidebar-mini-hide">{% trans 'Eyes color' %}</span></span>
                 <ul>
                     <li>
                         <span>{{ user.aboutme.get_color_aye_display }}</span>

@@ -48,14 +48,24 @@ class MainLevel:
         models.Candidates.objects.filter(creator=self.user).delete()
         for candidate in self.candidates:
             if candidate.pk != self.user.pk:
+                percentage_dictionary = self.getPercentageDictionary(candidate)
+                common_percentage = self.commonPercentage(percentage_dictionary)
                 obj, created = models.Candidates.objects.update_or_create(
                     creator=self.user, candidate=candidate,
                     defaults={
-                        'percentage_similar': self.getPercentageDictionary(candidate)
+                        'percentage_similar': percentage_dictionary,
+                        'common_percentage': common_percentage
                     },
                 )
         self.user.aboutyou.save()
         self.user.aboutme.save()
+
+    def commonPercentage(self, percentageDictionary):
+        all_percentages = 0
+        for percentage in percentageDictionary.values():
+            all_percentages += float(percentage)
+        commonProcent = (all_percentages / len(percentageDictionary))
+        return round(commonProcent, 2)
 
     def getAboutYouPercentageDictionary(self, candidate):
         percentage_similar_hobbies = (

@@ -16,17 +16,18 @@ class Candidates(models.Model):
     creator = models.ForeignKey(User, related_name="candidates_creator_set", on_delete=models.CASCADE)
     candidate = models.ForeignKey(User, related_name="candidates_set", on_delete=models.CASCADE)
     percentage_similar = HStoreField(blank=True, default=dict)
+    common_percentage = models.FloatField(default=0)
 
     def __str__(self):
         return str("{} - {}".format(self.creator, self.candidate))
 
     # return common percentage of all fields
-    def common_percentage(self):
-        all_percentages = 0
-        for percentage in self.percentage_similar.values():
-            all_percentages += float(percentage)
-        commonProcent = (all_percentages / len(self.percentage_similar))
-        return round(commonProcent, 2)
+    # def common_percentage(self):
+    #     all_percentages = 0
+    #     for percentage in self.percentage_similar.values():
+    #         all_percentages += float(percentage)
+    #     commonProcent = (all_percentages / len(self.percentage_similar))
+    #     return round(commonProcent, 2)
 
 
 # User method for search of candidate (all logic is stored at different levels)
@@ -46,7 +47,7 @@ def get_followers(self):
 # User method what returns all candidates from Candidate Model for current user
 # candidates - these are users that are stored in the candidate list for the current user
 def get_candidates(self):
-    candidates = Candidates.objects.filter(creator=self)
+    candidates = Candidates.objects.filter(creator=self).order_by('-common_percentage')
     # users = {candidate.candidate for candidate in candidates}
     return candidates
 
