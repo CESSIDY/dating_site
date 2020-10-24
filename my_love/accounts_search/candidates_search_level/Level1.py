@@ -17,14 +17,12 @@ class Level1:
         self.aboutyou_age()
 
         self.aboutyou_gender()
-        print(self.candidates)
 
         self.aboutyou_countries()
 
         self.aboutme_age()
 
         self.aboutme_gender()
-        print(self.candidates)
 
         self.aboutme_countries()
         return self.candidates

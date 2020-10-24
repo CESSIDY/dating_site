@@ -23,7 +23,7 @@ SECRET_KEY = '74a=5tfq0@ljlw6=^ez)ovmo$kd8o5gb@+kiz1ztcp-2%1vq)w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-#'127.0.0.1', '192.168.0.108'
+# '127.0.0.1', '192.168.0.108'
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -65,12 +65,12 @@ INSTALLED_APPS = [
     # A new model field and form field. With this you can get a multiple select from a choices.
     # Stores to the database as a CharField of comma-separated values.
     'multiselectfield',
-    # The Django Debug Toolbar is a configurable set of panels that display various debug information
-    # about the current request/response and when clicked, display more details about the panel’s content.
-    'debug_toolbar',
     # The following apps are required:
     'django.contrib.sites',
     'channels',
+    # ckeditor
+    'ckeditor',
+    'ckeditor_uploader',
     # Auth from social
     'allauth',
     'allauth.account',
@@ -130,7 +130,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -140,6 +139,37 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+DEBUG_TOOLBAR = DEBUG  # Can override using the debug toolbar here
+if DEBUG_TOOLBAR:
+    def show_toolbar(request):
+        return True
+
+
+    # This example is unlikely to be appropriate for your project.
+    DEBUG_TOOLBAR_CONFIG = {
+        # Toolbar options
+        'INTERCEPT_REDIRECTS': False,
+        'SHOW_TOOLBAR_CALLBACK': show_toolbar
+    }
+    INTERNAL_IPS = ['*']
+    INSTALLED_APPS += ['debug_toolbar']
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+    # DEBUG SETTINGS:
+    DEBUG_TOOLBAR_PANELS = [
+        'debug_toolbar.panels.versions.VersionsPanel',
+        'debug_toolbar.panels.timer.TimerPanel',
+        'debug_toolbar.panels.settings.SettingsPanel',
+        'debug_toolbar.panels.headers.HeadersPanel',
+        'debug_toolbar.panels.request.RequestPanel',
+        'debug_toolbar.panels.sql.SQLPanel',
+        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+        'debug_toolbar.panels.templates.TemplatesPanel',
+        'debug_toolbar.panels.cache.CachePanel',
+        'debug_toolbar.panels.signals.SignalsPanel',
+        'debug_toolbar.panels.logging.LoggingPanel',
+        'debug_toolbar.panels.redirects.RedirectsPanel',
+        'debug_toolbar.panels.profiling.ProfilingPanel',
+    ]
 
 ROOT_URLCONF = 'my_love.urls'
 
@@ -221,12 +251,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 LANGUAGES = [
     ('en', 'English'),
     ('ru', 'Русский'),
 ]
-
 
 TIME_ZONE = 'UTC'
 
@@ -245,6 +274,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'media'),
 ]
 
+CKEDITOR_BASEPATH = "/static_root/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "/media/images/"
+
 # ROUTE FOR DEFAULT IMAGE:
 DEFAULT_IMAGE = 'images/default.png'
 # DEFAULT LOGIN AND LOGOUT URL
@@ -252,35 +284,5 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 # crispy_forms SETTINGS:
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# DEBUG SETTINGS:
-
-DEBUG_TOOLBAR_PANELS = [
-    'debug_toolbar.panels.versions.VersionsPanel',
-    'debug_toolbar.panels.timer.TimerPanel',
-    'debug_toolbar.panels.settings.SettingsPanel',
-    'debug_toolbar.panels.headers.HeadersPanel',
-    'debug_toolbar.panels.request.RequestPanel',
-    'debug_toolbar.panels.sql.SQLPanel',
-    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
-    'debug_toolbar.panels.templates.TemplatesPanel',
-    'debug_toolbar.panels.cache.CachePanel',
-    'debug_toolbar.panels.signals.SignalsPanel',
-    'debug_toolbar.panels.logging.LoggingPanel',
-    'debug_toolbar.panels.redirects.RedirectsPanel',
-    'debug_toolbar.panels.profiling.ProfilingPanel',
-]
-
-
-def show_toolbar(request):
-    return True
-
-
-# This example is unlikely to be appropriate for your project.
-DEBUG_TOOLBAR_CONFIG = {
-    # Toolbar options
-    'INTERCEPT_REDIRECTS': False,
-    'SHOW_TOOLBAR_CALLBACK': show_toolbar
-}
 
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True

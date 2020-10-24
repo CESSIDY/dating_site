@@ -1,6 +1,7 @@
 import datetime
 from dateutil.relativedelta import relativedelta
-from account_settings.models import AboutCommonInfo as commonInfo
+from account_settings.models import AboutCommonInfo as commonInfo, AboutMe, AboutYou
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from .Level1 import Level1
 from .Level2 import Level2
@@ -20,7 +21,10 @@ class MainLevel:
         self.books = self.user.aboutyou.books.count()
         self.films = self.user.aboutyou.films.count()
         self.genres = self.user.aboutyou.genres.count()
-        self.questionary = self.user.questionarys.count()
+        self.questionary_me = self.user.questionarys.filter(
+            content_type=ContentType.objects.get_for_model(AboutMe)).count()
+        self.questionary_you = self.user.questionarys.filter(
+            content_type=ContentType.objects.get_for_model(AboutYou)).count()
         # the search will be performed only on active profiles
         self.candidates = User.objects.filter(aboutme__activate=True)
 
@@ -81,7 +85,7 @@ class MainLevel:
         percentage_similar_genres = (
                 100 - ((self.genres - candidate.count_you_similar_genres) / (self.genres / 100)))
         percentage_similar_answers = (
-                100 - ((self.questionary - candidate.count_you_similar_questionary) / (self.questionary / 100)))
+                100 - ((self.questionary_you - candidate.count_you_similar_questionary) / (self.questionary_you / 100)))
         percentage_similar_weight = (100 if candidate.bool_you_similar_weight else 0)
         percentage_similar_growth = (100 if candidate.bool_you_similar_growth else 0)
         return {
@@ -109,7 +113,7 @@ class MainLevel:
         percentage_similar_genres = (
                 100 - ((self.genres - candidate.count_me_similar_genres) / (self.genres / 100)))
         percentage_similar_answers = (
-                100 - ((self.questionary - candidate.count_me_similar_questionary) / (self.questionary / 100)))
+                100 - ((self.questionary_me - candidate.count_me_similar_questionary) / (self.questionary_me / 100)))
         percentage_similar_weight = (100 if candidate.bool_me_similar_weight else 0)
         percentage_similar_growth = (100 if candidate.bool_me_similar_growth else 0)
         return {

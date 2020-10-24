@@ -47,7 +47,7 @@ class Users:
         user.aboutme.color_hair = sample([index[0] for index in list(commonInfo.COLOR_HAIR)], k=randColorHairCount)
 
         randColorAyeCount = randrange(1, len(commonInfo.COLOR_AYE))
-        user.aboutme.color_aye = sample([index[0] for index in list(commonInfo.COLOR_HAIR)], k=randColorAyeCount)
+        user.aboutme.color_aye = sample([index[0] for index in list(commonInfo.COLOR_AYE)], k=randColorAyeCount)
 
         user.aboutme.activate = True
 
@@ -69,13 +69,13 @@ class Users:
         self.save_questionary(user, user.aboutme)
 
     def update_aboutYou(self, user):
-        user.aboutme.gender = choice(list(commonInfo.GENDER))[0]
+        user.aboutyou.gender = choice(list(commonInfo.GENDER))[0]
 
         randColorHairCount = randrange(1, len(commonInfo.COLOR_HAIR))
         user.aboutyou.color_hair = sample([index[0] for index in list(commonInfo.COLOR_HAIR)], k=randColorHairCount)
 
         randColorAyeCount = randrange(1, len(commonInfo.COLOR_AYE))
-        user.aboutyou.color_aye = sample([index[0] for index in list(commonInfo.COLOR_HAIR)], k=randColorAyeCount)
+        user.aboutyou.color_aye = sample([index[0] for index in list(commonInfo.COLOR_AYE)], k=randColorAyeCount)
 
         min_age = randrange(18, 60)
         user.aboutyou.min_age = min_age

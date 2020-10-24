@@ -16,7 +16,6 @@
                 <div class="options-overlay bg-black-op">
                     <div class="options-overlay-content">
                         <h3 class="h4 text-white mb-5">{{ image.name }}</h3>
-                        <h4 class="h6 text-white-op mb-15">{{image.description|truncatewords:"15"}}</h4>
                         <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
                            href="{% url 'update_article' image.id %}">
                             <i class="fa fa-pencil"></i> {% trans 'Edit' %}

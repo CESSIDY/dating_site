@@ -4,6 +4,7 @@ from django.db.models.signals import pre_save
 from django.contrib.contenttypes.models import ContentType
 from django.dispatch import receiver
 from django.contrib.contenttypes.fields import GenericRelation
+from ckeditor.fields import RichTextField
 from articles_likes.models import Like
 from taggit.managers import TaggableManager
 from django.conf import settings
@@ -16,7 +17,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 # Model for store a users articles
 class Gallery(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='gallery_set', verbose_name='User')
-    description = models.TextField(max_length=1000, verbose_name='Descriptions')
+    description = RichTextField(max_length=1000, verbose_name='Descriptions')
     tags = TaggableManager(blank=True, verbose_name='Tags')
     path = models.ImageField(upload_to='images/', default='images/default.png', verbose_name='Image')
     name = models.CharField(max_length=200, verbose_name='Title')
