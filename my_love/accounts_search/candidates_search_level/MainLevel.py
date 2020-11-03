@@ -57,7 +57,6 @@ class MainLevel:
 
     def makeCandidates(self):
         models.Candidates.objects.filter(creator=self.user).delete()
-        print(self.candidates)
         for candidate in self.candidates:
             if candidate.pk != self.user.pk:
                 percentage_dictionary = self.getPercentageDictionary(candidate)

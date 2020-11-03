@@ -76,8 +76,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     # include the providers you want to enable:
-    'allauth.socialaccount.providers.discord',
-    'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'rest_framework'
 ]
@@ -91,33 +89,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 
 ACCOUNT_FORMS = {'login': 'accounts_social_auth.forms.MyCustomLoginForm'}
 
-SOCIALACCOUNT_PROVIDERS = {
-    'facebook': {
-        'METHOD': 'js_sdk',
-        'INIT_PARAMS': {'cookie': True},
-        'FIELDS': [
-            'id',
-            'email',
-            'name',
-            'first_name',
-            'last_name',
-            'verified',
-            'locale',
-            'timezone',
-            'link',
-            'gender',
-            'updated_time',
-        ],
-        'EXCHANGE_TOKEN': True,
-        'VERIFIED_EMAIL': False,
-    },
-    'discord': {
-        'METHOD': 'js_sdk',
-    },
-    'telegram': {
-        'TOKEN': '1328729898:AAHJGSYMBB4JH_S8QhdkhH-W9TYcxjQ0qes'
-    }
-}
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
