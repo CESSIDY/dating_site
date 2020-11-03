@@ -182,20 +182,20 @@
         {% load static %}
         {% block content%}
         {% endblock %}
-        <div class="block block-rounded block-themed block-mode-pinned">
-            <!-- Chat Header -->
-            <div class="js-chat-head block-content block-content-full block-sticky-options bg-gd-sea text-center">
-                <div class="block-options">
-                    <button type="button" class="btn-block-option" data-toggle="block-option"
-                            data-action="pinned_toggle">
-                        <i class="si si-pin"></i>
-                    </button>
+            <div class="block block-rounded block-themed block-mode-pinned">
+                <!-- Chat Header -->
+                <div class="js-chat-head block-content block-content-full block-sticky-options bg-gd-sea text-center">
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-toggle="block-option"
+                                data-action="pinned_toggle">
+                            <i class="si si-pin"></i>
+                        </button>
+                    </div>
+                    <img class="img-avatar img-avatar-thumb" src="/static/media/images/cupid.jpg" alt="">
+                    <div class="font-w600 mt-15 mb-5 text-white">
+                        Cupid<span class="font-italic text-white-op"> spy </span>
+                    </div>
                 </div>
-                <img class="img-avatar img-avatar-thumb" src="/static/media/images/cupid.jpg" alt="">
-                <div class="font-w600 mt-15 mb-5 text-white">
-                    Cupid<span class="font-italic text-white-op"> spy </span>
-                </div>
-            </div>
             <!-- END Chat Header -->
 
             <!-- Messages (demonstration messages are added with JS code at the bottom of this page) -->
@@ -224,9 +224,9 @@
                         {% get_available_languages as LANGUAGES %}
                         {% get_language_info_list for LANGUAGES as languages %}
                         {% for language in languages %}
-                            <option value="{{language.code}}" {% if language.code == LANGUAGE_CODE %} selected {% endif %} >
-                                {{ language.name_local }} ({{ language.code }})
-                            </option>
+                        <option value="{{language.code}}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                            {{ language.name_local }} ({{ language.code }})
+                        </option>
                         {% endfor %}
                     </select>
                     <input type="submit" value="GO">
@@ -241,25 +241,7 @@
     <!-- END Footer -->
 </div>
 <!-- END Page Container -->
-<!--
-    Codebase JS Core
-
-    Vital libraries and plugins used in all pages. You can choose to not include this file if you would like
-    to handle those dependencies through webpack. Please check out assets/_es6/main/bootstrap.js for more info.
-
-    If you like, you could also include them separately directly from the assets/js/core folder in the following
-    order. That can come in handy if you would like to include a few of them (eg jQuery) from a CDN.
-
-    assets/js/core/jquery.min.js
-    assets/js/core/bootstrap.bundle.min.js
-    assets/js/core/simplebar.min.js
-    assets/js/core/jquery-scrollLock.min.js
-    assets/js/core/jquery.appear.min.js
-    assets/js/core/jquery.countTo.min.js
-    assets/js/core/js.cookie.min.js
--->
 <script src="/static/assets/js/codebase.core.min.js"></script>
-
 <!--
     Codebase JS
 
@@ -278,9 +260,6 @@
     $("#post-form").submit(function(e){
         e.preventDefault();
     });
-
-
-
 </script>
 <script src="/static/js/tagsinput.js"></script>
 {% get_current_language as LANGUAGE_CODE %}
@@ -300,9 +279,6 @@
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
     };
-
-
-
 </script>
 {% block scripts %}
 {% endblock %}

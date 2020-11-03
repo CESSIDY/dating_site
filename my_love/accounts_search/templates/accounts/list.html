@@ -6,21 +6,17 @@
 html{background-color:#000}
 .countdown{width:100%;float:left;margin:20px auto}
 .timer{font:72px Courier;color:#fff;text-align:center}
-
-
-
-
 </style>
 {% endblock %}
 {% block content %}
 
 <div class="row justify-content-center text-center">
     {% if search_active %}
-    <div class="col-md-12">
+    <div class="col-md-6">
         <a class="btn btn-square btn-warning btn-lg btn-block" href="{% url 'partners_search' %}">{% trans 'SEARCH OF LOVE' %}</a>
     </div>
     {% else %}
-    <div class="col-md-12 countdown">
+    <div class="col-md-6 countdown">
         <a class="timer btn btn-square btn-danger btn-lg btn-block" href="#">
             <span id="days"></span>
             <span id="hours"></span>
@@ -30,6 +26,9 @@ html{background-color:#000}
     </div>
     <input type="hidden" id="access_date" value="{{ access_date }}">
     {% endif %}
+    <div class="col-md-6">
+        <a class="btn btn-square btn-danger btn-lg btn-block" href="{% url 'partners_delete' %}">{% trans 'DELETE ALL' %}</a>
+    </div>
 </div>
 <div class="container my-sm-3">
     <div class="content">

@@ -39,6 +39,10 @@ def partners_search(request):
     request.user.search_candidates()
     return HttpResponseRedirect(reverse('accounts_list'))
 
+@login_required
+def partners_delete(request):
+    request.user.remove_candidates()
+    return HttpResponseRedirect(reverse('accounts_list'))
 
 # show information of User by (pk) view
 class AccountDetailView(LoginRequiredMixin, DetailView):

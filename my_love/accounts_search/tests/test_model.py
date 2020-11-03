@@ -160,9 +160,9 @@ class CandidatesTestCase(TestCase):
             user_2.aboutyou.foods.set(Foods.objects.all())
             user_3.aboutyou.foods.set(Foods.objects.all())
 
-            user_1.aboutyou.countries.set(Countries.objects.filter(id__contains='1'))
-            user_2.aboutyou.countries.set(Countries.objects.filter(id__contains='1'))
-            user_3.aboutyou.countries.set(Countries.objects.filter(id__contains='2'))  # Alone
+            user_1.aboutyou.countries.set(Countries.objects.filter(name__contains='1'))
+            user_2.aboutyou.countries.set(Countries.objects.filter(name__contains='1'))
+            user_3.aboutyou.countries.set(Countries.objects.filter(name__contains='2'))  # Alone
 
             user_1.aboutyou.save()
             user_2.aboutyou.save()
@@ -198,14 +198,23 @@ class CandidatesTestCase(TestCase):
         self.client = Client()
         logged_in = self.client.login(username='user_1', password='Qwerty1!')
         self.partner_search = reverse('partners_search')
+        self.user1.search_candidates()
+        self.user2.search_candidates()
 
     def test_candidates_search(self):
-        response = self.client.get(self.partner_search)
-        self.assertEquals(response.status_code, 302)
-        response = self.client.get(response.url)
-        self.assertEquals(response.status_code, 200)
+        # self.client.get(self.partner_search)
         candidates = Candidates.objects.filter(creator=self.user1)
         candidate = candidates.first()
         self.assertEquals(candidates.count(), 1)
         self.assertEquals(candidate.candidate, self.user2)
         self.assertEquals(candidate.common_percentage, 100)
+
+    def test_get_followers(self):
+        followers = self.user1.get_followers()
+        self.assertEquals(followers.filter(candidate=self.user1).count(), 1)
+
+    def test_remove_candidate(self):
+        self.user1.remove_candidate(self.user2.pk)
+        candidates_count = self.user1.get_candidates().count()
+        self.assertEquals(candidates_count, 0)
+

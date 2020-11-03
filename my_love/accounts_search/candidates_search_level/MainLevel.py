@@ -15,18 +15,25 @@ class MainLevel:
 
     def __init__(self, user):
         self.user = user
-        self.hobbies = self.user.aboutyou.hobbies.count()
-        self.music_types = self.user.aboutyou.music_types.count()
-        self.foods = self.user.aboutyou.foods.count()
-        self.books = self.user.aboutyou.books.count()
-        self.films = self.user.aboutyou.films.count()
-        self.genres = self.user.aboutyou.genres.count()
-        self.questionary_me = self.user.questionarys.filter(
-            content_type=ContentType.objects.get_for_model(AboutMe)).count()
-        self.questionary_you = self.user.questionarys.filter(
-            content_type=ContentType.objects.get_for_model(AboutYou)).count()
+        self.hobbies = self.isNoteZero(self.user.aboutyou.hobbies.count())
+        self.music_types = self.isNoteZero(self.user.aboutyou.music_types.count())
+        self.foods = self.isNoteZero(self.user.aboutyou.foods.count())
+        self.books = self.isNoteZero(self.user.aboutyou.books.count())
+        self.films = self.isNoteZero(self.user.aboutyou.films.count())
+        self.genres = self.isNoteZero(self.user.aboutyou.genres.count())
+        self.questionary_me = self.isNoteZero(self.user.questionarys.filter(
+            content_type=ContentType.objects.get_for_model(AboutMe)).count())
+        self.questionary_you = self.isNoteZero(self.user.questionarys.filter(
+            content_type=ContentType.objects.get_for_model(AboutYou)).count())
         # the search will be performed only on active profiles
         self.candidates = User.objects.filter(aboutme__activate=True)
+
+    @staticmethod
+    def isNoteZero(number):
+        if number == 0:
+            return 1
+        else:
+            return number
 
     def updateCandidates(self):
         self.search()
@@ -50,6 +57,7 @@ class MainLevel:
 
     def makeCandidates(self):
         models.Candidates.objects.filter(creator=self.user).delete()
+        print(self.candidates)
         for candidate in self.candidates:
             if candidate.pk != self.user.pk:
                 percentage_dictionary = self.getPercentageDictionary(candidate)

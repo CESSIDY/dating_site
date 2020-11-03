@@ -52,6 +52,7 @@ class Level1:
         countries_pk = self.user.aboutyou.countries.values_list('pk')
         self.candidates = self.candidates.filter(aboutme__country__in=countries_pk)
 
+
     def aboutme_age(self):
         age = self.calculate_age(self.user.aboutme.birthday)
         self.candidates = self.candidates.filter(Q(aboutyou__min_age__gte=age) | Q(aboutyou__min_age__lte=age))

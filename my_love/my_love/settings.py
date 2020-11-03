@@ -78,11 +78,8 @@ INSTALLED_APPS = [
     # include the providers you want to enable:
     'allauth.socialaccount.providers.discord',
     'allauth.socialaccount.providers.facebook',
-    # 'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
-    # 'allauth.socialaccount.providers.instagram',
-    # 'allauth.socialaccount.providers.steam',
-    # 'allauth.socialaccount.providers.twitter',
+    'rest_framework'
 ]
 
 SITE_ID = 1

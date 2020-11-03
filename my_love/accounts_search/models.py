@@ -61,7 +61,14 @@ def remove_candidate(self, candidate_id):
     ).delete()
 
 
+def remove_candidates(self):
+    Candidates.objects.filter(
+        creator=self
+    ).delete()
+
+
 User.add_to_class("get_followers", get_followers)
 User.add_to_class("get_candidates", get_candidates)
+User.add_to_class("remove_candidates", remove_candidates)
 User.add_to_class("remove_candidate", remove_candidate)
 User.add_to_class("search_candidates", search_candidates)
