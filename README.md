@@ -1,5 +1,8 @@
 # dating_site
-Dating site... Call Make Love
+Dating site - (Make Love)
+dating site with a percentage search for matches.
+
+---------------------------
 install postgresql:
 - sudo apt-get -y install postgresql
 ---------------------------
