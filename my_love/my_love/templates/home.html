@@ -4,20 +4,23 @@
 
 {% block content %}
 <div class="bg-image" style="background-image: url('{% static "media/images/main.jpg" %}');">
-    <div class="hero bg-primary-dark-op">
-        <div class="hero-inner">
-            <div class="content content-full text-center">
-                <h1 class="display-4 font-w700 text-white mb-10 js-appear-enabled animated fadeInDown"
-                    data-toggle="appear" data-class="animated fadeInDown">Make Love</h1>
-                <h2 class="font-w400 text-white-op mb-50 js-appear-enabled animated fadeInUp" data-toggle="appear"
-                    data-class="animated fadeInUp" data-timeout="250">Some one of ({{ user_count }}) users Wait for you!</h2>
-                <a class="btn btn-hero btn-noborder btn-rounded btn-primary js-appear-enabled animated bounceIn"
-                   data-toggle="appear" data-class="animated bounceIn" data-timeout="750"
-                   href="#">
-                    <i class="fa fa-heart mr-10"></i> Get Started
-                </a>
-            </div>
+<div class="hero bg-primary-dark-op">
+    <div class="hero-inner">
+        <div class="content content-full text-center">
+            <h1 class="display-4 font-w700 text-white mb-10 js-appear-enabled animated fadeInDown"
+                data-toggle="appear" data-class="animated fadeInDown">Make Love</h1>
+            <h2 class="font-w400 text-white-op mb-50 js-appear-enabled animated fadeInUp" data-toggle="appear"
+                data-class="animated fadeInUp" data-timeout="250">Some one of ({{ user_count }}) users Wait for
+                you!</h2>
+            {% if user_count < 2 %}
+            <a class="btn btn-hero btn-noborder btn-rounded btn-primary js-appear-enabled animated bounceIn"
+               data-toggle="appear" data-class="animated bounceIn" data-timeout="750"
+               href="{% url 'data_base_auto_complete' %}">
+                <i class="fa fa-heart mr-10"></i> Generate 100 random users
+            </a>
+            {% endif %}
         </div>
     </div>
+</div>
 </div>
 {% endblock %}

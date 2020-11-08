@@ -7,6 +7,7 @@ from .models import AboutMe, AboutYou, Questionary, Question, Answer
 from background_data.models import Genres, MusicType, Films, Foods, Countries, Books, Hobbies
 from .forms import *
 from .database_autocomplete import Users, Articles, Likes
+from django.contrib.auth.models import User
 from .questionary import services
 from .questionary.settings import form_answer_prefix
 import json
@@ -79,7 +80,8 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
 
 def DataBaseAutoComplete(request):
-    #Users().generate()
-    #Articles().generate()
-    #Likes().generate()
+    if User.objects.count() < 100:
+        Users().generate()
+        Articles().generate()
+        Likes().generate()
     return HttpResponse(status=200)

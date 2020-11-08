@@ -23,6 +23,7 @@ class Users:
     def __init__(self):
         self.person = Person('en')
         self.generic = Generic('en')
+        self.questions = Question.objects.all()
 
     def generate(self):
         for i in range(1, 101):
@@ -100,8 +101,7 @@ class Users:
         self.save_questionary(user, user.aboutyou)
 
     def save_questionary(self, user, obj):
-        questions = Question.objects.all()
-        for question in questions:
+        for question in self.questions:
             question = Question.objects.get(pk=question.pk)
             answer = self.get_random_data_from_objects(Answer.objects.filter(question=question))
             obj_type = ContentType.objects.get_for_model(obj)

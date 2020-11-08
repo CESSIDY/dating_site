@@ -35,8 +35,8 @@ class AccountsListView(LoginRequiredMixin, ListView):
 # search of candidates for current user
 @login_required
 def partners_search(request):
-    # if request.user.permission_search_candidates():
-    request.user.search_candidates()
+    if request.user.permission_search_candidates():
+        request.user.search_candidates()
     return HttpResponseRedirect(reverse('accounts_list'))
 
 @login_required
