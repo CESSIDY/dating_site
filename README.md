@@ -28,4 +28,6 @@ comands for starting project:
 3. pip3 install -r requirements.txt
 4. sudo service postgresql restart - (if you need it)
 5. sudo service redis-server start
-6. python manage.py runserver
+6. python manage.py makemigrations
+7. python manage.py migrate
+8. python manage.py runserver
