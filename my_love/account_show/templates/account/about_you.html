@@ -1,65 +1,226 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
 {% block content %}
-<div class="container-fluid banner">
+<div class="block-content block-content-full">
+    <div class="row align-items-start">
+        <a class="btn btn-square btn-warning btn-lg btn-block" href="{% url 'edit_about_you' %}">{% trans 'Change About You' %}</a>
+    </div>
     <div class="row">
-        <div class="col-md-8 col-sm-9">
-            <div class="col-sm">
-                <h1 class="h1">About You<a class="btn btn-danger" href="{% url 'edit_about_you' %}">{% trans 'Change' %}</a></h1>
-            </div>
-            <div class="col-sm">
-                <p>{% trans 'Countries' %}: {% for value in user.aboutyou.countries.all %} {{value.name}}{% endfor %}</p>
-                <p>{% trans 'Age' %}: {{ user.aboutyou.min_age }} - {{ user.aboutyou.max_age }}</p>
-                <p>{% trans 'Growth' %}: {{ user.aboutyou.min_growth }} - {{ user.aboutyou.max_growth }}</p>
-                <p>{% trans 'Weight' %}: {{ user.aboutyou.min_weight }} - {{ user.aboutyou.max_weight }}</p>
-                <p>{% trans 'Gender' %}: {{ user.aboutyou.get_gender_display }}</p>
-                <p>{% trans 'Hair' %}: {{ user.aboutyou.get_color_hair_display }}</p>
-                <p>{% trans 'Eyes' %}: {{ user.aboutyou.get_color_aye_display }}</p>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm">
-                        <h2>{% trans 'Genres' %}</h2>
-                        {% for value in user.aboutyou.genres.all %}
-                        <p>{{ value.name }}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="col-sm">
-                        <h2>{% trans 'Music types' %}</h2>
-                        {% for value in user.aboutyou.music_types.all %}
-                        <p>{{ value.name }}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="col-sm">
-                        <h2>{% trans 'Films' %}</h2>
-                        {% for value in user.aboutyou.films.all %}
-                        <p>{{ value.name }}</p>
-                        {% endfor %}
+        <div class="col-sm-6 align-self-center">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="block block-bordered block-mode-hidden" id="genres-block">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">{% trans 'Genres' %} <small></small></h3>
+                            <div class="block-options">
+                                <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                                <button type="button" class="btn-block-option" data-toggle="block-option"
+                                        data-action="content_toggle">
+                                    <i class="si si-arrow-down"></i></button>
+                            </div>
+                        </div>
+                        <div class="block-content">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                </tr>
+                                </thead>
+                                <tbody class="">
+                                {% for value in user.aboutyou.genres.all %}
+                                <tr>
+                                    <td class="text-left">{{ value.name }}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm">
-                        <h2>{% trans 'Books' %}</h2>
-                        {% for value in user.aboutyou.books.all %}
-                        <p>{{ value.name }}</p>
-                        {% endfor %}
+                <div class="col-md-4">
+                    <div class="block block-mode-hidden" id="music-block">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">{% trans 'Music types' %}<small></small></h3>
+                            <div class="block-options">
+                                <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                                <button type="button" class="btn-block-option" data-toggle="block-option"
+                                        data-action="content_toggle">
+                                    <i class="si si-arrow-down"></i></button>
+                            </div>
+                        </div>
+                        <div class="block-content">
+                            <table class="table table-hover">
+                                <thead>
+                                </thead>
+                                <tbody class="">
+                                {% for value in user.aboutyou.music_types.all %}
+
+                                <tr>
+                                    <td class="text-left">{{ value.name }}</td>
+                                </tr>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="col-sm">
-                        <h2>{% trans 'Hobbies' %}</h2>
-                        {% for value in user.aboutyou.hobbies.all %}
-                        <p>{{ value.name }}</p>
-                        {% endfor %}
+                </div>
+                <div class="col-md-4">
+                    <div class="block block-mode-hidden" id="films-block">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">{% trans 'Films' %} <small></small></h3>
+                            <div class="block-options">
+                                <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                                <button type="button" class="btn-block-option" data-toggle="block-option"
+                                        data-action="content_toggle">
+                                    <i class="si si-arrow-down"></i></button>
+                            </div>
+                        </div>
+                        <div class="block-content">
+                            <table class="js-table-sections table table-hover">
+                                <thead>
+                                </thead>
+                                <tbody class="">
+                                {% for value in user.aboutyou.films.all %}
+
+                                <tr>
+                                    <td class="text-left">{{ value.name }}</td>
+                                </tr>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="col-sm">
-                        <h2>{% trans 'Foods' %}</h2>
-                        {% for value in user.aboutyou.foods.all %}
-                        <p>{{ value.name }}</p>
-                        {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="block block-mode-hidden" id="books-block">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">{% trans 'Books' %} <small></small></h3>
+                            <div class="block-options">
+                                <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                                <button type="button" class="btn-block-option" data-toggle="block-option"
+                                        data-action="content_toggle">
+                                    <i class="si si-arrow-down"></i></button>
+                            </div>
+                        </div>
+                        <div class="block-content">
+                            <table class="js-table-sections table table-hover">
+                                <thead>
+                                </thead>
+                                <tbody class="">
+                                {% for value in user.aboutyou.books.all %}
+
+                                <tr>
+                                    <td class="text-left">{{ value.name }}</td>
+                                </tr>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="block block-mode-hidden" id="hobbies-block">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">{% trans 'Hobbies' %} <small></small></h3>
+                            <div class="block-options">
+                                <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                                <button type="button" class="btn-block-option" data-toggle="block-option"
+                                        data-action="content_toggle">
+                                    <i class="si si-arrow-down"></i></button>
+                            </div>
+                        </div>
+                        <div class="block-content">
+                            <table class="js-table-sections table table-hover">
+                                <thead>
+                                </thead>
+                                <tbody class="">
+                                {% for value in user.aboutyou.hobbies.all %}
+
+                                <tr>
+                                    <td class="text-left">{{ value.name }}</td>
+                                </tr>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="block block-mode-hidden" id="foods-block">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">{% trans 'Foods' %} <small></small></h3>
+                            <div class="block-options">
+                                <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                                <button type="button" class="btn-block-option" data-toggle="block-option"
+                                        data-action="content_toggle">
+                                    <i class="si si-arrow-down"></i></button>
+                            </div>
+                        </div>
+                        <div class="block-content">
+                            <table class="js-table-sections table table-hover">
+                                <thead>
+                                </thead>
+                                <tbody class="">
+                                {% for value in user.aboutyou.foods.all %}
+
+                                <tr>
+                                    <td class="text-left">{{ value.name }}</td>
+                                    <td class="text-right">({{ value.get_type_display }})</td>
+                                </tr>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-sm-6 nice-copy">
+            <table class="table table-striped table-borderless">
+                <tbody>
+                <tr class="table-active">
+                    <td class="font-w600">{% trans 'Countries' %}</td>
+                    <td>{% for value in user.aboutyou.countries.all %} {{value.name}}{% endfor %}</td>
+                </tr>
+                <tr class="table-primary">
+                    <td class="font-w600">{% trans 'Age' %}</td>
+                    <td>{{ user.aboutyou.min_age }} - {{ user.aboutyou.max_age }}</td>
+                </tr>
+                <tr class="table-active">
+                    <td class="font-w600">{% trans 'Growth' %}</td>
+                    <td>{{ user.aboutyou.min_growth }} - {{ user.aboutyou.max_growth }}</td>
+                </tr>
+                <tr class="table-primary">
+                    <td class="font-w600">{% trans 'Weight' %}</td>
+                    <td>{{ user.aboutyou.min_weight }} - {{ user.aboutyou.max_weight }}</td>
+                </tr>
+                <tr class="table-active">
+                    <td class="font-w600">{% trans 'Gender' %}</td>
+                    <td>{{ user.aboutyou.get_gender_display }}</td>
+                </tr>
+                <tr class="table-primary">
+                    <td class="font-w600">{% trans 'Hair color' %}</td>
+                    <td>{{ user.aboutyou.get_color_hair_display }}</td>
+                </tr>
+                <tr class="table-active">
+                    <td class="font-w600">{% trans 'Eyes color' %}</td>
+                    <td>{{ user.aboutyou.get_color_aye_display }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<!-- Page JS Helpers (Table Tools helper) -->
+<script>jQuery(function () {  Codebase.helpers('table-tools');     });</script>
 {% endblock %}

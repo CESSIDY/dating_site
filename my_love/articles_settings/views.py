@@ -55,7 +55,7 @@ class ArticleUpdate(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         pk_ = self.kwargs.get('pk')
         # check whether the user edits his article
-        if pk_ is not None or pk_.isnumeric():
+        if pk_ and pk_.isnumeric():
             article = self.model.objects.get(id=pk_)
             if article.user == self.request.user:
                 return article

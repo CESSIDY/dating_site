@@ -25,11 +25,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-7 col-md-6">
                     <div class="block">
                         <div class="block-content">
                             <div class="font-w600 ml-auto">
-                                <p>{% trans "You/'r name" %}: {{ user.first_name }} {{ user.last_name }}</p>
+                                <p>{% trans "Your name" %}: {{ user.first_name }} {{ user.last_name }}</p>
                                 <p>{% trans 'Email' %}: {{ user.email }}</p>
                                 <a class="btn btn-sm btn-rounded btn-alt-primary min-width-75"
                                    href="{% url 'edit.profile' %}">

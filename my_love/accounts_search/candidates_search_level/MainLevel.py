@@ -53,6 +53,7 @@ class MainLevel:
         mePercentage = self.getAboutMePercentageDictionary(candidate)
         youPercentage = self.getAboutYouPercentageDictionary(candidate)
         mePercentage.update(youPercentage)
+
         return mePercentage
 
     def makeCandidates(self):

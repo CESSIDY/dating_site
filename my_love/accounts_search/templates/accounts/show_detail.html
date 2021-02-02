@@ -4,38 +4,83 @@
 {% block side-overlay%}
 {% endblock %}
 {% block content %}
-<div class="bg-image bg-image-bottom " style="background-image: url('{% static "media/images/main.jpg" %}');">
-    <div class="bg-primary-dark-op py-30">
-        <div class="content content-full text-center">
-            <!-- Avatar -->
-            <div class="mb-15">
-                <a class="img-link" href="#">
-                    <img class="img-avatar img-avatar96 img-avatar-thumb" src="{{ candidate.aboutme.main_photo }}"
-                         alt="">
-                </a>
-            </div>
-            <!-- END Avatar -->
 
-            <!-- Personal -->
-            <h3 class="h3 text-white font-w700 mb-10">{{ candidate.first_name }} {{ candidate.last_name }}</h3>
-            <h5 class="text-white font-w700 mb-10">{{ candidate.email }}</h5>
-            <h1 class="h3 text-white font-w700 mb-10">
-                <div class="font-w600">
-                    {% for account in social_accounts %}
-                        {% if account.get_profile_url %}
-                            <div class="font-w600">{{ account.provider }}:
-                                <a href="{{ account.get_profile_url }}"><i
-                                        class="fa fa-{{account.provider}}" aria-hidden="true"></i></a>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
+<!-- Project -->
+<div class="block-content block-content-full">
+    <div class="row">
+        <div class="col-sm-6 table-primary">
+            <p></p>
+            <div class="text-center invisible" data-toggle="appear">
+                <!-- Image Slider (.js-slider class is initialized in Helpers.slick()) -->
+                <!-- For more info and examples you can check out http://kenwheeler.github.io/slick/ -->
+                <div class="" data-dots="true"
+                     data-arrows="true">
+                    <div class="text-center text-black">
+                        <img class="img-fluid img-avatar img-avatar128 img-avatar-thumb"
+                             src="{{ candidate.aboutme.main_photo }}"
+                             alt="Project Promo 1">
+                        <!-- Personal -->
+                        <h1 class="h3 font-w700 mb-10">{{ candidate.first_name }} {{ candidate.last_name }}</h1>
+                        <h5 class="font-w700 mb-10">{{ candidate.email }}</h5>
+                        <h1 class="h3 font-w700 mb-10">
+                            <div class="font-w600">
+                                {% for account in social_accounts %}
+                                {% if account.get_profile_url %}
+                                <div class="font-w600">{{ account.provider }}:
+                                    <a href="{{ account.get_profile_url }}"><i class="fa fa-{{account.provider}}"
+                                                                               aria-hidden="true"></i></a>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </h1>
+                        <!-- END Personal -->
+                    </div>
                 </div>
-            </h1>
-            <!-- END Personal -->
-
+                <!-- END Image Slider -->
+            </div>
+        </div>
+        <div class="col-sm-6 nice-copy">
+            <!-- Project Description -->
+            <!-- Project Info -->
+            <table class="table table-striped table-borderless">
+                <tbody>
+                <tr class="table-active">
+                    <td class="font-w600">{% trans 'Birth Day' %}</td>
+                    <td>{{ candidate.aboutme.birthday }}</td>
+                </tr>
+                <tr class="table-primary">
+                    <td class="font-w600">{% trans 'Country' %}</td>
+                    <td>{{ candidate.aboutme.country.name }}</td>
+                </tr>
+                <tr class="table-active">
+                    <td class="font-w600">{% trans 'Growth' %}</td>
+                    <td>{{ candidate.aboutme.growth }}</td>
+                </tr>
+                <tr class="table-primary">
+                    <td class="font-w600">{% trans 'Weight' %}</td>
+                    <td>{{ candidate.aboutme.weight }}</td>
+                </tr>
+                <tr class="table-active">
+                    <td class="font-w600">{% trans 'Gender' %}</td>
+                    <td>{{ candidate.aboutme.get_gender_display }}</td>
+                </tr>
+                <tr class="table-primary">
+                    <td class="font-w600">{% trans 'Hair color' %}</td>
+                    <td>{{ candidate.aboutme.get_color_hair_display }}</td>
+                </tr>
+                <tr class="table-active">
+                    <td class="font-w600">{% trans 'Eyes color' %}</td>
+                    <td>{{ candidate.aboutme.get_color_aye_display }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- END Project Info -->
+            <!-- END Project Description -->
         </div>
     </div>
 </div>
+<!-- END Project -->
 <div class="container my-sm-3">
     <div class="row">
         <div class="col-md-4">
@@ -55,13 +100,13 @@
                         <tr>
                         </tr>
                         </thead>
-                        {% for value in candidate.aboutme.genres.all %}
                         <tbody class="">
+                        {% for value in candidate.aboutme.genres.all %}
                         <tr>
                             <td class="text-left">{{ value.name }}</td>
                         </tr>
-                        </tbody>
                         {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -81,13 +126,15 @@
                     <table class="table table-hover">
                         <thead>
                         </thead>
-                        {% for value in candidate.aboutme.music_types.all %}
                         <tbody class="">
+                        {% for value in candidate.aboutme.music_types.all %}
+
                         <tr>
                             <td class="text-left">{{ value.name }}</td>
                         </tr>
-                        </tbody>
+
                         {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -107,13 +154,15 @@
                     <table class="js-table-sections table table-hover">
                         <thead>
                         </thead>
-                        {% for value in candidate.aboutme.films.all %}
                         <tbody class="">
+                        {% for value in candidate.aboutme.films.all %}
+
                         <tr>
                             <td class="text-left">{{ value.name }}</td>
                         </tr>
-                        </tbody>
+
                         {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -133,13 +182,15 @@
                     <table class="js-table-sections table table-hover">
                         <thead>
                         </thead>
-                        {% for value in candidate.aboutme.books.all %}
                         <tbody class="">
+                        {% for value in candidate.aboutme.books.all %}
+
                         <tr>
                             <td class="text-left">{{ value.name }}</td>
                         </tr>
-                        </tbody>
+
                         {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -159,13 +210,15 @@
                     <table class="js-table-sections table table-hover">
                         <thead>
                         </thead>
-                        {% for value in candidate.aboutme.hobbies.all %}
                         <tbody class="">
+                        {% for value in candidate.aboutme.hobbies.all %}
+
                         <tr>
                             <td class="text-left">{{ value.name }}</td>
                         </tr>
-                        </tbody>
+
                         {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -185,84 +238,19 @@
                     <table class="js-table-sections table table-hover">
                         <thead>
                         </thead>
-                        {% for value in candidate.aboutme.foods.all %}
                         <tbody class="">
+                        {% for value in candidate.aboutme.foods.all %}
+
                         <tr>
                             <td class="text-left">{{ value.name }}</td>
                             <td class="text-right">({{ value.get_type_display }})</td>
                         </tr>
-                        </tbody>
+
                         {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="block-content">
-            <li>
-                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Birth Day</span></span>
-                <ul>
-                    <li>
-                        <span> {{ candidate.aboutme.birthday }}</span>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Country</span></span>
-                <ul>
-                    <li>
-                        <span>{{ candidate.aboutme.country.name }}</span>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Growth</span></span>
-                <ul>
-                    <li>
-                        <span>{{ candidate.aboutme.growth }}</span>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Weight</span></span>
-                <ul>
-                    <li>
-                        <span>{{ candidate.aboutme.weight }}</span>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Gender</span></span>
-                <ul>
-                    <li>
-                        <span>{{ candidate.aboutme.get_gender_display }}</span>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Hair color</span></span>
-                <ul>
-                    <li>
-                        <span>{{ candidate.aboutme.get_color_hair_display }}</span>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                            <span class="nav-submenu" data-toggle="nav-submenu" href="#"><span
-                                    class="sidebar-mini-hide">Aye color</span></span>
-                <ul>
-                    <li>
-                        <span>{{ candidate.aboutme.get_color_aye_display }}</span>
-                    </li>
-                </ul>
-            </li>
         </div>
     </div>
     <!-- END Table Sections -->
@@ -270,13 +258,5 @@
 {% endblock %}
 {% block scripts %}
 <!-- Page JS Helpers (Table Tools helper) -->
-<script>
-jQuery(function () {  Codebase.helpers('table-tools');     });
-
-
-
-
-
-
-</script>
+<script>jQuery(function () {  Codebase.helpers('table-tools');     });</script>
 {% endblock %}
