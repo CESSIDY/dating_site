@@ -24,7 +24,7 @@ https://docs.djangoproject.com/en/3.1/ref/contrib/postgres/operations/#creating-
 ---------------------------
 comands for starting project:
 1. python3 -m venv venv
-2. source venv
+2. source venv/bin/activate
 3. pip3 install -r requirements.txt
 4. sudo service postgresql restart - (if you need it)
 5. sudo service redis-server start
