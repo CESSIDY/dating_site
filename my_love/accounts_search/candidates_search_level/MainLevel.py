@@ -36,8 +36,25 @@ class MainLevel:
             return number
 
     def updateCandidates(self):
-        self.search()
-        self.makeCandidates()
+        if self.is_valid():
+            self.search()
+            self.makeCandidates()
+            return True
+        else:
+            return Exception('None data')
+
+    def is_valid(self):
+        if self.user.aboutme.birthday is None:
+            return False
+        if self.user.aboutme.growth is None:
+            return False
+        if self.user.aboutme.gender is None:
+            return False
+        if self.user.aboutme.country is None:
+            return False
+        if self.user.aboutme.weight is None:
+            return False
+        return True
 
     def search(self):
         self.candidates = Level1(self.user, self.candidates).search()

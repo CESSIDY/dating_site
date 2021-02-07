@@ -1,5 +1,7 @@
 import datetime
 from dateutil.relativedelta import relativedelta
+import datetime
+from django.utils import timezone
 from account_settings.models import AboutCommonInfo as commonInfo
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.postgres.fields import HStoreField
@@ -21,20 +23,13 @@ class Candidates(models.Model):
     def __str__(self):
         return str("{} - {}".format(self.creator, self.candidate))
 
-    # return common percentage of all fields
-    # def common_percentage(self):
-    #     all_percentages = 0
-    #     for percentage in self.percentage_similar.values():
-    #         all_percentages += float(percentage)
-    #     commonProcent = (all_percentages / len(self.percentage_similar))
-    #     return round(commonProcent, 2)
-
 
 # User method for search of candidate (all logic is stored at different levels)
 def search_candidates(self):
     # At this level, users will stand up for the main criteria
     main_search_level = MainLevel(self)
-    main_search_level.updateCandidates()
+    result = main_search_level.updateCandidates()
+    return result
 
 
 # User method what returns all followers from Candidate Model for current user
@@ -67,6 +62,16 @@ def remove_candidates(self):
     ).delete()
 
 
+def permission_search_candidates(self):
+    return True#timezone.now() > self.get_permission_date_search_candidates()
+
+
+def get_permission_date_search_candidates(self):
+    return timezone.timedelta(days=2) + self.aboutyou.last_search_date
+
+
+User.add_to_class("permission_search_candidates", permission_search_candidates)
+User.add_to_class("get_permission_date_search_candidates", get_permission_date_search_candidates)
 User.add_to_class("get_followers", get_followers)
 User.add_to_class("get_candidates", get_candidates)
 User.add_to_class("remove_candidates", remove_candidates)

@@ -209,7 +209,19 @@
         </div>
     </main>
     <!-- END Main Container -->
-
+{% if messages %}
+    {% for message in messages %}
+            <script>
+                Codebase.helpers('notify', {
+                align: 'right',             // 'right', 'left', 'center'
+                from: 'top',                // 'top', 'bottom'
+                type: '{{ message.tags }}',               // 'info', 'success', 'warning', 'danger'
+                icon: 'fa fa-info mr-5',    // Icon class
+                message: '{{ message }}'
+            });
+            </script>
+    {% endfor %}
+{% endif %}
     <!-- Footer -->
     <footer id="page-footer" class="">
         <div class="content py-20 font-size-xs clearfix">
@@ -256,6 +268,19 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
+
+<!-- Page JS Plugins -->
+<script src="/static/assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="/static/assets/js/plugins/es6-promise/es6-promise.auto.min.js"></script>
+<script src="/static/assets/js/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+<!-- Page JS Code -->
+<script src="/static/assets/js/pages/be_ui_activity.min.js"></script>
+
+<!-- Page JS Helpers (BS Notify Plugin) -->
+<script>jQuery(function(){ Codebase.helpers('notify'); });</script>
+
+<!-- Page JS Helpers (BS Notify Plugin) -->
 <script>
     $("#post-form").submit(function(e){
         e.preventDefault();
@@ -283,5 +308,6 @@
 {% block scripts %}
 {% endblock %}
 {{ form.media.js }}
+
 </body>
 </html>

@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from allauth.socialaccount.models import SocialAccount
+from django.contrib import messages
 
 
 # list of candidates for the current user
@@ -27,7 +28,7 @@ class AccountsListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['search_active'] = True#self.request.user.permission_search_candidates()
+        context['search_active'] = self.request.user.permission_search_candidates()
         context['access_date'] = str(self.request.user.get_permission_date_search_candidates())
         return context
 
@@ -36,7 +37,9 @@ class AccountsListView(LoginRequiredMixin, ListView):
 @login_required
 def partners_search(request):
     if request.user.permission_search_candidates():
-        request.user.search_candidates()
+        result = request.user.search_candidates()
+        if result is not True:
+            messages.warning(request, result)
     return HttpResponseRedirect(reverse('accounts_list'))
 
 @login_required

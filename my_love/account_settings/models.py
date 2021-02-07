@@ -151,14 +151,3 @@ class Questionary(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.question.me_title, self.answer.title)
 
-
-def permission_search_candidates(self):
-    return timezone.now() > self.get_permission_date_search_candidates()
-
-
-def get_permission_date_search_candidates(self):
-    return timezone.timedelta(days=2) + self.aboutyou.last_search_date
-
-
-User.add_to_class("permission_search_candidates", permission_search_candidates)
-User.add_to_class("get_permission_date_search_candidates", get_permission_date_search_candidates)
