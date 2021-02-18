@@ -2,6 +2,8 @@
 Dating site - (Make Love)
 dating site with a percentage search for matches.
 
+Site interface diagram - https://xd.adobe.com/view/b41176dc-2dff-4329-9bc6-946d9caa525b-e142/
+
 ---------------------------
 install postgresql:
 - sudo apt-get -y install postgresql
