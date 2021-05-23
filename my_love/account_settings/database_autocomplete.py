@@ -1,6 +1,5 @@
 from datetime import datetime
 from random import randrange, sample, choice
-
 from articles_likes.services import *
 from django.contrib.contenttypes.models import ContentType
 from taggit.managers import TaggableManager
@@ -16,6 +15,7 @@ from mimesis.enums import Gender
 from mimesis import Generic
 from django.contrib.auth.models import User
 from account_settings import models
+import random
 
 
 class Users:
@@ -134,6 +134,28 @@ class Users:
         listOfRandomDataIds = sample(list(modelDataIds), k=randDataCount)
         multipleData = Objects.filter(id__in=listOfRandomDataIds)
         return multipleData
+
+
+class AccountAtributes():
+    def __init__(self):
+        pass
+
+    def generate(self):
+        for index in range(1, 5):
+            object = Genres.objects.create(name="genre_{}".format(index))
+            object.save()
+            object = MusicType.objects.create(name="music_type_{}".format(index))
+            object.save()
+            object = Films.objects.create(name="film_{}".format(index))
+            object.save()
+            object = Books.objects.create(name="book_{}".format(index))
+            object.save()
+            object = Hobbies.objects.create(name="hobby_{}".format(index))
+            object.save()
+            object = Foods.objects.create(name="food_{}".format(index), type=random.randint(1, 3))
+            object.save()
+            object = Countries.objects.create(name="country_{}".format(index))
+            object.save()
 
 
 class Articles:
